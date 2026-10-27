@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCRIPT PROMPT STUDIO - Ultimate Multi-Language AI Engine</title>
+    <title>SCRIPT PROMPT STUDIO - Unlimited Long-Context & Live Terminal</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -69,11 +69,11 @@
     <!-- Toast Alert Container -->
     <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- Modal Tambah Prompt Kustom -->
+    <!-- Modal Tambah Prompt Kustom (Unlimited) -->
     <div id="create-prompt-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-panelDark border border-panelBorder rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
+        <div class="bg-panelDark border border-panelBorder rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl">
             <div class="flex items-center justify-between pb-3 border-b border-panelBorder">
-                <h3 class="text-base font-bold text-white">Create Custom Prompt</h3>
+                <h3 class="text-base font-bold text-white">Create Unlimited Long-Context Prompt</h3>
                 <button onclick="closeCreatePromptModal()" class="text-slate-400 hover:text-white">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
@@ -81,7 +81,7 @@
             <div class="space-y-3">
                 <div>
                     <label class="block text-xs font-medium text-slate-300 mb-1">Prompt Title</label>
-                    <input type="text" id="modal-title" placeholder="e.g. Advanced Distributed Microservice" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                    <input type="text" id="modal-title" placeholder="e.g. Enterprise Distributed Cluster Engine" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
@@ -116,8 +116,8 @@
                     <input type="text" id="modal-desc" placeholder="Brief summary..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Prompt Content (Detailed Architecture)</label>
-                    <textarea id="modal-content" rows="5" placeholder="Context: ... \nRequirements: ... \nArchitecture: ..." class="w-full bg-bgDark border border-panelBorder rounded-lg p-3 text-xs font-mono text-slate-200 focus:outline-none resize-none"></textarea>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Prompt Content (Unlimited Context / Structured Architecture)</label>
+                    <textarea id="modal-content" rows="7" placeholder="### SYSTEM ROLE & OBJECTIVE..." class="w-full bg-bgDark border border-panelBorder rounded-lg p-3 text-xs font-mono text-slate-200 focus:outline-none resize-none"></textarea>
                 </div>
             </div>
             <div class="flex justify-end gap-2 pt-2 border-t border-panelBorder">
@@ -139,7 +139,7 @@
                     </div>
                     <div>
                         <span class="text-lg font-bold tracking-tight text-white block leading-none">SCRIPT PROMPT STUDIO</span>
-                        <span class="text-[10px] font-mono text-blue-400 tracking-wider">LONG-CONTEXT AI SUITE & TXT EXPORTER</span>
+                        <span class="text-[10px] font-mono text-blue-400 tracking-wider">UNLIMITED CONTEXT & LIVE TERMINAL</span>
                     </div>
                 </div>
 
@@ -227,18 +227,18 @@
         </aside>
 
         <!-- Main Dynamic View Container -->
-        <main class="flex-1 min-w-0 overflow-y-auto">
+        <main class="flex-1 min-w-0 overflow-y-auto space-y-6">
             
             <!-- VIEW: DASHBOARD -->
             <section id="view-dashboard" class="space-y-6">
                 <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-panelDark via-slate-900 to-panelDark border border-panelBorder p-6">
                     <div class="relative z-10">
                         <div class="flex items-center gap-2 mb-2">
-                            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/40 rounded uppercase tracking-wider pulse-live">● Long-Context AI Engine Active</span>
+                            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/40 rounded uppercase tracking-wider pulse-live">● Unlimited Context & Live Terminal Active</span>
                         </div>
                         <h1 class="text-2xl sm:text-3xl font-extrabold text-white">SCRIPT PROMPT STUDIO</h1>
                         <p class="text-xs sm:text-sm text-slate-400 max-w-2xl mt-1">
-                            Pusat AI Prompt berkonteks panjang dan mendalam untuk AI, dilengkapi fitur unduh teks instan (`.txt`) dengan penamaan otomatis.
+                            Pusat AI Prompt tanpa batasan karakter (Unlimited Long-Context) dengan terminal konsol real-time untuk memantau sintesis kode global.
                         </p>
                         <div class="flex flex-wrap gap-3 mt-4">
                             <button onclick="switchTab('streamer')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-2 transition-all shadow-lg">
@@ -279,11 +279,11 @@
                     </div>
                     <div class="bg-panelDark border border-panelBorder rounded-xl p-4">
                         <div class="flex items-center justify-between text-slate-400 mb-2">
-                            <span class="text-xs font-medium">Languages</span>
-                            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                            <span class="text-xs font-medium">Context Window</span>
+                            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                         </div>
-                        <div class="text-2xl font-bold text-white font-mono">15+</div>
-                        <span class="text-[10px] text-slate-500">Global syntaxes</span>
+                        <div class="text-2xl font-bold text-white font-mono">UNLIMITED</div>
+                        <span class="text-[10px] text-slate-500">No token truncation</span>
                     </div>
                 </div>
 
@@ -300,13 +300,13 @@
                         </div>
                     </div>
                     <div id="dashboard-live-ticker" class="bg-bgDark border border-panelBorder rounded-lg p-3 font-mono text-xs text-slate-300">
-                        Initializing long-context code generation stream...
+                        Initializing unlimited context code generation stream...
                     </div>
                 </div>
 
                 <div>
                     <div class="flex items-center justify-between mb-3">
-                        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Featured Long-Context Prompts</h2>
+                        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Featured Unlimited Prompts</h2>
                         <button onclick="switchTab('library')" class="text-xs text-blue-400 hover:text-blue-300 font-medium">View Library &rarr;</button>
                     </div>
                     <div id="dashboard-recent-prompts" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
@@ -318,10 +318,10 @@
                 <div class="bg-panelDark p-5 rounded-xl border border-emerald-500/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <div class="flex items-center gap-2 mb-1">
-                            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/40 rounded">LONG-CONTEXT SYNTHESIZER ENGINE</span>
+                            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/40 rounded">UNLIMITED LONG-CONTEXT ENGINE</span>
                         </div>
                         <h1 class="text-xl font-bold text-white">Live AI Multi-Language Streamer</h1>
-                        <p class="text-xs text-slate-400">AI otomatis menghasilkan prompt terstruktur panjang dan mendalam setiap detik. Siap disalin atau diunduh ke file .txt.</p>
+                        <p class="text-xs text-slate-400">AI otomatis menghasilkan prompt terstruktur tanpa batas panjang setiap detik. Salin atau unduh sebagai .txt.</p>
                     </div>
                     <div class="flex items-center gap-2">
                         <button onclick="toggleStreamerPause()" id="btn-streamer-toggle-2" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded-lg text-xs font-semibold">Pause / Resume</button>
@@ -338,6 +338,7 @@
                                 <div class="flex justify-between text-slate-400"><span>Interval:</span><span class="text-white">1.0s</span></div>
                                 <div class="flex justify-between text-slate-400"><span>Generated Total:</span><span id="streamer-stat-total" class="text-emerald-400">0</span></div>
                                 <div class="flex justify-between text-slate-400"><span>Status:</span><span id="streamer-stat-status" class="text-emerald-400">Streaming Active</span></div>
+                                <div class="flex justify-between text-slate-400"><span>Token Limit:</span><span class="text-purple-400 font-bold">UNLIMITED</span></div>
                             </div>
                         </div>
                     </div>
@@ -352,7 +353,7 @@
                             <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-amber-950 text-amber-400 border border-amber-800/40 rounded">ROBLOX STUDIO SPECIALIZED</span>
                         </div>
                         <h1 class="text-xl font-bold text-white">Roblox Luau Engineering Hub</h1>
-                        <p class="text-xs text-slate-400">Koleksi prompt panjang khusus Roblox Luau: DataStore, CFrame Animation, dan Network Security.</p>
+                        <p class="text-xs text-slate-400">Koleksi prompt panjang tanpa batas khusus Roblox Luau: DataStore, CFrame Animation, dan Network Security.</p>
                     </div>
                     <button onclick="switchTab('library')" class="px-3 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-semibold transition-all">View All Library</button>
                 </div>
@@ -364,7 +365,7 @@
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-panelDark p-4 rounded-xl border border-panelBorder">
                     <div>
                         <h1 class="text-xl font-bold text-white">Global Prompt & Code Library</h1>
-                        <p class="text-xs text-slate-400">Filter, search, and manage production-ready AI prompt templates.</p>
+                        <p class="text-xs text-slate-400">Filter, search, and manage unlimited context AI prompt templates.</p>
                     </div>
                     <button onclick="openCreatePromptModal()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
@@ -425,8 +426,8 @@
             <!-- VIEW: PROMPT BUILDER -->
             <section id="view-builder" class="hidden space-y-6">
                 <div class="bg-panelDark p-4 rounded-xl border border-panelBorder">
-                    <h1 class="text-xl font-bold text-white">Interactive Long-Context Prompt Builder</h1>
-                    <p class="text-xs text-slate-400">Generate structured, high-context developer prompts tailored to any programming language.</p>
+                    <h1 class="text-xl font-bold text-white">Interactive Unlimited Prompt Builder</h1>
+                    <p class="text-xs text-slate-400">Generate structured, high-context developer prompts with zero character limits.</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -436,7 +437,7 @@
                             <input type="text" id="pb-title" placeholder="e.g. Asynchronous Rust TCP Server" class="w-full bg-bgDark border border-panelBorder rounded-lg p-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                         </div>
                         <button onclick="generateCustomPrompt()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg text-xs transition-all shadow-md">
-                            Generate Master Long-Context Prompt
+                            Generate Unlimited Master Prompt
                         </button>
                     </div>
                     <div class="lg:col-span-6 flex flex-col bg-panelDark border border-panelBorder rounded-xl p-5 space-y-3">
@@ -453,7 +454,7 @@
             <section id="view-debugger" class="hidden space-y-6">
                 <div class="bg-panelDark p-4 rounded-xl border border-panelBorder">
                     <h1 class="text-xl font-bold text-white">Global Code Error Debugger & Fixer Studio</h1>
-                    <p class="text-xs text-slate-400">Masukkan kode dari bahasa apa pun yang bermasalah untuk menghasilkan prompt perbaikan otomatis.</p>
+                    <p class="text-xs text-slate-400">Masukkan kode yang bermasalah untuk menghasilkan prompt perbaikan terperinci.</p>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                     <div class="lg:col-span-6 bg-panelDark border border-panelBorder rounded-xl p-5 space-y-4">
@@ -478,10 +479,27 @@
                 </div>
                 <div id="workspace-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </section>
+
+            <!-- LIVE REAL-TIME TERMINAL PANEL (HACKER THEME) -->
+            <div class="bg-panelDark border border-emerald-500/40 rounded-xl p-4 space-y-2 shadow-2xl">
+                <div class="flex items-center justify-between pb-2 border-b border-panelBorder">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                        <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">Live Real-Time Terminal & Log Stream</h2>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="clearTerminalLogs()" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-[10px] font-mono">Clear Terminal</button>
+                    </div>
+                </div>
+                <div id="realtime-terminal" class="bg-bgDark border border-panelBorder rounded-lg p-3 font-mono text-[11px] text-emerald-400 h-36 overflow-y-auto space-y-1">
+                    <div>[00:00:00] [SYSTEM] Script Prompt Studio v4.0 booted successfully. Zero token limits enabled.</div>
+                </div>
+            </div>
+
         </main>
     </div>
 
-    <!-- MAIN JAVASCRIPT & LONG-CONTEXT ENGINE -->
+    <!-- MAIN JAVASCRIPT & UNLIMITED ENGINE -->
     <script>
         const INITIAL_PROMPTS = [
             {
@@ -492,7 +510,7 @@
                 difficulty: "Advanced",
                 description: "Enterprise-grade server-side data persistence script with session locking, pcall error handling, and auto-save.",
                 content: `### SYSTEM ROLE & OBJECTIVE
-Act as an elite Roblox Luau Engineer and Systems Architect. Your task is to design a production-ready, highly resilient player data persistence module using ProfileService or DataStore2.
+Act as an elite Roblox Luau Engineer and Systems Architect. Your task is to design a production-ready, highly resilient player data persistence module using ProfileService or DataStore2 without any truncation or token limits.
 
 ### TECHNICAL REQUIREMENTS & CONSTRAINTS
 1. Session Locking: Prevent multi-device data corruption or duplication when players rapidly rejoin or switch servers.
@@ -512,7 +530,7 @@ Provide clean, commented Luau source code implementing a complete DataManager cl
                 difficulty: "Expert",
                 description: "High-performance multi-threaded TCP server in Rust using Tokio, bounded channels, and zero-copy parsing.",
                 content: `### SYSTEM ROLE & OBJECTIVE
-Act as a Principal Rust Systems Engineer. Design and implement an ultra-low latency, concurrent TCP server using the Tokio asynchronous runtime.
+Act as a Principal Rust Systems Engineer. Design and implement an ultra-low latency, concurrent TCP server using the Tokio asynchronous runtime with complete zero-limit specification.
 
 ### TECHNICAL SPECIFICATIONS
 1. Concurrency Model: Utilize tokio::net::TcpListener with bounded channels (tokio::sync::mpsc) to distribute client tasks across worker threads.
@@ -522,29 +540,9 @@ Act as a Principal Rust Systems Engineer. Design and implement an ultra-low late
 
 ### DELIVERABLES
 Provide fully compiling Cargo project source code (main.rs and Cargo.toml dependencies) with thorough unit tests.`
-            },
-            {
-                id: "p-cpp-memory-pool",
-                title: "C++ Custom Fixed-Size Memory Pool Allocator",
-                category: "C dan C++",
-                language: "C++ / C",
-                difficulty: "Expert",
-                description: "Low-level custom memory pool allocator to eliminate heap fragmentation in game loops at 60 FPS.",
-                content: `### SYSTEM ROLE & OBJECTIVE
-Act as a Senior C++ Game Engine Architect. Write a high-performance, cache-friendly fixed-size memory pool allocator in modern C++ (C++20).
-
-### ARCHITECTURAL REQUIREMENTS
-1. Heap Fragmentation Elimination: Pre-allocate a contiguous block of memory during initialization and manage free blocks via an intrusive free list.
-2. O(1) Complexity: Ensure allocation and deallocation operations run in constant time O(1).
-3. Thread Safety: Provide an optional thread-safe wrapper using std::mutex or lock-free atomic operations.
-4. Custom operator new / delete Overrides: Demonstrate how classes can integrate this memory pool seamlessly.
-
-### OUTPUT EXPECTATION
-Provide header-only implementation with comprehensive benchmarking main() routine.`
             }
         ];
 
-        // Generator Pool Prompt Panjang Berkonteks Tinggi
         const STREAMER_TEMPLATES = [
             { 
                 title: "Live Luau Auto-Save Module v", 
@@ -552,7 +550,7 @@ Provide header-only implementation with comprehensive benchmarking main() routin
                 lang: "Luau / Lua", 
                 diff: "Advanced", 
                 desc: "Autonomously generated persistent DataStore wrapper with session locking.", 
-                content: `### CONTEXT\nAutonomous synthesis for Roblox Studio data architecture.\n\n### REQUIREMENTS\n1. Write a ModuleScript handling player data templates.\n2. Implement safe pcall retries and auto-saving debounce.\n3. Add BindToClose listener for safe server shutdowns.` 
+                content: `### UNLIMITED CONTEXT CONTEXT\nAutonomous synthesis for Roblox Studio data architecture.\n\n### DETAILED REQUIREMENTS\n1. Write a comprehensive ModuleScript handling player data templates with zero character restrictions.\n2. Implement safe pcall retries, session locking, and auto-saving debounce.\n3. Add BindToClose listener for safe server shutdowns.` 
             },
             { 
                 title: "Live Python FastAPI Microservice v", 
@@ -560,7 +558,7 @@ Provide header-only implementation with comprehensive benchmarking main() routin
                 lang: "Python", 
                 diff: "Intermediate", 
                 desc: "Autonomously generated asynchronous REST endpoint with JWT validation.", 
-                content: `### CONTEXT\nHigh-throughput backend microservice generation.\n\n### REQUIREMENTS\n1. Build an asynchronous FastAPI app with Pydantic validation models.\n2. Implement JWT token authentication middleware and bcrypt password hashing.\n3. Include automatic Swagger/OpenAPI documentation setup.` 
+                content: `### UNLIMITED CONTEXT CONTEXT\nHigh-throughput backend microservice generation.\n\n### DETAILED REQUIREMENTS\n1. Build an asynchronous FastAPI app with Pydantic validation models and dependency injection.\n2. Implement JWT token authentication middleware and bcrypt password hashing.\n3. Include automatic Swagger/OpenAPI documentation setup and error logging.` 
             },
             { 
                 title: "Live Rust Actix Web Server v", 
@@ -568,7 +566,7 @@ Provide header-only implementation with comprehensive benchmarking main() routin
                 lang: "Rust", 
                 diff: "Advanced", 
                 desc: "Autonomously generated memory-safe web server route handler.", 
-                content: `### CONTEXT\nMemory-safe systems programming stream.\n\n### REQUIREMENTS\n1. Write an Actix-web server handling JSON payloads.\n2. Enforce strict lifetime parameters and zero unwrap() production panic safeguards.\n3. Return standardized JSON response envelopes.` 
+                content: `### UNLIMITED CONTEXT CONTEXT\nMemory-safe systems programming stream.\n\n### DETAILED REQUIREMENTS\n1. Write an Actix-web server handling JSON payloads with threadpool workers.\n2. Enforce strict lifetime parameters and zero unwrap() production panic safeguards.\n3. Return standardized JSON response envelopes with structured error codes.` 
             },
             { 
                 title: "Live Solidity ERC721 Staking Vault v", 
@@ -576,7 +574,7 @@ Provide header-only implementation with comprehensive benchmarking main() routin
                 lang: "Solidity", 
                 diff: "Expert", 
                 desc: "Autonomously generated gas-optimized NFT staking contract.", 
-                content: `### CONTEXT\nWeb3 decentralized finance smart contract generation.\n\n### REQUIREMENTS\n1. Write a Solidity 0.8+ ERC721 staking contract.\n2. Implement ReentrancyGuard, checkpoint rewards calculation, and timelock withdrawal.\n3. Pass all Slither security analysis checks.` 
+                content: `### UNLIMITED CONTEXT CONTEXT\nWeb3 decentralized finance smart contract generation.\n\n### DETAILED REQUIREMENTS\n1. Write a Solidity 0.8+ ERC721 staking contract with custom Merkle tree verification.\n2. Implement ReentrancyGuard, checkpoint rewards calculation, and timelock withdrawal.\n3. Pass all Slither security analysis checks and gas optimizations.` 
             }
         ];
 
@@ -601,7 +599,8 @@ Provide header-only implementation with comprehensive benchmarking main() routin
             renderWorkspace();
             
             setInterval(runLiveAiStreamerTick, 1000);
-            logActivity("Long-Context AI Streamer engine activated (1s interval).");
+            logActivity("Unlimited Context AI Streamer engine activated (1s interval).");
+            terminalLog("SYSTEM INITIALIZED: Unlimited prompt length & real-time terminal ready.");
         };
 
         function loadFromStorage() {
@@ -630,6 +629,22 @@ Provide header-only implementation with comprehensive benchmarking main() routin
             saveToStorage();
         }
 
+        function terminalLog(msg) {
+            const term = document.getElementById('realtime-terminal');
+            if (!term) return;
+            const timeStr = new Date().toLocaleTimeString();
+            const div = document.createElement('div');
+            div.innerHTML = `[${timeStr}] ${escapeHTML(msg)}`;
+            term.appendChild(div);
+            term.scrollTop = term.scrollHeight;
+            if (term.children.length > 50) term.removeChild(term.firstChild);
+        }
+
+        function clearTerminalLogs() {
+            const term = document.getElementById('realtime-terminal');
+            if (term) term.innerHTML = `<div>[${new Date().toLocaleTimeString()}] [TERMINAL] Logs cleared by user.</div>`;
+        }
+
         function runLiveAiStreamerTick() {
             if (appState.isStreamerPaused) return;
 
@@ -642,7 +657,7 @@ Provide header-only implementation with comprehensive benchmarking main() routin
                 language: template.lang,
                 difficulty: template.diff,
                 description: template.desc,
-                content: `${template.content}\n\n### TIMESTAMP & METADATA\nGenerated Live at ${new Date().toLocaleTimeString()} | Target LLM Context Window: Optimized for GPT-4 / Claude 3.5 Sonnet.`
+                content: `${template.content}\n\n### UNLIMITED TOKEN METADATA\nGenerated Live at ${new Date().toLocaleTimeString()} | Context Length: Unlimited | Target: GPT-4o / Claude 3.5 Sonnet / Gemini Pro.`
             };
 
             appState.prompts.unshift(newPrompt);
@@ -652,9 +667,11 @@ Provide header-only implementation with comprehensive benchmarking main() routin
             saveToStorage();
             renderMetrics();
             
+            terminalLog(`SYNTHESIZED [${newPrompt.language}] &rarr; "${newPrompt.title}" (Length: ${newPrompt.content.length} chars)`);
+
             const ticker = document.getElementById('dashboard-live-ticker');
             if (ticker) {
-                ticker.innerHTML = `<span class="text-emerald-400 font-bold">[LONG-CONTEXT SYNTHESIZED]</span> <span class="text-white">${escapeHTML(newPrompt.title)}</span> (${escapeHTML(newPrompt.language)})`;
+                ticker.innerHTML = `<span class="text-emerald-400 font-bold">[UNLIMITED STREAM]</span> <span class="text-white">${escapeHTML(newPrompt.title)}</span> (${escapeHTML(newPrompt.language)})`;
             }
 
             const feedContainer = document.getElementById('streamer-feed-container');
@@ -679,12 +696,14 @@ Provide header-only implementation with comprehensive benchmarking main() routin
                 if (btn1) btn1.innerText = "Resume Stream";
                 if (btn2) btn2.innerText = "Resume Stream";
                 showToast("Live AI Streamer paused.");
+                terminalLog("SYSTEM: Live AI Streamer paused.");
             } else {
                 if (statusBadge) { statusBadge.innerText = "ACTIVE (1s)"; statusBadge.className = "text-emerald-400 font-mono font-bold animate-pulse"; }
                 if (statStatus) statStatus.innerText = "Streaming Active";
                 if (btn1) btn1.innerText = "Pause Stream";
                 if (btn2) btn2.innerText = "Pause Stream";
                 showToast("Live AI Streamer resumed.");
+                terminalLog("SYSTEM: Live AI Streamer resumed.");
             }
         }
 
@@ -692,6 +711,7 @@ Provide header-only implementation with comprehensive benchmarking main() routin
             appState.streamedPrompts = [];
             renderStreamerFeed();
             showToast("Stream feed cleared.");
+            terminalLog("SYSTEM: Streamed prompt feed cleared.");
         }
 
         function renderStreamerFeed() {
@@ -722,6 +742,7 @@ Provide header-only implementation with comprehensive benchmarking main() routin
             const sidebar = document.getElementById('sidebar');
             if (sidebar) sidebar.classList.add('-translate-x-full');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            terminalLog(`NAVIGATION: Switched to view tab [${tabId}]`);
         }
 
         function toggleMobileSidebar() {
@@ -733,12 +754,10 @@ Provide header-only implementation with comprehensive benchmarking main() routin
             const totalPromptsEl = document.getElementById('stat-total-prompts');
             const streamedCountEl = document.getElementById('stat-streamed-count');
             const totalFavEl = document.getElementById('stat-total-favorites');
-            const totalHistEl = document.getElementById('stat-total-history');
 
             if (totalPromptsEl) totalPromptsEl.innerText = appState.prompts.length;
             if (streamedCountEl) streamedCountEl.innerText = appState.streamedPrompts.length;
             if (totalFavEl) totalFavEl.innerText = appState.favorites.length;
-            if (totalHistEl) totalHistEl.innerText = appState.history.length;
         }
 
         function renderDashboard() {
@@ -788,7 +807,6 @@ Provide header-only implementation with comprehensive benchmarking main() routin
 
         function createPromptCardHTML(prompt) {
             const isFav = appState.favorites.includes(prompt.id);
-            // Sanitasi nama file untuk download .txt (menghilangkan karakter spesial)
             const safeFileName = prompt.title.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 40);
 
             return `
@@ -805,12 +823,12 @@ Provide header-only implementation with comprehensive benchmarking main() routin
                         </div>
                         <h3 class="text-sm font-bold text-white mb-1">${escapeHTML(prompt.title)}</h3>
                         <p class="text-xs text-slate-400 mb-3">${escapeHTML(prompt.description)}</p>
-                        <div class="bg-bgDark border border-panelBorder rounded-lg p-2.5 mb-3 max-h-40 overflow-y-auto">
+                        <div class="bg-bgDark border border-panelBorder rounded-lg p-2.5 mb-3 max-h-44 overflow-y-auto">
                             <pre class="text-[11px] font-mono text-slate-300 whitespace-pre-wrap">${escapeHTML(prompt.content)}</pre>
                         </div>
                     </div>
                     <div class="flex items-center justify-between pt-3 border-t border-panelBorder text-xs">
-                        <span class="text-[10px] text-slate-500 font-mono">Difficulty: ${escapeHTML(prompt.difficulty || 'Intermediate')}</span>
+                        <span class="text-[10px] text-slate-500 font-mono">Length: ${prompt.content.length} chars (Unlimited)</span>
                         <div class="flex items-center gap-1.5">
                             <button onclick="copyTextToClipboard(\`${escapeJsString(prompt.content)}\`, 'Prompt Copied!')" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded font-medium">Copy</button>
                             <button onclick="downloadPromptTxt('${safeFileName}', \`${escapeJsString(prompt.content)}\`)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded font-medium flex items-center gap-1">
@@ -823,7 +841,6 @@ Provide header-only implementation with comprehensive benchmarking main() routin
             `;
         }
 
-        // FUNGSI DOWNLOAD FILE .TXT OTOMATIS
         function downloadPromptTxt(filename, textContent) {
             const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
@@ -835,7 +852,7 @@ Provide header-only implementation with comprehensive benchmarking main() routin
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             showToast(`Downloaded ${a.download}`);
-            logActivity(`Downloaded prompt as ${a.download}`);
+            terminalLog(`EXPORT: Downloaded prompt to file [${a.download}]`);
         }
 
         function toggleFavorite(id) {
@@ -874,8 +891,8 @@ Provide header-only implementation with comprehensive benchmarking main() routin
                 title,
                 category,
                 language,
-                difficulty: 'Intermediate',
-                description: description || 'Custom user prompt template.',
+                difficulty: 'Expert',
+                description: description || 'Unlimited custom context prompt template.',
                 content
             };
 
@@ -887,6 +904,7 @@ Provide header-only implementation with comprehensive benchmarking main() routin
             renderRobloxHub();
             applyLibraryFilters();
             logActivity(`Created custom prompt: "${title}"`);
+            terminalLog(`USER ACTION: Created custom prompt "${title}" (${content.length} chars)`);
 
             document.getElementById('modal-title').value = '';
             document.getElementById('modal-desc').value = '';
@@ -894,11 +912,12 @@ Provide header-only implementation with comprehensive benchmarking main() routin
         }
 
         function generateCustomPrompt() {
-            const title = document.getElementById('pb-title')?.value || "Custom Code Module";
+            const title = document.getElementById('pb-title')?.value || "Custom Enterprise Module";
             const out = document.getElementById('pb-output');
             if (out) {
-                out.value = `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal Software Engineer. Design an enterprise-grade, high-performance module for [${title}].\n\n### DETAILED ARCHITECTURE & CONSTRAINTS\n1. Modular Design: Ensure decoupled components with clear separation of concerns.\n2. Error Handling: Implement strict boundary checks and structured error recovery mechanisms.\n3. Performance & Memory: Optimize algorithm complexity and eliminate memory leaks.\n4. Testing: Provide comprehensive unit test cases and mock data.\n\n### OUTPUT EXPECTATION\nProvide fully production-ready code with complete inline documentation.`;
-                showToast("Long-Context Master Prompt Generated!");
+                out.value = `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal Software Architect and Lead Code Generator. Design an exhaustive, zero-limit enterprise implementation blueprint for [${title}].\n\n### DETAILED ARCHITECTURE & SPECIFICATIONS\n1. Modular Decoupling: Ensure strict separation of concerns, high cohesion, and dependency injection patterns.\n2. Resilient Error Handling: Implement bulletproof boundary checks, custom exception types, and structured rollback handlers.\n3. Memory & Performance Optimization: Profile execution bottlenecks, eliminate memory leaks, and optimize computational complexity to O(1) or O(log n).\n4. Automated Testing Suite: Provide exhaustive unit test cases, edge-case simulations, and mock fixtures.\n\n### FULL PRODUCTION OUTPUT EXPECTATION\nProvide complete, fully-compiled source code in the target language with comprehensive inline documentation, avoiding any placeholder comments or truncated shortcuts.`;
+                showToast("Unlimited Master Prompt Generated!");
+                terminalLog(`BUILDER: Generated unlimited context prompt for "${title}"`);
             }
         }
 
@@ -906,8 +925,9 @@ Provide header-only implementation with comprehensive benchmarking main() routin
             const code = document.getElementById('dbg-code')?.value || "";
             const out = document.getElementById('dbg-output');
             if (out) {
-                out.value = `### SYSTEM ROLE & OBJECTIVE\nAct as an expert Code Debugger and Security Auditor. Analyze the following source code snippet for logic errors, memory leaks, performance bottlenecks, and security vulnerabilities.\n\n### PROBLEM CODE:\n\`\`\`\n${code}\n\`\`\`\n\n### ANALYSIS REQUIREMENTS:\n1. Root Cause Identification: Explain precisely why the bug occurs.\n2. Security Implications: Identify any potential injection, race conditions, or unhandled exceptions.\n3. Patched Code: Provide the fully refactored, robust source code with line-by-line comments explaining the fix.`;
+                out.value = `### SYSTEM ROLE & OBJECTIVE\nAct as an Elite Code Debugger and Cybersecurity Auditor. Perform a rigorous, deep-inspection code review on the provided source code snippet to diagnose logic faults, memory corruption, thread safety issues, and security vulnerabilities.\n\n### TARGET SOURCE CODE:\n\`\`\`\n${code}\n\`\`\`\n\n### EXHAUSTIVE DEBUGGING REQUIREMENTS:\n1. Root Cause Analysis: Pinpoint the exact line number and logical fallacy causing the failure.\n2. Security Threat Modeling: Evaluate vulnerability against injection attacks, race conditions, buffer overflows, or unhandled exceptions.\n3. Fully Patched Source Code: Provide the complete, refactored production source code with meticulous line-by-line commentary explaining the fixes.`;
                 showToast("Debug Prompt Generated!");
+                terminalLog(`DEBUGGER: Generated deep-inspection bugfix prompt (${code.length} chars analyzed)`);
             }
         }
 
@@ -933,6 +953,7 @@ Provide header-only implementation with comprehensive benchmarking main() routin
                 document.execCommand('copy');
                 showToast(successMsg);
                 logActivity("Copied prompt content.");
+                terminalLog("CLIPBOARD: Copied unlimited prompt text to system clipboard.");
             } catch (err) {
                 showToast("Failed to copy.", "error");
             }
