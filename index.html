@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCRIPT PROMPT STUDIO - Mass Batch Streamer & Custom Categories</title>
+    <title>SCRIPT PROMPT STUDIO - Auto Category Deep Prompt Generator</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -55,22 +55,25 @@
     <!-- Toast Alert Container -->
     <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- Modal Tambah Kategori Baru (Custom Category) -->
+    <!-- Modal Tambah Kategori Custom (Auto Generate Deep .txt Prompts) -->
     <div id="create-category-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-panelDark border border-panelBorder rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex items-center justify-between pb-3 border-b border-panelBorder">
-                <h3 class="text-base font-bold text-white">Buat Kategori Custom Baru</h3>
+                <h3 class="text-base font-bold text-white">Buat Kategori & Auto Generate .txt</h3>
                 <button onclick="closeCategoryModal()" class="text-slate-400 hover:text-white">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
             <div>
                 <label class="block text-xs font-medium text-slate-300 mb-1">Nama Kategori Stack</label>
-                <input type="text" id="new-category-name" placeholder="e.g. Web3 & Crypto, Cyber Security, Game AI" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                <input type="text" id="new-category-name" placeholder="e.g. Web3 & Smart Contracts, Cyber Security" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                <p class="text-[11px] text-slate-400 mt-1.5 leading-relaxed">
+                    💡 <strong class="text-emerald-400">Auto-Fill Smart Engine:</strong> Saat Anda menyimpan kategori ini, sistem akan langsung membuatkan puluhan file .txt dengan skrip panjang & prompt terstruktur yang mendalam secara otomatis!
+                </p>
             </div>
             <div class="flex justify-end gap-2 pt-2 border-t border-panelBorder">
                 <button onclick="closeCategoryModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium">Batal</button>
-                <button onclick="saveNewCategory()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold shadow-md">Simpan Kategori</button>
+                <button onclick="saveNewCategoryAndAutoFill()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold shadow-md">Simpan & Auto-Fill .txt</button>
             </div>
         </div>
     </div>
@@ -87,7 +90,7 @@
             <div class="space-y-3">
                 <div>
                     <label class="block text-xs font-medium text-slate-300 mb-1">Judul Prompt / Ide</label>
-                    <input type="text" id="modal-title" placeholder="e.g. C++ Ray Tracing Engine" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                    <input type="text" id="modal-title" placeholder="e.g. Advanced System Architecture" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
@@ -96,15 +99,15 @@
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-slate-300 mb-1">Bahasa / Teknologi</label>
-                        <input type="text" id="modal-language" placeholder="e.g. C++, Python, Rust" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                        <input type="text" id="modal-language" placeholder="e.g. C++, Solidity, Python" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                     </div>
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-slate-300 mb-1">Ringkasan Ide</label>
-                    <input type="text" id="modal-desc" placeholder="Deskripsi singkat skrip..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                    <input type="text" id="modal-desc" placeholder="Deskripsi singkat..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Isi Prompt Terstruktur</label>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Isi Prompt Panjang & Mendalam (.txt Content)</label>
                     <textarea id="modal-content" rows="7" placeholder="### SYSTEM ROLE & OBJECTIVE..." class="w-full bg-bgDark border border-panelBorder rounded-lg p-3 text-xs font-mono text-slate-200 focus:outline-none resize-none"></textarea>
                 </div>
             </div>
@@ -125,19 +128,19 @@
                     </div>
                     <div>
                         <span class="text-lg font-bold tracking-tight text-white block leading-none">SCRIPT PROMPT STUDIO</span>
-                        <span class="text-[10px] font-mono text-blue-400 tracking-wider">MASS BATCH STREAMER & CUSTOM CATEGORIES</span>
+                        <span class="text-[10px] font-mono text-emerald-400 tracking-wider">AUTO CATEGORY DEEP PROMPT GENERATOR</span>
                     </div>
                 </div>
 
                 <div class="hidden md:flex flex-1 max-w-md mx-8 relative">
-                    <input type="text" id="global-search" oninput="handleGlobalSearch(this.value)" placeholder="Cari prompt, kategori, atau bahasa..." class="w-full bg-bgDark border border-panelBorder rounded-lg pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all">
+                    <input type="text" id="global-search" oninput="handleGlobalSearch(this.value)" placeholder="Cari prompt, kategori, atau kode..." class="w-full bg-bgDark border border-panelBorder rounded-lg pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all">
                     <svg class="w-4 h-4 text-slate-500 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 </div>
 
                 <div class="flex items-center gap-2">
                     <button onclick="openCategoryModal()" class="px-3 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder transition-all flex items-center gap-1">
                         <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                        + Kategori
+                        + Kategori & Auto-Fill
                     </button>
                     <button onclick="openCreatePromptModal()" class="px-3 py-2 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition-all shadow-md flex items-center gap-1">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
@@ -164,8 +167,8 @@
 
                 <div>
                     <div class="flex items-center justify-between mb-2 px-3">
-                        <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Categories</span>
-                        <button onclick="openCategoryModal()" class="text-[10px] text-blue-400 hover:underline">+ Buat</button>
+                        <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Categories (.txt Hub)</span>
+                        <button onclick="openCategoryModal()" class="text-[10px] text-emerald-400 font-bold hover:underline">+ Buat Kategori</button>
                     </div>
                     <nav id="sidebar-category-nav" class="space-y-1">
                         <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn active w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
@@ -180,11 +183,11 @@
                     <nav class="space-y-1">
                         <button onclick="switchTab('streamer')" id="nav-streamer" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
                             <svg class="w-4 h-4 text-emerald-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                            Mass Batch Streamer <span class="ml-auto px-1.5 py-0.5 text-[9px] font-mono bg-emerald-950 text-emerald-400 rounded border border-emerald-800">3x/s</span>
+                            Live Deep AI Streamer <span class="ml-auto px-1.5 py-0.5 text-[9px] font-mono bg-emerald-950 text-emerald-400 rounded border border-emerald-800">ACTIVE</span>
                         </button>
                         <button onclick="switchTab('library')" id="nav-library" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
                             <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                            Full Library
+                            Full Library (.txt)
                         </button>
                         <button onclick="switchTab('workspace')" id="nav-workspace" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
                             <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v1a2 2 0 01-2 2M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
@@ -196,8 +199,8 @@
 
             <div class="p-4 border-t border-panelBorder bg-bgDark/50">
                 <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
-                    <span>Batch Generator</span>
-                    <span id="streamer-status-badge" class="text-emerald-400 font-mono font-bold animate-pulse">ACTIVE (3 files/s)</span>
+                    <span>Auto-Fill Engine</span>
+                    <span class="text-emerald-400 font-mono font-bold animate-pulse">READY</span>
                 </div>
                 <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
                     <div class="h-full bg-emerald-500 rounded-full w-full"></div>
@@ -213,16 +216,15 @@
                 <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-panelDark via-slate-900 to-panelDark border border-panelBorder p-6">
                     <div class="relative z-10">
                         <div class="flex items-center gap-2 mb-2">
-                            <span class="px-2.5 py-1 text-[10px] font-mono font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/40 rounded uppercase tracking-wider pulse-live">● Mass Batch Generation Active (3x/sec)</span>
+                            <span class="px-2.5 py-1 text-[10px] font-mono font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/40 rounded uppercase tracking-wider pulse-live">● Auto-Fill & Deep .txt Generator Active</span>
                         </div>
                         <h1 class="text-2xl sm:text-3xl font-extrabold text-white">SCRIPT PROMPT & IDEA STUDIO</h1>
                         <p class="text-xs sm:text-sm text-slate-400 max-w-2xl mt-1">
-                            Mesin otonom menghasilkan banyak file prompt sekaligus. Anda juga bisa membuat kategori custom sendiri sesuai keinginan!
+                            Buat kategori baru apa saja, dan sistem akan otomatis mengisi kategori tersebut dengan puluhan file prompt dan ide skrip panjang yang mendalam (.txt) secara instan!
                         </p>
                         <div class="flex flex-wrap gap-3 mt-4">
-                            <button onclick="switchTab('streamer')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-2 transition-all shadow-lg">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                                Buka Mass Batch Streamer Feed
+                            <button onclick="openCategoryModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-2 transition-all shadow-lg">
+                                + Buat Kategori & Auto-Fill .txt
                             </button>
                         </div>
                     </div>
@@ -233,18 +235,18 @@
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Mass Batch Live Feed (Generating 3 Prompts / sec)</h2>
+                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Live Deep .txt Streamer Feed</h2>
                         </div>
                         <button onclick="switchTab('streamer')" class="text-xs text-blue-400 hover:text-blue-300 font-medium">Buka Feed &rarr;</button>
                     </div>
                     <div id="dashboard-live-ticker" class="bg-bgDark border border-panelBorder rounded-lg p-3 font-mono text-xs text-slate-300">
-                        Menginisialisasi batch stream otonom...
+                        Menunggu sinkronisasi kategori custom...
                     </div>
                 </div>
 
                 <div>
                     <div class="flex items-center justify-between mb-3">
-                        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Prompt & Ide Terbaru</h2>
+                        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Prompt & Ide Panjang Terbaru</h2>
                         <button onclick="switchTab('library')" class="text-xs text-blue-400 hover:text-blue-300 font-medium">Lihat Semua &rarr;</button>
                     </div>
                     <div id="dashboard-featured-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
@@ -255,25 +257,25 @@
                     <div class="flex items-center justify-between pb-2 border-b border-panelBorder">
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">Live Mass Terminal & Batch Log</h2>
+                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">Live Terminal & Auto-Fill Log</h2>
                         </div>
                         <button onclick="clearTerminalLogs()" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-[10px] font-mono">Clear Terminal</button>
                     </div>
                     <div id="realtime-terminal" class="bg-bgDark border border-panelBorder rounded-lg p-3 font-mono text-[11px] text-emerald-400 h-36 overflow-y-auto space-y-1">
-                        <div>[00:00:00] [SYSTEM] Script Prompt Studio booted. Mass batch streamer initialized.</div>
+                        <div>[00:00:00] [SYSTEM] Script Prompt Studio initialized with Auto-Category Deep .txt Filler.</div>
                     </div>
                 </div>
             </section>
 
-            <!-- VIEW: MASS BATCH STREAMER -->
+            <!-- VIEW: STREAMER -->
             <section id="view-streamer" class="hidden space-y-6">
                 <div class="bg-panelDark p-5 rounded-xl border border-emerald-500/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <div class="flex items-center gap-2 mb-1">
-                            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/40 rounded">MASS BATCH UNLIMITED GENERATOR</span>
+                            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/40 rounded">LIVE DEEP .TXT GENERATOR</span>
                         </div>
-                        <h1 class="text-xl font-bold text-white">Mass Batch AI Streamer Feed</h1>
-                        <p class="text-xs text-slate-400">Sistem otomatis menghasilkan 3 file prompt terstruktur setiap detik agar koleksi bertambah sangat cepat.</p>
+                        <h1 class="text-xl font-bold text-white">Live AI Streamer Feed (.txt)</h1>
+                        <p class="text-xs text-slate-400">Sistem terus men-generate skrip dan prompt panjang mendalam secara otonom.</p>
                     </div>
                     <div class="flex items-center gap-2">
                         <button onclick="toggleStreamerPause()" id="btn-streamer-toggle" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded-lg text-xs font-semibold">Pause / Resume</button>
@@ -285,11 +287,10 @@
                     <div class="lg:col-span-8 space-y-4" id="streamer-feed-container"></div>
                     <div class="lg:col-span-4 space-y-4">
                         <div class="bg-panelDark border border-panelBorder rounded-xl p-4 space-y-3">
-                            <h2 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Batch Stats</h2>
+                            <h2 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Streamer Stats</h2>
                             <div class="space-y-2 text-xs font-mono">
-                                <div class="flex justify-between text-slate-400"><span>Batch Rate:</span><span class="text-white">3 files / sec</span></div>
-                                <div class="flex justify-between text-slate-400"><span>Total Generated:</span><span id="streamer-stat-total" class="text-emerald-400">0</span></div>
-                                <div class="flex justify-between text-slate-400"><span>Status:</span><span id="streamer-stat-status" class="text-emerald-400">Batch Active</span></div>
+                                <div class="flex justify-between text-slate-400"><span>Total Streamed:</span><span id="streamer-stat-total" class="text-emerald-400">0</span></div>
+                                <div class="flex justify-between text-slate-400"><span>Status:</span><span id="streamer-stat-status" class="text-emerald-400">Active</span></div>
                             </div>
                         </div>
                     </div>
@@ -300,14 +301,14 @@
             <section id="view-library" class="hidden space-y-6">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-panelDark p-4 rounded-xl border border-panelBorder">
                     <div>
-                        <h1 class="text-xl font-bold text-white">Full Prompt & Idea Library</h1>
-                        <p class="text-xs text-slate-400">Semua prompt tersimpan rapi berdasarkan kategori bawaan maupun kategori custom buatan Anda.</p>
+                        <h1 class="text-xl font-bold text-white">Full Prompt & .txt Library</h1>
+                        <p class="text-xs text-slate-400">Pilih kategori buatan Anda untuk melihat seluruh file .txt panjang yang di-generate secara otomatis.</p>
                     </div>
                     <div class="flex items-center gap-2">
                         <button onclick="openCategoryModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded-lg text-xs font-semibold">
                             + Buat Kategori
                         </button>
-                        <button onclick="openCreatePromptModal()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-md">
+                        <button onclick="openCreatePromptModal()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold shadow-md">
                             + Prompt Baru
                         </button>
                     </div>
@@ -317,14 +318,14 @@
                 <div class="bg-panelDark border border-panelBorder p-4 rounded-xl space-y-3">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-[11px] font-medium text-slate-400 mb-1">Filter Kategori Stack</label>
+                            <label class="block text-[11px] font-medium text-slate-400 mb-1">Filter Kategori (.txt Hub)</label>
                             <select id="filter-category" onchange="applyLibraryFilters()" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                                 <option value="ALL">Semua Kategori</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-[11px] font-medium text-slate-400 mb-1">Cari Kata Kunci</label>
-                            <input type="text" id="filter-search" oninput="applyLibraryFilters()" placeholder="Cari judul atau isi prompt..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                            <label class="block text-[11px] font-medium text-slate-400 mb-1">Cari Kata Kunci / Kode</label>
+                            <input type="text" id="filter-search" oninput="applyLibraryFilters()" placeholder="Cari isi file .txt..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                         </div>
                     </div>
                 </div>
@@ -336,7 +337,7 @@
             <section id="view-workspace" class="hidden space-y-6">
                 <div class="bg-panelDark p-4 rounded-xl border border-panelBorder">
                     <h1 class="text-xl font-bold text-white">My Workspace & Bookmarks</h1>
-                    <p class="text-xs text-slate-400">Koleksi prompt favorit yang Anda bookmark.</p>
+                    <p class="text-xs text-slate-400">File prompt favorit yang Anda simpan.</p>
                 </div>
                 <div id="workspace-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </section>
@@ -344,17 +345,14 @@
         </main>
     </div>
 
-    <!-- JAVASCRIPT & MASS BATCH ENGINE -->
+    <!-- JAVASCRIPT & AUTO-FILL ENGINE -->
     <script>
         const INITIAL_CATEGORIES = [
             "C dan C++",
             "Java Enterprise",
             "Python & AI",
             "Roblox Development",
-            "Systems & Rust",
-            "Web3 & Smart Contracts",
-            "Cyber Security & Ethical Hacking",
-            "Mobile App Development"
+            "Systems & Rust"
         ];
 
         const INITIAL_PROMPTS = [
@@ -365,7 +363,7 @@
                 language: "C++",
                 difficulty: "Expert",
                 description: "Alokator memori kustom berbasis block fixed-size untuk menghindari fragmentasi heap pada game engine.",
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Senior C++ Game Engine Architect. Design a high-performance fixed-size memory pool allocator in C++20.\n\n### REQUIREMENTS\n1. Pre-allocate contiguous memory.\n2. O(1) allocation & deallocation.\n3. Thread-safe wrapper.`
+                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Senior C++ Game Engine Architect. Design a high-performance fixed-size memory pool allocator in C++20.\n\n### DEEP CODE BLUEPRINT & ARCHITECTURE\n1. Pre-allocate contiguous heap memory block during initialization phase.\n2. Intrusive free-list management for O(1) complexity allocation and deallocation.\n3. Thread-safe wrapper utilizing std::mutex or lock-free atomics for concurrent task workers.\n4. RAII smart pointer integration to guarantee zero memory leaks across subsystems.\n\n### DETAILED IMPLEMENTATION SCRIPT\n\`\`\`cpp\n#include <vector>\n#include <iostream>\n#include <mutex>\n\ntemplate <typename T, size_t BlockSize = 4096>\nclass MemoryPool {\nprivate:\n    struct Node { Node* next; };\n    Node* freeList = nullptr;\n    std::vector<void*> chunks;\n    std::mutex mtx;\n\npublic:\n    MemoryPool() = default;\n    ~MemoryPool() {\n        std::lock_guard<std::mutex> lock(mtx);\n        for (auto chunk : chunks) std::free(chunk);\n    }\n    // O(1) allocation logic...\n};\n\`\`\``
             },
             {
                 id: "p-java-microservice",
@@ -374,25 +372,8 @@
                 language: "Java",
                 difficulty: "Advanced",
                 description: "Enterprise microservice non-blocking menggunakan Spring WebFlux, R2DBC, dan Resilience4j.",
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal Java Enterprise Architect. Design a reactive microservice using Spring Boot 3.x and R2DBC.\n\n### REQUIREMENTS\n1. Project Reactor (Flux/Mono).\n2. Resilience4j circuit breakers.\n3. OAuth2 Resource Server.`
-            },
-            {
-                id: "p-python-ai-pipeline",
-                title: "Python FastAPI AI Inference Pipeline",
-                category: "Python & AI",
-                language: "Python",
-                difficulty: "Advanced",
-                description: "API server untuk inferensi model Machine Learning dengan background tasks dan Redis queue.",
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Senior Python AI Infrastructure Engineer. Build an asynchronous FastAPI inference pipeline.\n\n### REQUIREMENTS\n1. Celery + Redis queue.\n2. Pydantic v2 validation.\n3. Prometheus metrics.`
+                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal Java Enterprise Architect. Design a reactive microservice using Spring Boot 3.x and R2DBC.\n\n### DEEP ARCHITECTURE & CODE BLUEPRINT\n1. Fully reactive end-to-end non-blocking database queries with PostgreSQL R2DBC.\n2. Resilience4j circuit breakers and rate limiters for fault tolerance.\n3. Spring Security OAuth2 Resource Server with JWT validation.\n\n### DETAILED CODE SPECIFICATION\n\`\`\`java\n@RestController\n@RequestMapping("/api/v1/secure")\npublic class ReactiveController {\n    @GetMapping("/data")\n    public Mono<ServerResponse> getData() {\n        return Mono.just(ServerResponse.ok().bodyValue("Secure Enterprise Payload"));\n    }\n}\n\`\`\``
             }
-        ];
-
-        const STREAMER_TEMPLATES = [
-            { title: "Mass Batch C++ Renderer v", cat: "C dan C++", lang: "C++", desc: "Generated Vulkan graphics pipeline initialization script." },
-            { title: "Mass Batch Java Spring Data v", cat: "Java Enterprise", lang: "Java", desc: "Generated Spring Data JPA auditing repository." },
-            { title: "Mass Batch Python Automation v", cat: "Python & AI", lang: "Python", desc: "Generated AsyncIO web scraping & data extraction pipeline." },
-            { title: "Mass Batch Roblox Combat v", cat: "Roblox Development", lang: "Luau / Lua", desc: "Generated server-side raycast weapon hit registration." },
-            { title: "Mass Batch Rust Memory v", cat: "Systems & Rust", lang: "Rust", desc: "Generated zero-copy lock-free ring buffer structure." }
         ];
 
         let appState = {
@@ -416,16 +397,15 @@
             renderLibrary();
             renderWorkspace();
 
-            // Jalankan streamer 3 file sekaligus per 1 detik
-            setInterval(runMassBatchStreamerTick, 1000);
-            terminalLog("SYSTEM: Mass batch AI streamer active (Generating 3 files per second).");
+            setInterval(runStreamerTick, 1500);
+            terminalLog("SYSTEM: Auto-fill & deep .txt streamer initialized.");
         };
 
         function loadFromStorage() {
             try {
-                const cats = localStorage.getItem('sps_categories_v3');
-                const prompts = localStorage.getItem('sps_prompts_v3');
-                const favs = localStorage.getItem('sps_favs_v3');
+                const cats = localStorage.getItem('sps_categories_v4');
+                const prompts = localStorage.getItem('sps_prompts_v4');
+                const favs = localStorage.getItem('sps_favs_v4');
                 if (cats) appState.categories = JSON.parse(cats);
                 if (prompts) appState.prompts = JSON.parse(prompts);
                 if (favs) appState.favorites = JSON.parse(favs);
@@ -434,9 +414,9 @@
 
         function saveToStorage() {
             try {
-                localStorage.setItem('sps_categories_v3', JSON.stringify(appState.categories));
-                localStorage.setItem('sps_prompts_v3', JSON.stringify(appState.prompts));
-                localStorage.setItem('sps_favs_v3', JSON.stringify(appState.favorites));
+                localStorage.setItem('sps_categories_v4', JSON.stringify(appState.categories));
+                localStorage.setItem('sps_prompts_v4', JSON.stringify(appState.prompts));
+                localStorage.setItem('sps_favs_v4', JSON.stringify(appState.favorites));
             } catch (err) {}
         }
 
@@ -456,41 +436,99 @@
             if (term) term.innerHTML = `<div>[${new Date().toLocaleTimeString()}] [TERMINAL] Logs cleared.</div>`;
         }
 
-        // MASS BATCH GENERATOR (3 PROMPTS PER TICK)
-        function runMassBatchStreamerTick() {
+        // AUTO-FILL ENGINE: Saat kategori dibuat, buatkan 4 prompt panjang .txt sekaligus khusus kategori tersebut!
+        function saveNewCategoryAndAutoFill() {
+            const nameInput = document.getElementById('new-category-name');
+            const catName = nameInput.value.trim();
+            if (!catName) {
+                showToast("Nama kategori tidak boleh kosong!", "error");
+                return;
+            }
+            if (appState.categories.includes(catName)) {
+                showToast("Kategori tersebut sudah ada!", "error");
+                return;
+            }
+
+            appState.categories.push(catName);
+
+            // AUTO-FILL: Generate 4 deep structured .txt prompts for this exact category
+            const autoGeneratedPrompts = [
+                {
+                    id: 'p-autofill-' + Date.now() + '-1',
+                    title: `${catName} - Core Architectural Framework & Setup`,
+                    category: catName,
+                    language: catName.split(' ')[0],
+                    difficulty: 'Advanced',
+                    description: `File .txt otomatis: Kerangka dasar arsitektur sistem dan setup modul utama untuk ${catName}.`,
+                    content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal ${catName} Architect. Design a robust, production-ready foundation framework.\n\n### DEEP IMPLEMENTATION BLUEPRINT\n1. Initialize modular directory structure and dependency injection containers.\n2. Establish strict security headers, environment encryption, and logging hooks.\n3. Write comprehensive unit tests and benchmark harnesses.\n\n### DETAILED SCRIPT SPECIFICATION\n\`\`\`\n// Production Blueprint for ${catName}\nmodule.exports = { version: "1.0.0", secure: true, mode: "enterprise" };\n\`\``
+                },
+                {
+                    id: 'p-autofill-' + Date.now() + '-2',
+                    title: `${catName} - High-Performance Concurrency & Optimization`,
+                    category: catName,
+                    language: catName.split(' ')[0],
+                    difficulty: 'Expert',
+                    description: `File .txt otomatis: Optimasi performa tinggi dan manajemen thread/memory untuk ${catName}.`,
+                    content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Senior Performance Engineer specializing in ${catName}.\n\n### PERFORMANCE OBJECTIVES\n1. Eliminate latency bottlenecks using asynchronous worker queues and caching layers.\n2. Optimize memory footprint and garbage collection / heap allocation cycles.\n3. Implement robust error boundaries and automatic fallback mechanisms.\n\n### SCRIPT CODE SNIPPET\n\`\`\`\n// Concurrency worker loop for ${catName}\nasync function executeTaskWorker() {\n    while (true) {\n        const task = await queue.poll();\n        await processOptimized(task);\n    }\n}\n\`\``
+                },
+                {
+                    id: 'p-autofill-' + Date.now() + '-3',
+                    title: `${catName} - Automated Testing & Security Audit Script`,
+                    category: catName,
+                    language: catName.split(' ')[0],
+                    difficulty: 'Advanced',
+                    description: `File .txt otomatis: Skrip pengujian otomatis dan audit keamanan untuk ${catName}.`,
+                    content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Cybersecurity & QA Auditor for ${catName} systems.\n\n### AUDIT REQUIREMENTS\n1. Scan for dependency vulnerabilities and insecure data transmissions.\n2. Simulate stress testing with 100,000 concurrent virtual requests.\n3. Generate detailed compliance and audit log reports.\n\n### SCRIPT SPECIFICATION\n\`\`\`\n// Security audit runner\nrunSecurityScan({ strict: true, targetModule: "${catName}" });\n\`\``
+                },
+                {
+                    id: 'p-autofill-' + Date.now() + '-4',
+                    title: `${catName} - Production Deployment & CI/CD Pipeline`,
+                    category: catName,
+                    language: catName.split(' ')[0],
+                    difficulty: 'Expert',
+                    description: `File .txt otomatis: Konfigurasi deployment cloud dan pipeline CI/CD untuk ${catName}.`,
+                    content: `### SYSTEM ROLE & OBJECTIVE\nAct as a DevOps Lead for ${catName} infrastructure.\n\n### DEPLOYMENT BLUEPRINT\n1. Docker containerization with multi-stage builds.\n2. Kubernetes pod autoscaling policies based on CPU and memory metrics.\n3. Zero-downtime rolling update configuration.\n\n### YAML CONFIGURATION\n\`\`\`yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: ${catName.toLowerCase().replace(/[^a-z0-9]/g, '-')}-service\nspec:\n  replicas: 3\n\`\``
+                }
+            ];
+
+            appState.prompts.unshift(...autoGeneratedPrompts);
+            saveToStorage();
+            closeCategoryModal();
+
+            renderSidebarCategories();
+            renderCategoryDropdowns();
+            renderDashboard();
+            applyLibraryFilters();
+
+            showToast(`Kategori "${catName}" berhasil dibuat & di-auto-fill 4 file .txt panjang!`);
+            terminalLog(`AUTO-FILL [${catName}] &rarr; Berhasil men-generate 4 prompt & skrip panjang mendalam.`);
+            nameInput.value = '';
+        }
+
+        function runStreamerTick() {
             if (appState.isStreamerPaused) return;
 
-            let batchLogs = [];
-            for (let i = 0; i < 3; i++) {
-                const template = STREAMER_TEMPLATES[Math.floor(Math.random() * STREAMER_TEMPLATES.length)];
-                const randomCat = appState.categories[Math.floor(Math.random() * appState.categories.length)];
-                const randId = Math.floor(Math.random() * 90000) + 10000;
-                
-                const newPrompt = {
-                    id: 'p-batch-' + Date.now() + '-' + i,
-                    title: `${template.title}${randId.toString().slice(-3)}`,
-                    category: randomCat,
-                    language: template.lang,
-                    difficulty: 'Advanced',
-                    description: template.desc,
-                    content: `### MASS BATCH AUTONOMOUS SCRIPT\nCategory: ${randomCat}\nGenerated at: ${new Date().toLocaleTimeString()}\n\n### IMPLEMENTATION BLUEPRINT\n1. Enterprise modular architecture.\n2. Robust exception handling & async execution.\n3. Optimized memory management.`
-                };
+            const randomCat = appState.categories[Math.floor(Math.random() * appState.categories.length)];
+            const randId = Math.floor(Math.random() * 90000) + 10000;
+            const newPrompt = {
+                id: 'p-stream-' + Date.now(),
+                title: `${randomCat} - Autonomous Deep Script v${randId.toString().slice(-3)}`,
+                category: randomCat,
+                language: randomCat.split(' ')[0],
+                difficulty: 'Expert',
+                description: `File .txt hasil generate AI otomatis untuk kategori ${randomCat}.`,
+                content: `### SYSTEM ROLE & OBJECTIVE\nAct as an Autonomous Lead Architect for ${randomCat}.\n\n### DETAILED PROMPT & SCRIPT SPECIFICATION\n1. Automated deep execution routine generated at ${new Date().toLocaleTimeString()}.\n2. Optimized memory allocation and strict error handling protocols.\n\n### CODE BLUEPRINT\n\`\`\`\n// Autonomous script block\nfunction runAutonomousPipeline() {\n    console.log("Executing optimized ${randomCat} script module...");\n}\n\`\``
+            };
 
-                appState.prompts.unshift(newPrompt);
-                appState.streamedPrompts.unshift(newPrompt);
-                batchLogs.push(newPrompt.title);
-            }
-
-            if (appState.streamedPrompts.length > 40) {
-                appState.streamedPrompts = appState.streamedPrompts.slice(0, 40);
-            }
+            appState.prompts.unshift(newPrompt);
+            appState.streamedPrompts.unshift(newPrompt);
+            if (appState.streamedPrompts.length > 30) appState.streamedPrompts.pop();
 
             saveToStorage();
-            terminalLog(`BATCH [3 FILES GENERATED] &rarr; ${batchLogs.join(' | ')}`);
 
             const ticker = document.getElementById('dashboard-live-ticker');
             if (ticker) {
-                ticker.innerHTML = `<span class="text-emerald-400 font-bold">[BATCH STREAM ACTIVE]</span> <span class="text-white">Berhasil generate 3 file prompt baru: ${escapeHTML(batchLogs[0])}, dll.</span>`;
+                ticker.innerHTML = `<span class="text-emerald-400 font-bold">[STREAM ACTIVE]</span> <span class="text-white">${escapeHTML(newPrompt.title)}</span> (${escapeHTML(randomCat)})`;
             }
 
             if (appState.activeTab === 'streamer') renderStreamerFeed();
@@ -501,34 +539,31 @@
 
         function toggleStreamerPause() {
             appState.isStreamerPaused = !appState.isStreamerPaused;
-            const statusBadge = document.getElementById('streamer-status-badge');
             const statStatus = document.getElementById('streamer-stat-status');
             const btn = document.getElementById('btn-streamer-toggle');
 
             if (appState.isStreamerPaused) {
-                if (statusBadge) { statusBadge.innerText = "PAUSED"; statusBadge.className = "text-amber-400 font-mono font-bold"; }
-                if (statStatus) statStatus.innerText = "Stream Paused";
+                if (statStatus) statStatus.innerText = "Paused";
                 if (btn) btn.innerText = "Resume Stream";
-                showToast("Mass batch streamer dijeda.");
+                showToast("Streamer dijeda.");
             } else {
-                if (statusBadge) { statusBadge.innerText = "ACTIVE (3 files/s)"; statusBadge.className = "text-emerald-400 font-mono font-bold animate-pulse"; }
-                if (statStatus) statStatus.innerText = "Batch Active";
+                if (statStatus) statStatus.innerText = "Active";
                 if (btn) btn.innerText = "Pause Stream";
-                showToast("Mass batch streamer dilanjutkan.");
+                showToast("Streamer dilanjutkan.");
             }
         }
 
         function clearStreamedPrompts() {
             appState.streamedPrompts = [];
             renderStreamerFeed();
-            showToast("Feed streamer dibersihkan.");
+            showToast("Feed dibersihkan.");
         }
 
         function renderStreamerFeed() {
             const container = document.getElementById('streamer-feed-container');
             if (!container) return;
             if (appState.streamedPrompts.length === 0) {
-                container.innerHTML = `<div class="p-8 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">Streamer dijeda atau menunggu tick berikutnya...</div>`;
+                container.innerHTML = `<div class="p-8 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">Streamer dijeda atau menunggu tick...</div>`;
                 return;
             }
             container.innerHTML = appState.streamedPrompts.map(p => createPromptCardHTML(p)).join('');
@@ -548,7 +583,7 @@
             appState.categories.forEach(cat => {
                 html += `
                     <button onclick="switchCategoryView('${escapeHTML(cat)}')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
-                        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                         <span class="truncate">${escapeHTML(cat)}</span>
                     </button>
                 `;
@@ -568,31 +603,8 @@
             }
         }
 
-        // CUSTOM CATEGORY MODAL
         function openCategoryModal() { document.getElementById('create-category-modal').classList.remove('hidden'); }
         function closeCategoryModal() { document.getElementById('create-category-modal').classList.add('hidden'); }
-
-        function saveNewCategory() {
-            const nameInput = document.getElementById('new-category-name');
-            const catName = nameInput.value.trim();
-            if (!catName) {
-                showToast("Nama kategori tidak boleh kosong!", "error");
-                return;
-            }
-            if (appState.categories.includes(catName)) {
-                showToast("Kategori tersebut sudah ada!", "error");
-                return;
-            }
-
-            appState.categories.push(catName);
-            saveToStorage();
-            closeCategoryModal();
-            renderSidebarCategories();
-            renderCategoryDropdowns();
-            showToast(`Kategori "${catName}" berhasil dibuat!`);
-            terminalLog(`SYSTEM: Created new custom category [${catName}]`);
-            nameInput.value = '';
-        }
 
         function switchTab(tabId) {
             appState.activeTab = tabId;
@@ -666,7 +678,7 @@
             if (!grid) return;
             const favPrompts = appState.prompts.filter(p => appState.favorites.includes(p.id));
             if (favPrompts.length === 0) {
-                grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">Belum ada prompt favorit di workspace.</div>`;
+                grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">Belum ada prompt favorit.</div>`;
                 return;
             }
             grid.innerHTML = favPrompts.map(p => createPromptCardHTML(p)).join('');
@@ -680,7 +692,7 @@
                 <div class="bg-panelDark border border-panelBorder rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all shadow-md">
                     <div>
                         <div class="flex items-start justify-between gap-2 mb-2">
-                            <span class="px-2 py-0.5 text-[10px] font-semibold rounded bg-blue-950 text-blue-400 border border-blue-800/40">${escapeHTML(prompt.category)}</span>
+                            <span class="px-2 py-0.5 text-[10px] font-semibold rounded bg-emerald-950 text-emerald-400 border border-emerald-800/40">${escapeHTML(prompt.category)}</span>
                             <div class="flex items-center gap-1">
                                 <span class="px-2 py-0.5 text-[10px] font-mono text-slate-400 bg-bgDark rounded border border-panelBorder">${escapeHTML(prompt.language)}</span>
                                 <button onclick="toggleFavorite('${prompt.id}')" class="p-1 text-slate-500 hover:text-amber-400 transition-colors">
@@ -690,7 +702,7 @@
                         </div>
                         <h3 class="text-sm font-bold text-white mb-1">${escapeHTML(prompt.title)}</h3>
                         <p class="text-xs text-slate-400 mb-3">${escapeHTML(prompt.description)}</p>
-                        <div class="bg-bgDark border border-panelBorder rounded-lg p-2.5 mb-3 max-h-40 overflow-y-auto">
+                        <div class="bg-bgDark border border-panelBorder rounded-lg p-2.5 mb-3 max-h-48 overflow-y-auto">
                             <pre class="text-[11px] font-mono text-slate-300 whitespace-pre-wrap">${escapeHTML(prompt.content)}</pre>
                         </div>
                     </div>
