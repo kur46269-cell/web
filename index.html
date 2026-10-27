@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCRIPT PROMPT STUDIO - Build Better Scripts With Better Prompts</title>
+    <title>SCRIPT PROMPT STUDIO - Ultimate Multi-Language AI Engine</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -84,7 +84,7 @@
             <div class="space-y-3">
                 <div>
                     <label class="block text-xs font-medium text-slate-300 mb-1">Prompt Title</label>
-                    <input type="text" id="modal-title" placeholder="e.g. Advanced DataStore Manager" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                    <input type="text" id="modal-title" placeholder="e.g. Distributed Rust Microservice" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
@@ -93,8 +93,11 @@
                             <option value="Roblox Development">Roblox Development</option>
                             <option value="Website Development">Website Development</option>
                             <option value="Python Development">Python Development</option>
+                            <option value="C dan C++">C dan C++</option>
+                            <option value="Systems & Rust">Systems & Rust</option>
+                            <option value="Smart Contracts">Smart Contracts</option>
+                            <option value="AI & Machine Learning">AI & Machine Learning</option>
                             <option value="Script Security">Script Security</option>
-                            <option value="AI Development">AI Development</option>
                         </select>
                     </div>
                     <div>
@@ -102,8 +105,12 @@
                         <select id="modal-language" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                             <option value="Luau / Lua">Luau / Lua</option>
                             <option value="Python">Python</option>
-                            <option value="JavaScript / React">JavaScript / React</option>
+                            <option value="JavaScript / TypeScript">JavaScript / TypeScript</option>
                             <option value="C++ / C">C++ / C</option>
+                            <option value="Rust">Rust</option>
+                            <option value="Go">Go</option>
+                            <option value="Solidity">Solidity</option>
+                            <option value="Java / C#">Java / C#</option>
                         </select>
                     </div>
                 </div>
@@ -135,12 +142,12 @@
                     </div>
                     <div>
                         <span class="text-lg font-bold tracking-tight text-white block leading-none">SCRIPT PROMPT STUDIO</span>
-                        <span class="text-[10px] font-mono text-blue-400 tracking-wider">LIVE AI STREAMING SUITE</span>
+                        <span class="text-[10px] font-mono text-blue-400 tracking-wider">GLOBAL MULTI-LANGUAGE AI SUITE</span>
                     </div>
                 </div>
 
                 <div class="hidden md:flex flex-1 max-w-md mx-8 relative">
-                    <input type="text" id="global-search" oninput="handleGlobalSearch(this.value)" placeholder="Search Luau scripts, RemoteEvents, DataStores..." class="w-full bg-bgDark border border-panelBorder rounded-lg pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all">
+                    <input type="text" id="global-search" oninput="handleGlobalSearch(this.value)" placeholder="Search Luau, Python, Rust, C++, Smart Contracts..." class="w-full bg-bgDark border border-panelBorder rounded-lg pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all">
                     <svg class="w-4 h-4 text-slate-500 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
@@ -148,15 +155,11 @@
 
                 <div class="flex items-center gap-3">
                     <button onclick="openCreatePromptModal()" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition-all shadow-md">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                         New Prompt
                     </button>
                     <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 text-slate-400 hover:text-white rounded-lg border border-panelBorder">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                     </button>
                 </div>
             </div>
@@ -199,7 +202,7 @@
                         </button>
                         <button onclick="switchTab('debugger')" id="nav-debugger" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
                             <svg class="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-                            Luau Error Debugger
+                            Code Error Debugger
                         </button>
                     </nav>
                 </div>
@@ -234,19 +237,19 @@
                 <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-panelDark via-slate-900 to-panelDark border border-panelBorder p-6">
                     <div class="relative z-10">
                         <div class="flex items-center gap-2 mb-2">
-                            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/40 rounded uppercase tracking-wider pulse-live">● Live AI Generator Active</span>
+                            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/40 rounded uppercase tracking-wider pulse-live">● Global Multi-Language Streamer Active</span>
                         </div>
                         <h1 class="text-2xl sm:text-3xl font-extrabold text-white">SCRIPT PROMPT STUDIO</h1>
                         <p class="text-xs sm:text-sm text-slate-400 max-w-2xl mt-1">
-                            Pusat prompt AI dengan mesin pembuat prompt otomatis real-time setiap detik tanpa perintah manual. Sempurna untuk Roblox Luau, Python, dan arsitektur web.
+                            Pusat AI Prompt global yang secara otomatis men-generate kode dan prompt dari seluruh bahasa pemrograman di dunia setiap 1 detik.
                         </p>
                         <div class="flex flex-wrap gap-3 mt-4">
                             <button onclick="switchTab('streamer')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-2 transition-all shadow-lg">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                                 Buka Live AI Streamer (Auto 1s)
                             </button>
-                            <button onclick="switchTab('roblox')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded-lg text-xs font-semibold flex items-center gap-2 transition-all">
-                                Roblox Luau Hub
+                            <button onclick="switchTab('library')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded-lg text-xs font-semibold flex items-center gap-2 transition-all">
+                                Jelajahi Pustaka Global
                             </button>
                         </div>
                     </div>
@@ -279,11 +282,11 @@
                     </div>
                     <div class="bg-panelDark border border-panelBorder rounded-xl p-4">
                         <div class="flex items-center justify-between text-slate-400 mb-2">
-                            <span class="text-xs font-medium">History Log</span>
-                            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span class="text-xs font-medium">Languages</span>
+                            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
                         </div>
-                        <div id="stat-total-history" class="text-2xl font-bold text-white font-mono">0</div>
-                        <span class="text-[10px] text-slate-500">Actions logged</span>
+                        <div class="text-2xl font-bold text-white font-mono">15+</div>
+                        <span class="text-[10px] text-slate-500">Global syntaxes</span>
                     </div>
                 </div>
 
@@ -292,22 +295,22 @@
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Live AI Prompt Streamer (Real-time 1s generation)</h2>
+                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Live AI Multi-Language Streamer (Real-time 1s generation)</h2>
                         </div>
                         <div class="flex items-center gap-2">
                             <button onclick="toggleStreamerPause()" id="btn-streamer-toggle" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded text-xs">Pause Stream</button>
-                            <button onclick="switchTab('streamer')" class="text-xs text-blue-400 hover:text-blue-300 font-medium">Open Live Streamer View &rarr;</button>
+                            <button onclick="switchTab('streamer')" class="text-xs text-blue-400 hover:text-blue-300 font-medium">Open Live Streamer &rarr;</button>
                         </div>
                     </div>
                     <div id="dashboard-live-ticker" class="bg-bgDark border border-panelBorder rounded-lg p-3 font-mono text-xs text-slate-300">
-                        Initializing AI prompt generation stream...
+                        Initializing global code generation stream...
                     </div>
                 </div>
 
                 <div>
                     <div class="flex items-center justify-between mb-3">
-                        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Featured Roblox Luau & Core Prompts</h2>
-                        <button onclick="switchTab('roblox')" class="text-xs text-amber-400 hover:text-amber-300 font-medium">View Roblox Hub &rarr;</button>
+                        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Featured Prompts & Scripts</h2>
+                        <button onclick="switchTab('library')" class="text-xs text-blue-400 hover:text-blue-300 font-medium">View Library &rarr;</button>
                     </div>
                     <div id="dashboard-recent-prompts" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                 </div>
@@ -318,10 +321,10 @@
                 <div class="bg-panelDark p-5 rounded-xl border border-emerald-500/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <div class="flex items-center gap-2 mb-1">
-                            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/40 rounded">AUTONOMOUS 1-SECOND SYNTHESIZER</span>
+                            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/40 rounded">GLOBAL CODE SYNTHESIZER ENGINE</span>
                         </div>
-                        <h1 class="text-xl font-bold text-white">Live AI Prompt Streamer</h1>
-                        <p class="text-xs text-slate-400">Mesin AI otomatis menciptakan prompt script baru setiap 1 detik tanpa disuruh. Anda dapat langsung menyimpan prompt yang dihasilkan ke Workspace.</p>
+                        <h1 class="text-xl font-bold text-white">Live AI Multi-Language Streamer</h1>
+                        <p class="text-xs text-slate-400">AI otomatis menghasilkan prompt dan snippet kode baru dari berbagai bahasa pemrograman dunia setiap detik tanpa henti.</p>
                     </div>
                     <div class="flex items-center gap-2">
                         <button onclick="toggleStreamerPause()" id="btn-streamer-toggle-2" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded-lg text-xs font-semibold">Pause / Resume</button>
@@ -330,9 +333,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <div class="lg:col-span-8 space-y-4" id="streamer-feed-container">
-                        <!-- Populated live every second -->
-                    </div>
+                    <div class="lg:col-span-8 space-y-4" id="streamer-feed-container"></div>
                     <div class="lg:col-span-4 space-y-4">
                         <div class="bg-panelDark border border-panelBorder rounded-xl p-4 space-y-3">
                             <h2 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Streamer Stats</h2>
@@ -356,9 +357,7 @@
                         <h1 class="text-xl font-bold text-white">Roblox Luau Engineering Hub</h1>
                         <p class="text-xs text-slate-400">Koleksi prompt khusus Roblox Luau: Script, LocalScript, ModuleScript, CFrame Animation, DataStore, hingga RemoteEvent Security.</p>
                     </div>
-                    <button onclick="switchTab('library')" class="px-3 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-semibold transition-all">
-                        View All Library
-                    </button>
+                    <button onclick="switchTab('library')" class="px-3 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-semibold transition-all">View All Library</button>
                 </div>
                 <div id="roblox-hub-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </section>
@@ -367,8 +366,8 @@
             <section id="view-library" class="hidden space-y-6">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-panelDark p-4 rounded-xl border border-panelBorder">
                     <div>
-                        <h1 class="text-xl font-bold text-white">Prompt Library</h1>
-                        <p class="text-xs text-slate-400">Filter, search, and manage production-ready AI prompt templates.</p>
+                        <h1 class="text-xl font-bold text-white">Global Prompt & Code Library</h1>
+                        <p class="text-xs text-slate-400">Filter, search, and manage production-ready AI prompt templates across all programming languages.</p>
                     </div>
                     <button onclick="openCreatePromptModal()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
@@ -385,8 +384,11 @@
                                 <option value="Roblox Development">Roblox Development</option>
                                 <option value="Website Development">Website Development</option>
                                 <option value="Python Development">Python Development</option>
+                                <option value="C dan C++">C dan C++</option>
+                                <option value="Systems & Rust">Systems & Rust</option>
+                                <option value="Smart Contracts">Smart Contracts</option>
+                                <option value="AI & Machine Learning">AI & Machine Learning</option>
                                 <option value="Script Security">Script Security</option>
-                                <option value="AI Development">AI Development</option>
                             </select>
                         </div>
                         <div>
@@ -395,8 +397,12 @@
                                 <option value="ALL">All Languages</option>
                                 <option value="Luau / Lua">Luau / Lua</option>
                                 <option value="Python">Python</option>
-                                <option value="JavaScript / React">JavaScript / React</option>
+                                <option value="JavaScript / TypeScript">JavaScript / TypeScript</option>
                                 <option value="C++ / C">C++ / C</option>
+                                <option value="Rust">Rust</option>
+                                <option value="Go">Go</option>
+                                <option value="Solidity">Solidity</option>
+                                <option value="Java / C#">Java / C#</option>
                             </select>
                         </div>
                         <div>
@@ -411,7 +417,7 @@
                         </div>
                         <div>
                             <label class="block text-[11px] font-medium text-slate-400 mb-1">Search Keywords</label>
-                            <input type="text" id="filter-search" oninput="applyLibraryFilters()" placeholder="Search title..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                            <input type="text" id="filter-search" oninput="applyLibraryFilters()" placeholder="Search title or content..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                         </div>
                     </div>
                 </div>
@@ -423,14 +429,14 @@
             <section id="view-builder" class="hidden space-y-6">
                 <div class="bg-panelDark p-4 rounded-xl border border-panelBorder">
                     <h1 class="text-xl font-bold text-white">Interactive Prompt Builder</h1>
-                    <p class="text-xs text-slate-400">Generate structured, high-context developer prompts tailored to your exact script requirements.</p>
+                    <p class="text-xs text-slate-400">Generate structured, high-context developer prompts tailored to any programming language.</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                     <div class="lg:col-span-6 bg-panelDark border border-panelBorder rounded-xl p-5 space-y-4">
                         <div>
-                            <label class="block text-xs font-medium text-slate-300 mb-1">Project Name</label>
-                            <input type="text" id="pb-title" placeholder="e.g. DataStore Manager" class="w-full bg-bgDark border border-panelBorder rounded-lg p-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Project Name / Objective</label>
+                            <input type="text" id="pb-title" placeholder="e.g. Asynchronous Rust TCP Server" class="w-full bg-bgDark border border-panelBorder rounded-lg p-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                         </div>
                         <button onclick="generateCustomPrompt()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg text-xs transition-all shadow-md">
                             Generate Master Prompt
@@ -442,16 +448,16 @@
                 </div>
             </section>
 
-            <!-- VIEW: LUAU ERROR DEBUGGER -->
+            <!-- VIEW: CODE ERROR DEBUGGER -->
             <section id="view-debugger" class="hidden space-y-6">
                 <div class="bg-panelDark p-4 rounded-xl border border-panelBorder">
-                    <h1 class="text-xl font-bold text-white">Roblox Luau Error Debugger & Fixer Studio</h1>
-                    <p class="text-xs text-slate-400">Masukkan kode Luau yang bermasalah untuk menghasilkan prompt perbaikan otomatis.</p>
+                    <h1 class="text-xl font-bold text-white">Global Code Error Debugger & Fixer Studio</h1>
+                    <p class="text-xs text-slate-400">Masukkan kode dari bahasa apa pun yang bermasalah untuk menghasilkan prompt perbaikan otomatis.</p>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                     <div class="lg:col-span-6 bg-panelDark border border-panelBorder rounded-xl p-5 space-y-4">
-                        <textarea id="dbg-code" rows="8" placeholder="Paste problem Luau code here..." class="w-full bg-bgDark border border-panelBorder rounded-lg p-2 text-xs font-mono text-slate-200 focus:outline-none"></textarea>
-                        <button onclick="generateDebuggerPrompt()" class="w-full py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-semibold rounded-lg text-xs transition-all">Generate Luau Debug Prompt</button>
+                        <textarea id="dbg-code" rows="8" placeholder="Paste problem code here (Python, C++, Rust, JavaScript, Luau, dll)..." class="w-full bg-bgDark border border-panelBorder rounded-lg p-2 text-xs font-mono text-slate-200 focus:outline-none"></textarea>
+                        <button onclick="generateDebuggerPrompt()" class="w-full py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-semibold rounded-lg text-xs transition-all">Generate Debug Prompt</button>
                     </div>
                     <div class="lg:col-span-6 flex flex-col bg-panelDark border border-panelBorder rounded-xl p-5">
                         <textarea id="dbg-output" readonly class="flex-1 w-full bg-bgDark border border-panelBorder rounded-lg p-3 text-xs font-mono text-rose-300 focus:outline-none min-h-[350px] resize-none" placeholder="Debug output..."></textarea>
@@ -470,7 +476,7 @@
         </main>
     </div>
 
-    <!-- MAIN JAVASCRIPT & LIVE AI STREAMER ENGINE -->
+    <!-- MAIN JAVASCRIPT & MULTI-LANGUAGE AI STREAMER ENGINE -->
     <script>
         const INITIAL_PROMPTS = [
             {
@@ -479,25 +485,48 @@
                 category: "Roblox Development",
                 language: "Luau / Lua",
                 difficulty: "Advanced",
-                description: "Generates robust server-side data persistence script with session locking and pcall error handling.",
+                description: "Robust server-side data persistence script with session locking and pcall error handling.",
                 content: `Bertindaklah sebagai Roblox Luau engineer senior. Analisis kebutuhan sistem save data game Roblox, lalu rancang Script Server menggunakan ProfileService / DataStore2 dengan pcall dan Session Locking.`
             },
             {
-                id: "p-luau-cframe-anim",
-                title: "Roblox Luau CFrame Prop & Cutscene Controller",
-                category: "Roblox Development",
-                language: "Luau / Lua",
-                difficulty: "Intermediate",
-                description: "Smooth CFrame interpolation system for prop positioning and camera animation.",
-                content: `Bertindaklah sebagai Roblox Luau animation engineer. Buat sistem animasi props berbasis CFrame dengan TweenService dan Maid connection cleanup.`
+                id: "p-rust-tokio-server",
+                title: "Rust Asynchronous Tokio TCP Server & Worker Pool",
+                category: "Systems & Rust",
+                language: "Rust",
+                difficulty: "Expert",
+                description: "High-performance multi-threaded TCP server in Rust using Tokio and bounded channels.",
+                content: `Act as a Senior Systems Engineer in Rust. Write an asynchronous TCP server using Tokio, handling concurrent client streams with bounded worker channels and zero-copy packet parsing.`
+            },
+            {
+                id: "p-cpp-memory-pool",
+                title: "C++ Custom Fixed-Size Memory Pool Allocator",
+                category: "C dan C++",
+                language: "C++ / C",
+                difficulty: "Expert",
+                description: "Custom low-level memory pool allocator to eliminate heap fragmentation in game loops.",
+                content: `Act as a C++ Core Developer. Implement a high-performance custom memory pool allocator with intrusive free lists for real-time game engine loops running at 60 FPS.`
+            },
+            {
+                id: "p-solidity-secure-vault",
+                title: "Solidity Smart Contract Secure Token Vault & Timelock",
+                category: "Smart Contracts",
+                language: "Solidity",
+                difficulty: "Advanced",
+                description: "Gas-optimized ERC20 staking vault with reentrancy guard and timelock withdrawal.",
+                content: `Act as a Smart Contract Security Auditor. Design an ERC20 staking vault in Solidity 0.8+ with ReentrancyGuard, custom checkpoints, and role-based access control.`
             }
         ];
 
+        // Generator Pool Masif Multi-Bahasa Pemrograman di Dunia
         const STREAMER_TEMPLATES = [
             { title: "Live Luau Auto-Save Module v", cat: "Roblox Development", lang: "Luau / Lua", diff: "Advanced", desc: "Autonomously generated persistent DataStore wrapper with debounce.", content: "Bertindaklah sebagai Roblox Luau Engineer. Buat modul Auto-Save dengan debounce 10 detik dan session lock." },
-            { title: "Live Python FastAPI Endpoint v", cat: "Python Development", lang: "Python", diff: "Intermediate", desc: "Autonomously generated high-speed asynchronous REST endpoint.", content: "Bertindaklah sebagai Senior Python Developer. Buat endpoint FastAPI async dengan pydantic model validation." },
-            { title: "Live React Tailwind Component v", cat: "Website Development", lang: "JavaScript / React", diff: "Intermediate", desc: "Autonomously generated dashboard stats widget with dark UI.", content: "Bertindaklah sebagai React Expert. Buat komponen Dashboard Grid responsif dengan Tailwind CSS dark mode." },
-            { title: "Live Luau Raycast Combat Hitbox v", cat: "Roblox Development", lang: "Luau / Lua", diff: "Expert", desc: "Autonomously generated server-side sword swing raycast validator.", content: "Bertindaklah sebagai Roblox Combat Engineer. Buat sistem raycast melee hitbox dengan verifikasi server-side authority." }
+            { title: "Live Python FastAPI Microservice v", cat: "Python Development", lang: "Python", diff: "Intermediate", desc: "Autonomously generated high-speed asynchronous REST endpoint.", content: "Bertindaklah sebagai Senior Python Developer. Buat endpoint FastAPI async dengan pydantic model validation." },
+            { title: "Live Rust Actix Web Endpoint v", cat: "Systems & Rust", lang: "Rust", diff: "Advanced", desc: "Autonomously generated memory-safe web server route handler.", content: "Act as a Rust Expert. Write an Actix-web handler with JSON payload deserialization and connection pooling." },
+            { title: "Live C++ Vulkan Render Pipeline v", cat: "C dan C++", lang: "C++ / C", diff: "Expert", desc: "Autonomously generated graphics pipeline initialization setup.", content: "Act as a Graphics Engineer. Write Vulkan pipeline creation boilerplate with vertex input binding." },
+            { title: "Live Go Concurrent Worker Pool v", cat: "Systems & Rust", lang: "Go", diff: "Intermediate", desc: "Autonomously generated golang worker pool with buffered channels.", content: "Act as a Go Expert. Implement a robust worker pool pattern using channels and sync.WaitGroup." },
+            { title: "Live Solidity ERC721 NFT Mint v", cat: "Smart Contracts", lang: "Solidity", diff: "Advanced", desc: "Autonomously generated gas-efficient NFT contract with Merkle proof.", content: "Act as a Web3 Developer. Write an ERC721A minting contract with whitelist Merkle tree verification." },
+            { title: "Live TypeScript React Hook v", cat: "Website Development", lang: "JavaScript / TypeScript", diff: "Intermediate", desc: "Autonomously generated type-safe debounced search hook.", content: "Act as a Frontend Architect. Create a generic TypeScript custom hook for debounced API queries." },
+            { title: "Live AI PyTorch Transformer Block v", cat: "AI & Machine Learning", lang: "Python", diff: "Expert", desc: "Autonomously generated multi-head self-attention module.", content: "Act as an AI Researcher. Implement a Multi-Head Attention block in PyTorch from scratch." }
         ];
 
         let appState = {
@@ -522,7 +551,7 @@
             
             // Nyalakan Mesin AI Streamer otomatis tiap 1 detik
             setInterval(runLiveAiStreamerTick, 1000);
-            logActivity("Live AI Streamer engine activated (1s interval).");
+            logActivity("Global Multi-Language AI Streamer engine activated (1s interval).");
         };
 
         function loadFromStorage() {
@@ -555,27 +584,27 @@
             if (appState.isStreamerPaused) return;
 
             const template = STREAMER_TEMPLATES[Math.floor(Math.random() * STREAMER_TEMPLATES.length)];
-            const randId = Math.floor(Math.random() * 9000) + 1000;
+            const randId = Math.floor(Math.random() * 90000) + 10000;
             const newPrompt = {
                 id: 'p-stream-' + Date.now(),
-                title: `${template.title}.${randId}`,
+                title: `${template.title}${randId.toString().slice(-3)}`,
                 category: template.cat,
                 language: template.lang,
                 difficulty: template.diff,
                 description: template.desc,
-                content: `${template.content} [Timestamp: ${new Date().toLocaleTimeString()}]`
+                content: `${template.content} [Generated Live: ${new Date().toLocaleTimeString()}]`
             };
 
             appState.prompts.unshift(newPrompt);
             appState.streamedPrompts.unshift(newPrompt);
-            if (appState.streamedPrompts.length > 20) appState.streamedPrompts.pop();
+            if (appState.streamedPrompts.length > 25) appState.streamedPrompts.pop();
 
             saveToStorage();
             renderMetrics();
             
             const ticker = document.getElementById('dashboard-live-ticker');
             if (ticker) {
-                ticker.innerHTML = `<span class="text-emerald-400 font-bold">[NEW AI PROMPT SYNTHESIZED]</span> ${escapeHTML(newPrompt.title)} (${escapeHTML(newPrompt.category)}) — Click to copy.`;
+                ticker.innerHTML = `<span class="text-emerald-400 font-bold">[NEW CODE / PROMPT SYNTHESIZED]</span> <span class="text-white">${escapeHTML(newPrompt.title)}</span> (${escapeHTML(newPrompt.language)})`;
             }
 
             const feedContainer = document.getElementById('streamer-feed-container');
@@ -584,9 +613,7 @@
             }
 
             const statStreamed = document.getElementById('streamer-stat-total');
-            if (statStreamed) {
-                statStreamed.innerText = appState.streamedPrompts.length;
-            }
+            if (statStreamed) statStreamed.innerText = appState.streamedPrompts.length;
         }
 
         function toggleStreamerPause() {
@@ -690,7 +717,7 @@
                 if (cat !== 'ALL' && p.category !== cat) return false;
                 if (lang !== 'ALL' && p.language !== lang) return false;
                 if (diff !== 'ALL' && p.difficulty !== diff) return false;
-                if (search && !p.title.toLowerCase().includes(search) && !p.description.toLowerCase().includes(search)) return false;
+                if (search && !p.title.toLowerCase().includes(search) && !p.description.toLowerCase().includes(search) && !p.content.toLowerCase().includes(search)) return false;
                 return true;
             });
 
@@ -725,7 +752,7 @@
                         </div>
                         <h3 class="text-sm font-bold text-white mb-1">${escapeHTML(prompt.title)}</h3>
                         <p class="text-xs text-slate-400 mb-3">${escapeHTML(prompt.description)}</p>
-                        <div class="bg-bgDark border border-panelBorder rounded-lg p-2.5 mb-3 max-h-28 overflow-y-auto">
+                        <div class="bg-bgDark border border-panelBorder rounded-lg p-2.5 mb-3 max-h-32 overflow-y-auto">
                             <pre class="text-[11px] font-mono text-slate-300 whitespace-pre-wrap">${escapeHTML(prompt.content)}</pre>
                         </div>
                     </div>
@@ -767,7 +794,6 @@
             applyLibraryFilters();
         }
 
-        // Modal Functions
         function openCreatePromptModal() {
             document.getElementById('create-prompt-modal').classList.remove('hidden');
         }
@@ -807,17 +833,16 @@
             applyLibraryFilters();
             logActivity(`Created custom prompt: "${title}"`);
 
-            // Clear inputs
             document.getElementById('modal-title').value = '';
             document.getElementById('modal-desc').value = '';
             document.getElementById('modal-content').value = '';
         }
 
         function generateCustomPrompt() {
-            const title = document.getElementById('pb-title')?.value || "Custom Script";
+            const title = document.getElementById('pb-title')?.value || "Custom Code Module";
             const out = document.getElementById('pb-output');
             if (out) {
-                out.value = `Bertindaklah sebagai Senior Software Engineer. Buat arsitektur lengkap untuk [${title}] dengan validasi ketat, manajemen memori, dan penanganan error pcall.`;
+                out.value = `Act as an Expert Software Engineer. Build a robust implementation blueprint for [${title}] with optimized performance, memory safety, and comprehensive unit tests.`;
                 showToast("Master Prompt Generated!");
             }
         }
@@ -826,7 +851,7 @@
             const code = document.getElementById('dbg-code')?.value || "";
             const out = document.getElementById('dbg-output');
             if (out) {
-                out.value = `Analisis akar masalah error pada kode berikut:\n\`\`\`lua\n${code}\n\`\`\`\nTunjukkan baris error dan berikan patch perbaikan lengkap.`;
+                out.value = `Analyze and fix the root cause of the bug in the following source code:\n\`\`\`\n${code}\n\`\`\`\nExplain the error and provide a fully patched code snippet.`;
                 showToast("Debug Prompt Generated!");
             }
         }
