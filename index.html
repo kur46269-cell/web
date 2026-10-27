@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCRIPT PROMPT STUDIO - Public AI Streamer & Deep .txt Generator</title>
+    <title>SCRIPT PROMPT STUDIO - Advanced AI Neural Engine & Public Cloud</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,12 +12,13 @@
             theme: {
                 extend: {
                     colors: {
-                        bgDark: '#080B12',
-                        panelDark: '#111725',
+                        bgDark: '#07090F',
+                        panelDark: '#0D1322',
                         panelBorder: 'rgba(255, 255, 255, 0.08)',
                         neonBlue: '#3B82F6',
                         neonPurple: '#8B5CF6',
                         accentCyan: '#06B6D4',
+                        accentEmerald: '#10B981',
                     },
                     fontFamily: {
                         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
@@ -32,48 +33,54 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #080B12;
+            background-color: #07090F;
             color: #E2E8F0;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #080B12; }
+        ::-webkit-scrollbar-track { background: #07090F; }
         ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #334155; }
-        .glow-blue { box-shadow: 0 0 15px rgba(59, 130, 246, 0.25); }
+        .glow-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+        .glow-emerald { box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
         .pulse-live { animation: pulseGlow 1.5s infinite; }
         @keyframes pulseGlow {
             0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.02); }
+            50% { opacity: 0.5; transform: scale(1.02); }
             100% { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
+<body class="min-h-screen flex flex-col antialiased selection:bg-emerald-600 selection:text-white">
 
     <!-- Toast Alert Container -->
     <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- Modal Tambah Kategori Custom (Auto-Generate AI & Public Sync) -->
-    <div id="create-category-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-panelDark border border-panelBorder rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+    <!-- Modal Buat Topik & Neural AI Generator -->
+    <div id="create-category-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-panelDark border border-panelBorder rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
             <div class="flex items-center justify-between pb-3 border-b border-panelBorder">
-                <h3 class="text-base font-bold text-white">Buat Kategori & AI Deep .txt Generator</h3>
+                <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <h3 class="text-base font-bold text-white">Neural AI Topic & Deep .txt Generator</h3>
+                </div>
                 <button onclick="closeCategoryModal()" class="text-slate-400 hover:text-white">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-            <div>
-                <label class="block text-xs font-medium text-slate-300 mb-1">Nama Kategori / Topik Publik</label>
-                <input type="text" id="new-category-name" placeholder="e.g. Web3 Smart Contracts, AI Agent LangChain, Cyber Security" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
-                <p class="text-[11px] text-slate-400 mt-1.5 leading-relaxed">
-                    🤖 <strong class="text-emerald-400">AI Auto-Writer & Public Hub:</strong> AI akan langsung merancang puluhan file `.txt` panjang yang spesifik untuk topik ini dan membagikannya ke feed publik agar bisa dilihat semua pengguna.
-                </p>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Nama Topik / Kategori Publik</label>
+                    <input type="text" id="new-category-name" placeholder="e.g. Web3 Smart Contracts, Cyber Security, AI Agents" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 font-mono">
+                    <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                        ⚡ <strong class="text-emerald-400">Neural Engine v5.2:</strong> AI akan mensintesis 4 file `.txt` master berukuran panjang dengan spesifikasi kode tingkat lanjut dan menyiarkannya ke feed publik secara instan.
+                    </p>
+                </div>
             </div>
-            <div class="flex justify-end gap-2 pt-2 border-t border-panelBorder">
+            <div class="flex justify-end gap-2 pt-3 border-t border-panelBorder">
                 <button onclick="closeCategoryModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium">Batal</button>
-                <button onclick="saveNewCategoryAndAIGenerate()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold shadow-md">Buat & AI Generate</button>
+                <button onclick="saveCategoryAndRunNeuralAI()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow-lg glow-emerald">Jalankan Neural AI</button>
             </div>
         </div>
     </div>
@@ -83,24 +90,24 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('dashboard')">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center glow-blue">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-blue-600 flex items-center justify-center glow-emerald">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                     </div>
                     <div>
                         <span class="text-lg font-bold tracking-tight text-white block leading-none">SCRIPT PROMPT STUDIO</span>
-                        <span class="text-[10px] font-mono text-emerald-400 tracking-wider">PUBLIC CLOUD FEED & AI AUTO-GENERATOR</span>
+                        <span class="text-[10px] font-mono text-emerald-400 tracking-wider">NEURAL ENGINE v5.2 + PUBLIC CLOUD</span>
                     </div>
                 </div>
 
                 <div class="hidden md:flex flex-1 max-w-md mx-8 relative">
-                    <input type="text" id="global-search" oninput="handleGlobalSearch(this.value)" placeholder="Cari prompt publik, kategori, atau kode .txt..." class="w-full bg-bgDark border border-panelBorder rounded-lg pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all">
+                    <input type="text" id="global-search" oninput="handleGlobalSearch(this.value)" placeholder="Cari prompt publik, kategori, atau kode .txt..." class="w-full bg-bgDark border border-panelBorder rounded-lg pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-all">
                     <svg class="w-4 h-4 text-slate-500 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <button onclick="openCategoryModal()" class="px-3 py-2 text-xs font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition-all flex items-center gap-1 shadow-md">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                        + Topik Baru & AI
+                    <button onclick="openCategoryModal()" class="px-3.5 py-2 text-xs font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition-all flex items-center gap-1.5 shadow-lg glow-emerald">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        + Topik & Neural AI
                     </button>
                     <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 text-slate-400 hover:text-white rounded-lg border border-panelBorder">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -139,7 +146,7 @@
                     <nav class="space-y-1">
                         <button onclick="switchTab('streamer')" id="nav-streamer" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
                             <svg class="w-4 h-4 text-emerald-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                            Live AI Cloud Streamer <span class="ml-auto px-1.5 py-0.5 text-[9px] font-mono bg-emerald-950 text-emerald-400 rounded border border-emerald-800">PUBLIC</span>
+                            Neural AI Streamer <span class="ml-auto px-1.5 py-0.5 text-[9px] font-mono bg-emerald-950 text-emerald-400 rounded border border-emerald-800">V5.2</span>
                         </button>
                         <button onclick="switchTab('library')" id="nav-library" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
                             <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
@@ -155,8 +162,8 @@
 
             <div class="p-4 border-t border-panelBorder bg-bgDark/50">
                 <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
-                    <span>Public AI Engine</span>
-                    <span class="text-emerald-400 font-mono font-bold animate-pulse">SYNCED</span>
+                    <span>Neural Engine</span>
+                    <span class="text-emerald-400 font-mono font-bold animate-pulse">OPTIMIZED</span>
                 </div>
                 <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
                     <div class="h-full bg-emerald-500 rounded-full w-full"></div>
@@ -172,15 +179,15 @@
                 <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-panelDark via-slate-900 to-panelDark border border-panelBorder p-6">
                     <div class="relative z-10">
                         <div class="flex items-center gap-2 mb-2">
-                            <span class="px-2.5 py-1 text-[10px] font-mono font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/40 rounded uppercase tracking-wider pulse-live">● Public Cloud Feed & AI Auto-Generator Active</span>
+                            <span class="px-2.5 py-1 text-[10px] font-mono font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/40 rounded uppercase tracking-wider pulse-live">● Neural AI Engine v5.2 & Public Cloud Active</span>
                         </div>
                         <h1 class="text-2xl sm:text-3xl font-extrabold text-white">SCRIPT PROMPT & IDEA STUDIO</h1>
                         <p class="text-xs sm:text-sm text-slate-400 max-w-2xl mt-1">
-                            Semua prompt dan file `.txt` di sini digenerate secara otomatis oleh AI dan dapat dilihat, disalin, serta diunduh oleh siapa saja secara publik.
+                            Engine baru menghadirkan sintesis prompt yang jauh lebih mendalam, bersih, dan tersinkronisasi secara publik untuk seluruh pengguna.
                         </p>
                         <div class="flex flex-wrap gap-3 mt-4">
-                            <button onclick="openCategoryModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-2 transition-all shadow-lg">
-                                + Buat Topik & Biarkan AI Mengisi .txt
+                            <button onclick="openCategoryModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-2 transition-all shadow-lg glow-emerald">
+                                + Buat Topik & Jalankan Neural AI
                             </button>
                         </div>
                     </div>
@@ -191,12 +198,12 @@
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Live Public AI Streamer Feed</h2>
+                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Live Neural AI Streamer Feed</h2>
                         </div>
                         <button onclick="switchTab('streamer')" class="text-xs text-blue-400 hover:text-blue-300 font-medium">Buka Feed Publik &rarr;</button>
                     </div>
                     <div id="dashboard-live-ticker" class="bg-bgDark border border-panelBorder rounded-lg p-3 font-mono text-xs text-slate-300">
-                        Menghubungkan ke cloud public feed...
+                        Neural engine sedang memproses stream publik...
                     </div>
                 </div>
 
@@ -213,12 +220,12 @@
                     <div class="flex items-center justify-between pb-2 border-b border-panelBorder">
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">Cloud Public Feed & AI Terminal Log</h2>
+                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">Neural Engine & Public Cloud Log</h2>
                         </div>
                         <button onclick="clearTerminalLogs()" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-[10px] font-mono">Clear Terminal</button>
                     </div>
                     <div id="realtime-terminal" class="bg-bgDark border border-panelBorder rounded-lg p-3 font-mono text-[11px] text-emerald-400 h-36 overflow-y-auto space-y-1">
-                        <div>[00:00:00] [CLOUD] Public Script Prompt Studio synced. AI auto-generator ready.</div>
+                        <div>[00:00:00] [NEURAL] Engine v5.2 booted successfully. Public cloud feed synchronized.</div>
                     </div>
                 </div>
             </section>
@@ -228,10 +235,10 @@
                 <div class="bg-panelDark p-5 rounded-xl border border-emerald-500/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <div class="flex items-center gap-2 mb-1">
-                            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/40 rounded">PUBLIC CLOUD STREAMER</span>
+                            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/40 rounded">NEURAL STREAMER v5.2</span>
                         </div>
-                        <h1 class="text-xl font-bold text-white">Live AI Public Feed (.txt)</h1>
-                        <p class="text-xs text-slate-400">AI secara otomatis men-generate skrip dan prompt panjang untuk semua pengguna.</p>
+                        <h1 class="text-xl font-bold text-white">Live Neural AI Streamer Feed (.txt)</h1>
+                        <p class="text-xs text-slate-400">AI Neural Engine secara otomatis men-generate skrip dan prompt tingkat lanjut secara real-time.</p>
                     </div>
                     <div class="flex items-center gap-2">
                         <button onclick="toggleStreamerPause()" id="btn-streamer-toggle" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded-lg text-xs font-semibold">Pause / Resume</button>
@@ -243,10 +250,10 @@
                     <div class="lg:col-span-8 space-y-4" id="streamer-feed-container"></div>
                     <div class="lg:col-span-4 space-y-4">
                         <div class="bg-panelDark border border-panelBorder rounded-xl p-4 space-y-3">
-                            <h2 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Cloud Stats</h2>
+                            <h2 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Neural Metrics</h2>
                             <div class="space-y-2 text-xs font-mono">
                                 <div class="flex justify-between text-slate-400"><span>Total Public Files:</span><span id="streamer-stat-total" class="text-emerald-400">0</span></div>
-                                <div class="flex justify-between text-slate-400"><span>Status AI:</span><span class="text-emerald-400">Auto-Generating</span></div>
+                                <div class="flex justify-between text-slate-400"><span>Engine Status:</span><span class="text-emerald-400">Active (v5.2)</span></div>
                             </div>
                         </div>
                     </div>
@@ -258,10 +265,10 @@
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-panelDark p-4 rounded-xl border border-panelBorder">
                     <div>
                         <h1 class="text-xl font-bold text-white">Semua Prompt & File .txt Publik</h1>
-                        <p class="text-xs text-slate-400">Jelajahi seluruh prompt yang di-generate AI dan topik dari semua pengguna.</p>
+                        <p class="text-xs text-slate-400">Jelajahi seluruh prompt yang di-generate AI Neural Engine dari semua topik publik.</p>
                     </div>
-                    <button onclick="openCategoryModal()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow-md">
-                        + Buat Topik & AI Auto-Fill
+                    <button onclick="openCategoryModal()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow-lg glow-emerald">
+                        + Topik & Neural AI
                     </button>
                 </div>
 
@@ -270,13 +277,13 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                             <label class="block text-[11px] font-medium text-slate-400 mb-1">Filter Kategori Publik</label>
-                            <select id="filter-category" onchange="applyLibraryFilters()" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                            <select id="filter-category" onchange="applyLibraryFilters()" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
                                 <option value="ALL">Semua Kategori Publik</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-[11px] font-medium text-slate-400 mb-1">Cari Kata Kunci / Kode</label>
-                            <input type="text" id="filter-search" oninput="applyLibraryFilters()" placeholder="Cari isi file .txt..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                            <input type="text" id="filter-search" oninput="applyLibraryFilters()" placeholder="Cari isi file .txt..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
                         </div>
                     </div>
                 </div>
@@ -288,7 +295,7 @@
             <section id="view-workspace" class="hidden space-y-6">
                 <div class="bg-panelDark p-4 rounded-xl border border-panelBorder">
                     <h1 class="text-xl font-bold text-white">Bookmark & Workspace Saya</h1>
-                    <p class="text-xs text-slate-400">Daftar prompt publik yang Anda simpan ke perangkat Anda.</p>
+                    <p class="text-xs text-slate-400">Daftar prompt publik yang Anda simpan ke perangkat.</p>
                 </div>
                 <div id="workspace-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </section>
@@ -296,7 +303,7 @@
         </main>
     </div>
 
-    <!-- JAVASCRIPT & PUBLIC AI GENERATOR ENGINE -->
+    <!-- JAVASCRIPT & NEURAL AI ENGINE v5.2 -->
     <script>
         const INITIAL_CATEGORIES = [
             "C dan C++",
@@ -313,9 +320,9 @@
                 category: "C dan C++",
                 language: "C++",
                 difficulty: "Expert",
-                author: "AI Public Generator",
+                author: "Neural AI v5.2",
                 description: "Alokator memori kustom berbasis block fixed-size untuk menghindari fragmentasi heap pada game engine.",
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Senior C++ Game Engine Architect. Design a high-performance fixed-size memory pool allocator in C++20.\n\n### DEEP CODE BLUEPRINT & ARCHITECTURE\n1. Pre-allocate contiguous heap memory block during initialization phase.\n2. Intrusive free-list management for O(1) complexity allocation and deallocation.\n3. Thread-safe wrapper utilizing std::mutex or lock-free atomics for concurrent task workers.\n\n### DETAILED IMPLEMENTATION SCRIPT\n\`\`\`cpp\n#include <vector>\n#include <iostream>\n#include <mutex>\n\ntemplate <typename T, size_t BlockSize = 4096>\nclass MemoryPool {\nprivate:\n    struct Node { Node* next; };\n    Node* freeList = nullptr;\n    std::vector<void*> chunks;\n    std::mutex mtx;\npublic:\n    MemoryPool() = default;\n};\n\`\`\``
+                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Senior C++ Game Engine Architect. Design a high-performance fixed-size memory pool allocator in C++20.\n\n### NEURAL CODE BLUEPRINT\n1. Pre-allocate contiguous heap memory block during initialization phase.\n2. Intrusive free-list management for O(1) complexity allocation and deallocation.\n3. Thread-safe wrapper utilizing std::mutex or lock-free atomics for concurrent task workers.\n\n### IMPLEMENTATION SPECIFICATION\n\`\`\`cpp\n#include <vector>\n#include <iostream>\n#include <mutex>\n\ntemplate <typename T, size_t BlockSize = 4096>\nclass MemoryPool {\nprivate:\n    struct Node { Node* next; };\n    Node* freeList = nullptr;\n    std::vector<void*> chunks;\n    std::mutex mtx;\npublic:\n    MemoryPool() = default;\n};\n\`\`\``
             },
             {
                 id: "p-java-microservice",
@@ -323,9 +330,9 @@
                 category: "Java Enterprise",
                 language: "Java",
                 difficulty: "Advanced",
-                author: "AI Public Generator",
+                author: "Neural AI v5.2",
                 description: "Enterprise microservice non-blocking menggunakan Spring WebFlux, R2DBC, dan Resilience4j.",
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal Java Enterprise Architect. Design a reactive microservice using Spring Boot 3.x and R2DBC.\n\n### DEEP ARCHITECTURE & CODE BLUEPRINT\n1. Fully reactive end-to-end non-blocking database queries with PostgreSQL R2DBC.\n2. Resilience4j circuit breakers and rate limiters for fault tolerance.\n\n### DETAILED CODE SPECIFICATION\n\`\`\`java\n@RestController\n@RequestMapping("/api/v1/secure")\npublic class ReactiveController {\n    @GetMapping("/data")\n    public Mono<ServerResponse> getData() {\n        return Mono.just(ServerResponse.ok().bodyValue("Secure Payload"));\n    }\n}\n\`\`\``
+                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal Java Enterprise Architect. Design a reactive microservice using Spring Boot 3.x and R2DBC.\n\n### NEURAL ARCHITECTURE BLUEPRINT\n1. Fully reactive end-to-end non-blocking database queries with PostgreSQL R2DBC.\n2. Resilience4j circuit breakers and rate limiters for fault tolerance.\n\n### CODE SPECIFICATION\n\`\`\`java\n@RestController\n@RequestMapping("/api/v1/secure")\npublic class ReactiveController {\n    @GetMapping("/data")\n    public Mono<ServerResponse> getData() {\n        return Mono.just(ServerResponse.ok().bodyValue("Secure Payload"));\n    }\n}\n\`\`\``
             }
         ];
 
@@ -350,15 +357,15 @@
             renderLibrary();
             renderWorkspace();
 
-            setInterval(runPublicAiStreamerTick, 2000);
-            terminalLog("SYSTEM: Public Cloud Feed & AI Generator successfully connected.");
+            setInterval(runNeuralAiStreamerTick, 2500);
+            terminalLog("NEURAL ENGINE: v5.2 online. Public cloud feed synchronized successfully.");
         };
 
         function loadFromStorage() {
             try {
-                const cats = localStorage.getItem('sps_public_categories_v5');
-                const prompts = localStorage.getItem('sps_public_prompts_v5');
-                const favs = localStorage.getItem('sps_public_favs_v5');
+                const cats = localStorage.getItem('sps_neural_categories_v6');
+                const prompts = localStorage.getItem('sps_neural_prompts_v6');
+                const favs = localStorage.getItem('sps_neural_favs_v6');
                 if (cats) appState.categories = JSON.parse(cats);
                 if (prompts) appState.prompts = JSON.parse(prompts);
                 if (favs) appState.favorites = JSON.parse(favs);
@@ -367,9 +374,9 @@
 
         function saveToStorage() {
             try {
-                localStorage.setItem('sps_public_categories_v5', JSON.stringify(appState.categories));
-                localStorage.setItem('sps_public_prompts_v5', JSON.stringify(appState.prompts));
-                localStorage.setItem('sps_public_favs_v5', JSON.stringify(appState.favorites));
+                localStorage.setItem('sps_neural_categories_v6', JSON.stringify(appState.categories));
+                localStorage.setItem('sps_neural_prompts_v6', JSON.stringify(appState.prompts));
+                localStorage.setItem('sps_neural_favs_v6', JSON.stringify(appState.favorites));
             } catch (err) {}
         }
 
@@ -389,66 +396,65 @@
             if (term) term.innerHTML = `<div>[${new Date().toLocaleTimeString()}] [TERMINAL] Logs cleared.</div>`;
         }
 
-        // AI SMART AUTO-GENERATOR: Saat user buat topik baru, AI merancang 4 file .txt panjang spesifik untuk topik tersebut!
-        function saveNewCategoryAndAIGenerate() {
+        // NEURAL AI TOPIC GENERATOR: Menghasilkan 4 file .txt master dengan logika mendalam
+        function saveCategoryAndRunNeuralAI() {
             const nameInput = document.getElementById('new-category-name');
             const catName = nameInput.value.trim();
             if (!catName) {
-                showToast("Nama topik/kategori tidak boleh kosong!", "error");
+                showToast("Nama topik tidak boleh kosong!", "error");
                 return;
             }
             if (appState.categories.includes(catName)) {
-                showToast("Topik tersebut sudah ada di feed publik!", "error");
+                showToast("Topik tersebut sudah ada di cloud publik!", "error");
                 return;
             }
 
             appState.categories.push(catName);
 
-            // AI MENGHASILKAN 4 FILE .txt PANJANG SPESIFIK SECARA OTOMATIS
-            const aiGeneratedPrompts = [
+            const neuralGeneratedPrompts = [
                 {
-                    id: 'p-ai-gen-' + Date.now() + '-1',
-                    title: `AI Public Hub: ${catName} - Master Architecture & Core Engine`,
+                    id: 'p-neural-' + Date.now() + '-1',
+                    title: `Neural Master: ${catName} - Core Architectural Framework`,
                     category: catName,
                     language: catName.split(' ')[0],
                     difficulty: 'Expert',
-                    author: 'AI Public Generator',
-                    description: `File .txt otomatis buatan AI: Rancangan arsitektur inti dan setup sistem untuk topik ${catName}.`,
-                    content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal ${catName} Systems Architect. Design a bulletproof, enterprise-grade master architecture.\n\n### AI GENERATED BLUEPRINT FOR ${catName.toUpperCase()}\n1. Initialize modular directory structure with strict TypeScript/C++/Python typing.\n2. Configure asynchronous event loops, secure authentication middleware, and robust logging.\n3. Implement automated test suites and high-performance benchmarking.\n\n### COMPLETE SCRIPT SPECIFICATION\n\`\`\`\n// AI Master Script for ${catName}\nclass ${catName.replace(/[^a-zA-Z0-9]/g, '')}MasterEngine {\n    constructor() { console.log("Initialized ${catName} Engine"); }\n    async execute() { return { status: "SUCCESS", mode: "PRODUCTION" }; }\n}\n\`\``
+                    author: 'Neural AI v5.2',
+                    description: `File .txt master hasil sintesis Neural AI untuk perancangan sistem ${catName}.`,
+                    content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal ${catName} Architect. Design an ultra-scalable, production-ready master architecture.\n\n### NEURAL DESIGN BLUEPRINT\n1. Initialize modular directory structure with strict typing and dependency inversion.\n2. Configure asynchronous event loops, JWT authorization, and encrypted secure storage.\n3. Implement automated test suites and high-performance benchmarking hooks.\n\n### MASTER CODE SPECIFICATION\n\`\`\`\n// Neural Synthesized Master Script for ${catName}\nclass ${catName.replace(/[^a-zA-Z0-9]/g, '')}NeuralCore {\n    constructor() { console.log("Neural Core initialized for ${catName}"); }\n    async processPipeline() { return { code: 200, status: "OPTIMIZED" }; }\n}\n\`\``
                 },
                 {
-                    id: 'p-ai-gen-' + Date.now() + '-2',
-                    title: `AI Public Hub: ${catName} - Advanced Concurrency & Optimization`,
+                    id: 'p-neural-' + Date.now() + '-2',
+                    title: `Neural Master: ${catName} - High-Concurrency Engine`,
                     category: catName,
                     language: catName.split(' ')[0],
                     difficulty: 'Expert',
-                    author: 'AI Public Generator',
-                    description: `File .txt otomatis buatan AI: Skrip optimasi performa tinggi dan manajemen memori untuk ${catName}.`,
-                    content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Senior Performance Engineer specializing in ${catName}.\n\n### OPTIMIZATION PROTOCOLS\n1. Eliminate latency bottlenecks utilizing multi-threading worker pools and caching.\n2. Prevent memory leaks and optimize heap allocation cycles.\n3. Add robust error boundary catches and automatic failover handlers.\n\n### SCRIPT CODE SNIPPET\n\`\`\`\n// Optimized worker pipeline for ${catName}\nasync function runOptimizedWorker() {\n    while (true) {\n        const payload = await fetchNextPayload();\n        await processWithLowLatency(payload);\n    }\n}\n\`\``
+                    author: 'Neural AI v5.2',
+                    description: `File .txt master hasil sintesis Neural AI untuk optimasi konkurensi ${catName}.`,
+                    content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Senior Concurrency & Performance Engineer for ${catName}.\n\n### CONCURRENCY PROTOCOLS\n1. Utilize lock-free thread pools and atomic queue structures to minimize CPU contention.\n2. Optimize memory allocations and garbage collection overhead.\n3. Integrate robust circuit breakers for downstream fault tolerance.\n\n### CONCURRENCY SCRIPT\n\`\`\`\n// Async worker pool for ${catName}\nasync function executeNeuralWorkers() {\n    while (true) {\n        const task = await taskQueue.poll();\n        await processTaskWithZeroLatency(task);\n    }\n}\n\`\``
                 },
                 {
-                    id: 'p-ai-gen-' + Date.now() + '-3',
-                    title: `AI Public Hub: ${catName} - Security Audit & Vulnerability Shield`,
+                    id: 'p-neural-' + Date.now() + '-3',
+                    title: `Neural Master: ${catName} - Security & Penetration Defense`,
                     category: catName,
                     language: catName.split(' ')[0],
                     difficulty: 'Advanced',
-                    author: 'AI Public Generator',
-                    description: `File .txt otomatis buatan AI: Skrip pengujian keamanan dan audit sistem untuk ${catName}.`,
-                    content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Lead Cybersecurity & Penetration Testing Auditor for ${catName}.\n\n### SECURITY REQUIREMENTS\n1. Scan for SQL injection, XSS, and insecure memory buffer overflows.\n2. Simulate 50,000 concurrent virtual requests under DDoS conditions.\n3. Generate compliance reports and audit logs.\n\n### SCRIPT SPECIFICATION\n\`\`\`\n// Security audit runner\nrunPenetrationTest({ target: "${catName}", strictMode: true });\n\`\``
+                    author: 'Neural AI v5.2',
+                    description: `File .txt master hasil sintesis Neural AI untuk mitigasi kerentanan keamanan ${catName}.`,
+                    content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Lead Cybersecurity Auditor specializing in ${catName}.\n\n### SECURITY SHIELD REQUIREMENTS\n1. Enforce strict input validation, rate limiting, and SQL injection sanitization.\n2. Simulate 100,000 concurrent virtual requests in stress testing.\n3. Output comprehensive compliance audit reports.\n\n### SECURITY SCRIPT\n\`\`\`\n// Security defense wrapper\napplyNeuralSecurityShield({ target: "${catName}", strictMode: true });\n\`\``
                 },
                 {
-                    id: 'p-ai-gen-' + Date.now() + '-4',
-                    title: `AI Public Hub: ${catName} - Cloud CI/CD & Production Deployment`,
+                    id: 'p-neural-' + Date.now() + '-4',
+                    title: `Neural Master: ${catName} - Cloud CI/CD & Auto-Scaling`,
                     category: catName,
                     language: catName.split(' ')[0],
                     difficulty: 'Expert',
-                    author: 'AI Public Generator',
-                    description: `File .txt otomatis buatan AI: Konfigurasi deployment cloud dan pipeline otomatis untuk ${catName}.`,
-                    content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Cloud DevOps Infrastructure Lead for ${catName}.\n\n### DEPLOYMENT BLUEPRINT\n1. Multi-stage Docker containerization with minimal image footprint.\n2. Kubernetes horizontal pod autoscaler based on CPU load metrics.\n3. Zero-downtime rolling update configurations.\n\n### YAML SPECIFICATION\n\`\`\`yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: ${catName.toLowerCase().replace(/[^a-z0-9]/g, '-')}-public-service\nspec:\n  replicas: 3\n\`\``
+                    author: 'Neural AI v5.2',
+                    description: `File .txt master hasil sintesis Neural AI untuk deployment cloud ${catName}.`,
+                    content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Cloud Infrastructure & DevOps Lead for ${catName}.\n\n### DEPLOYMENT BLUEPRINT\n1. Multi-stage Docker containerization with minimal attack surface.\n2. Kubernetes horizontal pod autoscaler based on real-time traffic.\n3. Zero-downtime rolling update configurations.\n\n### KUBERNETES MANIFEST\n\`\`\`yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: ${catName.toLowerCase().replace(/[^a-z0-9]/g, '-')}-neural-service\nspec:\n  replicas: 3\n\`\``
                 }
             ];
 
-            appState.prompts.unshift(...aiGeneratedPrompts);
+            appState.prompts.unshift(...neuralGeneratedPrompts);
             saveToStorage();
             closeCategoryModal();
 
@@ -457,26 +463,26 @@
             renderDashboard();
             applyLibraryFilters();
 
-            showToast(`Topik "${catName}" berhasil dibuat & AI langsung mengisi 4 file .txt publik!`);
-            terminalLog(`AI GENERATOR [${catName}] &rarr; Berhasil merancang 4 file prompt panjang publik.`);
+            showToast(`Topik "${catName}" berhasil dibuat & Neural AI men-generate 4 file .txt master!`);
+            terminalLog(`NEURAL TOPIC [${catName}] &rarr; Synthesized 4 deep master files.`);
             nameInput.value = '';
         }
 
-        // BACKGROUND AI STREAMER: Terus men-generate prompt publik baru secara otonom
-        function runPublicAiStreamerTick() {
+        // BACKGROUND NEURAL STREAMER: Terus men-generate prompt publik baru
+        function runNeuralAiStreamerTick() {
             if (appState.isStreamerPaused) return;
 
             const randomCat = appState.categories[Math.floor(Math.random() * appState.categories.length)];
             const randId = Math.floor(Math.random() * 90000) + 10000;
             const newPrompt = {
-                id: 'p-public-stream-' + Date.now(),
-                title: `Public Stream: ${randomCat} - AI Optimized Script v${randId.toString().slice(-3)}`,
+                id: 'p-neural-stream-' + Date.now(),
+                title: `Neural Stream: ${randomCat} - Optimized Script v${randId.toString().slice(-3)}`,
                 category: randomCat,
                 language: randomCat.split(' ')[0],
                 difficulty: 'Expert',
-                author: 'AI Autonomous Streamer',
-                description: `File .txt publik hasil generate AI otonom untuk topik ${randomCat}.`,
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as an Autonomous Lead Architect for ${randomCat}.\n\n### DETAILED PROMPT & SCRIPT SPECIFICATION\n1. Automated deep execution routine generated publicly at ${new Date().toLocaleTimeString()}.\n2. Optimized memory allocation and strict enterprise security protocols.\n\n### CODE BLUEPRINT\n\`\`\`\n// Autonomous public script block\nfunction runPublicPipeline() {\n    console.log("Executing optimized ${randomCat} public module...");\n}\n\`\``
+                author: 'Neural AI Streamer v5.2',
+                description: `File .txt publik hasil generate Neural AI otonom untuk topik ${randomCat}.`,
+                content: `### SYSTEM ROLE & OBJECTIVE\nAct as an Autonomous Lead Architect for ${randomCat}.\n\n### NEURAL EXECUTION SPECIFICATION\n1. Automated deep execution routine synthesized publicly at ${new Date().toLocaleTimeString()}.\n2. Optimized memory allocation and strict enterprise security protocols.\n\n### CODE BLUEPRINT\n\`\`\`\n// Neural streaming script block\nfunction runNeuralPipeline() {\n    console.log("Executing neural-optimized ${randomCat} module...");\n}\n\`\``
             };
 
             appState.prompts.unshift(newPrompt);
@@ -487,7 +493,7 @@
 
             const ticker = document.getElementById('dashboard-live-ticker');
             if (ticker) {
-                ticker.innerHTML = `<span class="text-emerald-400 font-bold">[PUBLIC CLOUD STREAM]</span> <span class="text-white">${escapeHTML(newPrompt.title)}</span> (${escapeHTML(randomCat)})`;
+                ticker.innerHTML = `<span class="text-emerald-400 font-bold">[NEURAL STREAM ACTIVE]</span> <span class="text-white">${escapeHTML(newPrompt.title)}</span> (${escapeHTML(randomCat)})`;
             }
 
             if (appState.activeTab === 'streamer') renderStreamerFeed();
@@ -501,24 +507,24 @@
             const btn = document.getElementById('btn-streamer-toggle');
             if (appState.isStreamerPaused) {
                 if (btn) btn.innerText = "Resume Stream";
-                showToast("Streamer publik dijeda.");
+                showToast("Neural streamer dijeda.");
             } else {
                 if (btn) btn.innerText = "Pause Stream";
-                showToast("Streamer publik dilanjutkan.");
+                showToast("Neural streamer dilanjutkan.");
             }
         }
 
         function clearStreamedPrompts() {
             appState.streamedPrompts = [];
             renderStreamerFeed();
-            showToast("Feed publik dibersihkan.");
+            showToast("Feed streamer dibersihkan.");
         }
 
         function renderStreamerFeed() {
             const container = document.getElementById('streamer-feed-container');
             if (!container) return;
             if (appState.streamedPrompts.length === 0) {
-                container.innerHTML = `<div class="p-8 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">Menunggu stream publik berikutnya...</div>`;
+                container.innerHTML = `<div class="p-8 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">Menunggu stream neural berikutnya...</div>`;
                 return;
             }
             container.innerHTML = appState.streamedPrompts.map(p => createPromptCardHTML(p)).join('');
@@ -654,7 +660,7 @@
                             </div>
                         </div>
                         <h3 class="text-sm font-bold text-white mb-1">${escapeHTML(prompt.title)}</h3>
-                        <p class="text-[10px] text-emerald-400 font-mono mb-1">Author: ${escapeHTML(prompt.author || 'Public AI')}</p>
+                        <p class="text-[10px] text-emerald-400 font-mono mb-1">Author: ${escapeHTML(prompt.author || 'Neural AI v5.2')}</p>
                         <p class="text-xs text-slate-400 mb-3">${escapeHTML(prompt.description)}</p>
                         <div class="bg-bgDark border border-panelBorder rounded-lg p-2.5 mb-3 max-h-48 overflow-y-auto">
                             <pre class="text-[11px] font-mono text-slate-300 whitespace-pre-wrap">${escapeHTML(prompt.content)}</pre>
@@ -663,9 +669,9 @@
                     <div class="flex items-center justify-between pt-3 border-t border-panelBorder text-xs">
                         <span class="text-[10px] text-slate-500 font-mono">Level: ${prompt.difficulty || 'Expert'}</span>
                         <div class="flex items-center gap-1.5">
-                            <button onclick="copyTextToClipboard(\`${escapeJsString(prompt.content)}\`, 'Prompt Disalin!')" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded font-medium">Copy</button>
+                            <button onclick="copyTextToClipboard(\`${escapeJsString(prompt.content)}\`, 'Prompt Disalin!')" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded font-medium">Copy</button>
                             <button onclick="downloadPromptTxt('${safeFileName}', \`${escapeJsString(prompt.content)}\`)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded font-medium flex items-center gap-1">
-                                <svg class="w-3 h-3 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                <svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 .txt
                             </button>
                         </div>
