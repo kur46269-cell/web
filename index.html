@@ -72,6 +72,57 @@
     <!-- Toast Alert Container -->
     <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
+    <!-- Modal Tambah Prompt Kustom -->
+    <div id="create-prompt-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-panelDark border border-panelBorder rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-panelBorder">
+                <h3 class="text-base font-bold text-white">Create Custom Prompt</h3>
+                <button onclick="closeCreatePromptModal()" class="text-slate-400 hover:text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Prompt Title</label>
+                    <input type="text" id="modal-title" placeholder="e.g. Advanced DataStore Manager" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Category</label>
+                        <select id="modal-category" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                            <option value="Roblox Development">Roblox Development</option>
+                            <option value="Website Development">Website Development</option>
+                            <option value="Python Development">Python Development</option>
+                            <option value="Script Security">Script Security</option>
+                            <option value="AI Development">AI Development</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Language</label>
+                        <select id="modal-language" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                            <option value="Luau / Lua">Luau / Lua</option>
+                            <option value="Python">Python</option>
+                            <option value="JavaScript / React">JavaScript / React</option>
+                            <option value="C++ / C">C++ / C</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Description</label>
+                    <input type="text" id="modal-desc" placeholder="Brief summary..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Prompt Content / Instructions</label>
+                    <textarea id="modal-content" rows="4" placeholder="Bertindaklah sebagai..." class="w-full bg-bgDark border border-panelBorder rounded-lg p-3 text-xs font-mono text-slate-200 focus:outline-none resize-none"></textarea>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2 border-t border-panelBorder">
+                <button onclick="closeCreatePromptModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium">Cancel</button>
+                <button onclick="saveModalPrompt()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold shadow-md">Save Prompt</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Top Navigation Bar -->
     <header class="sticky top-0 z-40 bg-panelDark/90 backdrop-blur-md border-b border-panelBorder">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -119,9 +170,7 @@
                 <div class="lg:hidden flex justify-between items-center pb-4 border-b border-panelBorder">
                     <span class="font-bold text-sm text-slate-300">NAVIGATION</span>
                     <button onclick="toggleMobileSidebar()" class="text-slate-400 hover:text-white">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
                 </div>
 
@@ -336,12 +385,8 @@
                                 <option value="Roblox Development">Roblox Development</option>
                                 <option value="Website Development">Website Development</option>
                                 <option value="Python Development">Python Development</option>
-                                <option value="JavaScript Development">JavaScript Development</option>
-                                <option value="C dan C++">C dan C++</option>
-                                <option value="AI Development">AI Development</option>
                                 <option value="Script Security">Script Security</option>
-                                <option value="Debugging dan Perbaikan">Debugging dan Perbaikan</option>
-                                <option value="Game Development">Game Development</option>
+                                <option value="AI Development">AI Development</option>
                             </select>
                         </div>
                         <div>
@@ -349,8 +394,8 @@
                             <select id="filter-language" onchange="applyLibraryFilters()" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                                 <option value="ALL">All Languages</option>
                                 <option value="Luau / Lua">Luau / Lua</option>
-                                <option value="JavaScript / React">JavaScript / React</option>
                                 <option value="Python">Python</option>
+                                <option value="JavaScript / React">JavaScript / React</option>
                                 <option value="C++ / C">C++ / C</option>
                             </select>
                         </div>
@@ -448,7 +493,6 @@
             }
         ];
 
-        // Generator Pool untuk AI Streamer otomatis tiap detik
         const STREAMER_TEMPLATES = [
             { title: "Live Luau Auto-Save Module v", cat: "Roblox Development", lang: "Luau / Lua", diff: "Advanced", desc: "Autonomously generated persistent DataStore wrapper with debounce.", content: "Bertindaklah sebagai Roblox Luau Engineer. Buat modul Auto-Save dengan debounce 10 detik dan session lock." },
             { title: "Live Python FastAPI Endpoint v", cat: "Python Development", lang: "Python", diff: "Intermediate", desc: "Autonomously generated high-speed asynchronous REST endpoint.", content: "Bertindaklah sebagai Senior Python Developer. Buat endpoint FastAPI async dengan pydantic model validation." },
@@ -476,7 +520,7 @@
             renderLibrary();
             renderWorkspace();
             
-            // NYALAKAN MESIN AI STREAMER OTOMATIS TIAP 1 DETIK (1000ms)
+            // Nyalakan Mesin AI Streamer otomatis tiap 1 detik
             setInterval(runLiveAiStreamerTick, 1000);
             logActivity("Live AI Streamer engine activated (1s interval).");
         };
@@ -507,7 +551,6 @@
             saveToStorage();
         }
 
-        // MESIN UTAMA: MEMBUAT PROMPT BARU OTOMATIS TIAP 1 DETIK
         function runLiveAiStreamerTick() {
             if (appState.isStreamerPaused) return;
 
@@ -523,7 +566,6 @@
                 content: `${template.content} [Timestamp: ${new Date().toLocaleTimeString()}]`
             };
 
-            // Masukkan ke daftar prompt utama & feed streamed
             appState.prompts.unshift(newPrompt);
             appState.streamedPrompts.unshift(newPrompt);
             if (appState.streamedPrompts.length > 20) appState.streamedPrompts.pop();
@@ -531,10 +573,9 @@
             saveToStorage();
             renderMetrics();
             
-            // Update Ticker di Dashboard & Streamer Feed jika aktif
             const ticker = document.getElementById('dashboard-live-ticker');
             if (ticker) {
-                ticker.innerHTML = `<span class="text-emerald-400 font-bold">[NEW AI PROMPT SYNTHESIZED]</span> ${escapeHTML(newPrompt.title)} (${newPrompt.category}) — Click to copy.`;
+                ticker.innerHTML = `<span class="text-emerald-400 font-bold">[NEW AI PROMPT SYNTHESIZED]</span> ${escapeHTML(newPrompt.title)} (${escapeHTML(newPrompt.category)}) — Click to copy.`;
             }
 
             const feedContainer = document.getElementById('streamer-feed-container');
@@ -597,20 +638,30 @@
             if (activeNav) activeNav.classList.add('active', 'bg-slate-800/80', 'text-white');
 
             if (tabId === 'streamer') renderStreamerFeed();
+            if (tabId === 'workspace') renderWorkspace();
+            if (tabId === 'roblox') renderRobloxHub();
+            if (tabId === 'library') applyLibraryFilters();
 
-            document.getElementById('sidebar').classList.add('-translate-x-full');
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) sidebar.classList.add('-translate-x-full');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function toggleMobileSidebar() {
-            document.getElementById('sidebar').classList.toggle('-translate-x-full');
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) sidebar.classList.toggle('-translate-x-full');
         }
 
         function renderMetrics() {
-            document.getElementById('stat-total-prompts').innerText = appState.prompts.length;
-            document.getElementById('stat-streamed-count').innerText = appState.streamedPrompts.length;
-            document.getElementById('stat-total-favorites').innerText = appState.favorites.length;
-            document.getElementById('stat-total-history').innerText = appState.history.length;
+            const totalPromptsEl = document.getElementById('stat-total-prompts');
+            const streamedCountEl = document.getElementById('stat-streamed-count');
+            const totalFavEl = document.getElementById('stat-total-favorites');
+            const totalHistEl = document.getElementById('stat-total-history');
+
+            if (totalPromptsEl) totalPromptsEl.innerText = appState.prompts.length;
+            if (streamedCountEl) streamedCountEl.innerText = appState.streamedPrompts.length;
+            if (totalFavEl) totalFavEl.innerText = appState.favorites.length;
+            if (totalHistEl) totalHistEl.innerText = appState.history.length;
         }
 
         function renderDashboard() {
@@ -631,22 +682,37 @@
 
         function applyLibraryFilters() {
             const cat = document.getElementById('filter-category')?.value || 'ALL';
+            const lang = document.getElementById('filter-language')?.value || 'ALL';
+            const diff = document.getElementById('filter-difficulty')?.value || 'ALL';
             const search = (document.getElementById('filter-search')?.value || '').toLowerCase();
+
             let filtered = appState.prompts.filter(p => {
                 if (cat !== 'ALL' && p.category !== cat) return false;
-                if (search && !p.title.toLowerCase().includes(search)) return false;
+                if (lang !== 'ALL' && p.language !== lang) return false;
+                if (diff !== 'ALL' && p.difficulty !== diff) return false;
+                if (search && !p.title.toLowerCase().includes(search) && !p.description.toLowerCase().includes(search)) return false;
                 return true;
             });
+
             const grid = document.getElementById('library-prompt-grid');
             if (grid) {
-                grid.innerHTML = filtered.length === 0 ? `<div class="col-span-full py-12 text-center text-slate-500">No prompts found.</div>` : filtered.map(p => createPromptCardHTML(p)).join('');
+                grid.innerHTML = filtered.length === 0 ? `<div class="col-span-full py-12 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">No prompts found matching filter.</div>` : filtered.map(p => createPromptCardHTML(p)).join('');
+            }
+        }
+
+        function handleGlobalSearch(val) {
+            switchTab('library');
+            const searchInput = document.getElementById('filter-search');
+            if (searchInput) {
+                searchInput.value = val;
+                applyLibraryFilters();
             }
         }
 
         function createPromptCardHTML(prompt) {
             const isFav = appState.favorites.includes(prompt.id);
             return `
-                <div class="bg-panelDark border border-panelBorder rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
+                <div class="bg-panelDark border border-panelBorder rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all shadow-md">
                     <div>
                         <div class="flex items-start justify-between gap-2 mb-2">
                             <span class="px-2 py-0.5 text-[10px] font-semibold rounded bg-emerald-950/80 text-emerald-400 border border-emerald-800/40">${escapeHTML(prompt.category)}</span>
@@ -664,8 +730,11 @@
                         </div>
                     </div>
                     <div class="flex items-center justify-between pt-3 border-t border-panelBorder text-xs">
-                        <span class="text-[10px] text-slate-500 font-mono">Difficulty: ${escapeHTML(prompt.difficulty)}</span>
-                        <button onclick="copyTextToClipboard(\`${escapeJsString(prompt.content)}\`, 'Prompt Copied!')" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded font-medium">Copy</button>
+                        <span class="text-[10px] text-slate-500 font-mono">Difficulty: ${escapeHTML(prompt.difficulty || 'Intermediate')}</span>
+                        <div class="flex items-center gap-1">
+                            <button onclick="copyTextToClipboard(\`${escapeJsString(prompt.content)}\`, 'Prompt Copied!')" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded font-medium">Copy</button>
+                            <button onclick="duplicatePrompt('${prompt.id}')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded">Duplicate</button>
+                        </div>
                     </div>
                 </div>
             `;
@@ -673,40 +742,129 @@
 
         function toggleFavorite(id) {
             const idx = appState.favorites.indexOf(id);
-            if (idx > -1) { appState.favorites.splice(idx, 1); showToast("Removed favorite."); }
+            if (idx > -1) { appState.favorites.splice(idx, 1); showToast("Removed from favorites."); }
             else { appState.favorites.push(id); showToast("Added to favorites!"); }
             saveToStorage();
             renderMetrics();
             applyLibraryFilters();
+            renderWorkspace();
+            renderRobloxHub();
+        }
+
+        function duplicatePrompt(id) {
+            const target = appState.prompts.find(p => p.id === id);
+            if (!target) return;
+            const newPrompt = {
+                ...target,
+                id: 'p-custom-' + Date.now(),
+                title: `${target.title} (Copy)`
+            };
+            appState.prompts.unshift(newPrompt);
+            saveToStorage();
+            showToast("Prompt duplicated!");
+            renderDashboard();
+            renderRobloxHub();
+            applyLibraryFilters();
+        }
+
+        // Modal Functions
+        function openCreatePromptModal() {
+            document.getElementById('create-prompt-modal').classList.remove('hidden');
+        }
+
+        function closeCreatePromptModal() {
+            document.getElementById('create-prompt-modal').classList.add('hidden');
+        }
+
+        function saveModalPrompt() {
+            const title = document.getElementById('modal-title').value.trim();
+            const category = document.getElementById('modal-category').value;
+            const language = document.getElementById('modal-language').value;
+            const description = document.getElementById('modal-desc').value.trim();
+            const content = document.getElementById('modal-content').value.trim();
+
+            if (!title || !content) {
+                showToast("Title and Content are required!", "error");
+                return;
+            }
+
+            const newCustom = {
+                id: 'p-custom-' + Date.now(),
+                title,
+                category,
+                language,
+                difficulty: 'Intermediate',
+                description: description || 'Custom user prompt template.',
+                content
+            };
+
+            appState.prompts.unshift(newCustom);
+            saveToStorage();
+            closeCreatePromptModal();
+            showToast("Custom prompt created successfully!");
+            renderDashboard();
+            renderRobloxHub();
+            applyLibraryFilters();
+            logActivity(`Created custom prompt: "${title}"`);
+
+            // Clear inputs
+            document.getElementById('modal-title').value = '';
+            document.getElementById('modal-desc').value = '';
+            document.getElementById('modal-content').value = '';
         }
 
         function generateCustomPrompt() {
-            const title = document.getElementById('pb-title').value || "Custom Script";
-            document.getElementById('pb-output').value = `Bertindaklah sebagai Senior Software Engineer. Buat modul untuk [${title}] dengan validasi ketat dan penanganan error pcall.`;
-            showToast("Prompt generated!");
+            const title = document.getElementById('pb-title')?.value || "Custom Script";
+            const out = document.getElementById('pb-output');
+            if (out) {
+                out.value = `Bertindaklah sebagai Senior Software Engineer. Buat arsitektur lengkap untuk [${title}] dengan validasi ketat, manajemen memori, dan penanganan error pcall.`;
+                showToast("Master Prompt Generated!");
+            }
         }
 
         function generateDebuggerPrompt() {
-            const code = document.getElementById('dbg-code').value;
-            document.getElementById('dbg-output').value = `Analisis error pada kode berikut:\n\`\`\`lua\n${code}\n\`\`\`\nTunjukkan akar masalah dan berikan patch perbaikan.`;
-            showToast("Debug prompt generated!");
+            const code = document.getElementById('dbg-code')?.value || "";
+            const out = document.getElementById('dbg-output');
+            if (out) {
+                out.value = `Analisis akar masalah error pada kode berikut:\n\`\`\`lua\n${code}\n\`\`\`\nTunjukkan baris error dan berikan patch perbaikan lengkap.`;
+                showToast("Debug Prompt Generated!");
+            }
+        }
+
+        function renderWorkspace() {
+            const grid = document.getElementById('workspace-grid');
+            if (!grid) return;
+            const favPrompts = appState.prompts.filter(p => appState.favorites.includes(p.id));
+            if (favPrompts.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">No favorites bookmarked in workspace yet.</div>`;
+                return;
+            }
+            grid.innerHTML = favPrompts.map(p => createPromptCardHTML(p)).join('');
         }
 
         function copyTextToClipboard(text, successMsg = "Copied!") {
             const ta = document.createElement("textarea");
             ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
             document.body.appendChild(ta);
             ta.select();
-            document.execCommand('copy');
+            try {
+                document.execCommand('copy');
+                showToast(successMsg);
+                logActivity("Copied prompt content.");
+            } catch (err) {
+                showToast("Failed to copy.", "error");
+            }
             document.body.removeChild(ta);
-            showToast(successMsg);
-            logActivity("Copied prompt.");
         }
 
-        function showToast(msg) {
+        function showToast(msg, type = "success") {
             const container = document.getElementById('toast-container');
+            if (!container) return;
             const toast = document.createElement('div');
-            toast.className = `pointer-events-auto px-4 py-2.5 rounded-lg border bg-slate-900 border-emerald-800 text-slate-100 text-xs font-medium shadow-xl`;
+            const colorClass = type === 'error' ? 'bg-rose-950 border-rose-800 text-rose-200' : 'bg-slate-900 border-emerald-800 text-slate-100';
+            toast.className = `pointer-events-auto px-4 py-2.5 rounded-lg border text-xs font-medium shadow-2xl transition-all ${colorClass}`;
             toast.innerHTML = `<span>${escapeHTML(msg)}</span>`;
             container.appendChild(toast);
             setTimeout(() => toast.remove(), 3000);
