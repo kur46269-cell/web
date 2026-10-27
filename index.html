@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCRIPT PROMPT STUDIO - AI Smart Selector & Neural Engine</title>
+    <title>SCRIPT PROMPT STUDIO - Mega Multi-Code Deep Neural Engine v6.0</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -37,7 +37,7 @@
         ::-webkit-scrollbar-track { background: #07090F; }
         ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #334155; }
-        .glow-emerald { box-shadow: 0 0 20px rgba(16, 185, 129, 0.25); }
+        .glow-emerald { box-shadow: 0 0 25px rgba(16, 185, 129, 0.3); }
         .pulse-live { animation: pulseGlow 1.5s infinite; }
         @keyframes pulseGlow {
             0% { opacity: 1; transform: scale(1); }
@@ -51,65 +51,25 @@
     <!-- Toast Alert Container -->
     <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- Modal AI Smart Selector & Recommender -->
-    <div id="ai-selector-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="bg-panelDark border border-panelBorder rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl">
-            <div class="flex items-center justify-between pb-3 border-b border-panelBorder">
-                <div class="flex items-center gap-2">
-                    <span class="w-3 h-3 rounded-full bg-emerald-500 animate-ping"></span>
-                    <h3 class="text-base font-bold text-white">AI Smart Code Selector & Recommender</h3>
-                </div>
-                <button onclick="closeAiSelectorModal()" class="text-slate-400 hover:text-white">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
-            </div>
-            <div class="space-y-3">
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Ketik kebutuhan skrip atau prompt Anda (Bahasa Natural):</label>
-                    <textarea id="ai-query-input" rows="3" placeholder="Contoh: 'Saya butuh skrip C++ memory pool paling cepat', atau 'Roblox Luau data store anti crash', atau 'FastAPI async AI inference'..." class="w-full bg-bgDark border border-panelBorder rounded-lg p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-500 resize-none"></textarea>
-                </div>
-                <div class="flex justify-end gap-2">
-                    <button onclick="runAiSmartSelector()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow-lg glow-emerald flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        Pilihkan Skrip Terbaik (AI)
-                    </button>
-                </div>
-                <div id="ai-recommendation-result" class="hidden mt-4 pt-4 border-t border-panelBorder space-y-3">
-                    <div class="bg-bgDark border border-emerald-500/40 rounded-xl p-4 space-y-2">
-                        <div class="flex items-center justify-between">
-                            <span id="ai-rec-title" class="text-xs font-bold text-emerald-400"></span>
-                            <span id="ai-rec-score" class="px-2 py-0.5 text-[10px] font-mono bg-emerald-950 text-emerald-300 rounded border border-emerald-800"></span>
-                        </div>
-                        <p id="ai-rec-reason" class="text-xs text-slate-300 italic"></p>
-                        <div class="bg-panelDark border border-panelBorder rounded-lg p-3 max-h-48 overflow-y-auto">
-                            <pre id="ai-rec-code" class="text-[11px] font-mono text-slate-200 whitespace-pre-wrap"></pre>
-                        </div>
-                        <div class="flex justify-end gap-2 pt-2">
-                            <button id="ai-rec-copy-btn" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs rounded font-medium">Copy Code</button>
-                            <button id="ai-rec-download-btn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded font-medium">Export .txt</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Buat Topik / Kategori -->
+    <!-- Modal Buat Topik Kustom -->
     <div id="create-category-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="bg-panelDark border border-panelBorder rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
             <div class="flex items-center justify-between pb-3 border-b border-panelBorder">
-                <h3 class="text-base font-bold text-white">Buat Topik Baru & Auto-Generate .txt</h3>
+                <h3 class="text-base font-bold text-white">Buat Topik Baru & Mega Multi-Code Generator</h3>
                 <button onclick="closeCategoryModal()" class="text-slate-400 hover:text-white">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
             <div>
                 <label class="block text-xs font-medium text-slate-300 mb-1">Nama Topik Kategori Publik</label>
-                <input type="text" id="new-category-name" placeholder="e.g. Web3 Smart Contracts, Game Engine, Cyber Security" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 font-mono">
+                <input type="text" id="new-category-name" placeholder="e.g. Web3 Smart Contracts, Game Engine C++, AI Agent Pipeline" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 font-mono">
+                <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                    🚀 <strong class="text-emerald-400">Mega Engine v6.0:</strong> AI akan merancang file `.txt` sangat panjang yang berisi **banyak blok kode modular** secara lengkap (Core, Helper, Config, dan Test Suite).
+                </p>
             </div>
             <div class="flex justify-end gap-2 pt-3 border-t border-panelBorder">
                 <button onclick="closeCategoryModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium">Batal</button>
-                <button onclick="saveCategoryAndRunNeuralAI()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow-lg glow-emerald">Buat & Auto-Fill .txt</button>
+                <button onclick="saveCategoryAndRunMegaAI()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow-lg glow-emerald">Generate Mega Code</button>
             </div>
         </div>
     </div>
@@ -124,19 +84,19 @@
                     </div>
                     <div>
                         <span class="text-lg font-bold tracking-tight text-white block leading-none">SCRIPT PROMPT STUDIO</span>
-                        <span class="text-[10px] font-mono text-emerald-400 tracking-wider">AI SMART SELECTOR & NEURAL ENGINE v5.2</span>
+                        <span class="text-[10px] font-mono text-emerald-400 tracking-wider">MEGA MULTI-CODE ENGINE v6.0</span>
                     </div>
                 </div>
 
                 <div class="hidden md:flex flex-1 max-w-md mx-8 relative">
-                    <input type="text" id="global-search" oninput="handleGlobalSearch(this.value)" placeholder="Cari prompt publik, kategori, atau kode .txt..." class="w-full bg-bgDark border border-panelBorder rounded-lg pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-all">
+                    <input type="text" id="global-search" oninput="handleGlobalSearch(this.value)" placeholder="Cari prompt publik, kategori, atau banyak blok kode..." class="w-full bg-bgDark border border-panelBorder rounded-lg pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-all">
                     <svg class="w-4 h-4 text-slate-500 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <button onclick="openAiSelectorModal()" class="px-3.5 py-2 text-xs font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition-all flex items-center gap-1.5 shadow-lg glow-emerald">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-                        🤖 Minta Rekomendasi AI
+                    <button onclick="switchTab('chat')" class="px-3.5 py-2 text-xs font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition-all flex items-center gap-1.5 shadow-lg glow-emerald">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                        💬 AI Chat Multi-Code
                     </button>
                     <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 text-slate-400 hover:text-white rounded-lg border border-panelBorder">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -173,9 +133,13 @@
                 <div>
                     <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-2 px-3">Cloud Studio Hub</span>
                     <nav class="space-y-1">
+                        <button onclick="switchTab('chat')" id="nav-chat" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+                            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                            AI Chat Multi-Code <span class="ml-auto px-1.5 py-0.5 text-[9px] font-mono bg-emerald-950 text-emerald-400 rounded border border-emerald-800">V6.0</span>
+                        </button>
                         <button onclick="switchTab('streamer')" id="nav-streamer" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
-                            <svg class="w-4 h-4 text-emerald-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                            Neural AI Streamer <span class="ml-auto px-1.5 py-0.5 text-[9px] font-mono bg-emerald-950 text-emerald-400 rounded border border-emerald-800">V5.2</span>
+                            <svg class="w-4 h-4 text-cyan-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            Mega Code Streamer
                         </button>
                         <button onclick="switchTab('library')" id="nav-library" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
                             <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
@@ -191,8 +155,8 @@
 
             <div class="p-4 border-t border-panelBorder bg-bgDark/50">
                 <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
-                    <span>AI Smart Selector</span>
-                    <span class="text-emerald-400 font-mono font-bold animate-pulse">ONLINE</span>
+                    <span>Mega Engine</span>
+                    <span class="text-emerald-400 font-mono font-bold animate-pulse">V6.0 READY</span>
                 </div>
                 <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
                     <div class="h-full bg-emerald-500 rounded-full w-full"></div>
@@ -208,15 +172,15 @@
                 <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-panelDark via-slate-900 to-panelDark border border-panelBorder p-6">
                     <div class="relative z-10">
                         <div class="flex items-center gap-2 mb-2">
-                            <span class="px-2.5 py-1 text-[10px] font-mono font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/40 rounded uppercase tracking-wider pulse-live">● AI Smart Selector & Recommender Active</span>
+                            <span class="px-2.5 py-1 text-[10px] font-mono font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/40 rounded uppercase tracking-wider pulse-live">● Mega Multi-Code Engine v6.0 Active</span>
                         </div>
                         <h1 class="text-2xl sm:text-3xl font-extrabold text-white">SCRIPT PROMPT & IDEA STUDIO</h1>
                         <p class="text-xs sm:text-sm text-slate-400 max-w-2xl mt-1">
-                            Bingung cari kode yang pas? Cukup klik tombol <strong>Minta Rekomendasi AI</strong> di atas, dan AI akan memilihkan kode terbaik yang paling optimal untuk Anda!
+                            Sistem AI kini menghasilkan file `.txt` sangat panjang yang berisi **banyak blok kode modular lengkap** (Core, Helper, Config, Test) dalam sekali klik!
                         </p>
                         <div class="flex flex-wrap gap-3 mt-4">
-                            <button onclick="openAiSelectorModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-2 transition-all shadow-lg glow-emerald">
-                                🤖 Minta Rekomendasi AI Sekarang
+                            <button onclick="switchTab('chat')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-2 transition-all shadow-lg glow-emerald">
+                                💬 Mulai Chat Multi-Code AI
                             </button>
                         </div>
                     </div>
@@ -227,18 +191,18 @@
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Live Neural AI Streamer Feed</h2>
+                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Live Mega Code Streamer Feed</h2>
                         </div>
                         <button onclick="switchTab('streamer')" class="text-xs text-blue-400 hover:text-blue-300 font-medium">Buka Feed &rarr;</button>
                     </div>
                     <div id="dashboard-live-ticker" class="bg-bgDark border border-panelBorder rounded-lg p-3 font-mono text-xs text-slate-300">
-                        Neural engine aktif...
+                        Mega engine siap men-generate banyak blok kode...
                     </div>
                 </div>
 
                 <div>
                     <div class="flex items-center justify-between mb-3">
-                        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Prompt & Ide Publik Terbaru</h2>
+                        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Prompt & Multi-Code Terbaru</h2>
                         <button onclick="switchTab('library')" class="text-xs text-blue-400 hover:text-blue-300 font-medium">Lihat Semua &rarr;</button>
                     </div>
                     <div id="dashboard-featured-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
@@ -249,13 +213,47 @@
                     <div class="flex items-center justify-between pb-2 border-b border-panelBorder">
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">AI Selector & Cloud Log</h2>
+                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">Mega Engine & Public Cloud Log</h2>
                         </div>
                         <button onclick="clearTerminalLogs()" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-[10px] font-mono">Clear Terminal</button>
                     </div>
                     <div id="realtime-terminal" class="bg-bgDark border border-panelBorder rounded-lg p-3 font-mono text-[11px] text-emerald-400 h-36 overflow-y-auto space-y-1">
-                        <div>[00:00:00] [AI] Smart Selector & Recommender Engine initialized.</div>
+                        <div>[00:00:00] [MEGA ENGINE] v6.0 online. Multi-code long-format synthesis active.</div>
                     </div>
+                </div>
+            </section>
+
+            <!-- VIEW: AI CHAT MULTI-CODE -->
+            <section id="view-chat" class="hidden space-y-4">
+                <div class="bg-panelDark p-4 rounded-xl border border-panelBorder flex items-center justify-between">
+                    <div>
+                        <h1 class="text-xl font-bold text-white flex items-center gap-2">
+                            <span>💬 AI Chat Assistant (Multi-Code & Long-Format)</span>
+                            <span class="px-2 py-0.5 text-[10px] font-mono bg-emerald-950 text-emerald-400 border border-emerald-800 rounded">V6.0</span>
+                        </h1>
+                        <p class="text-xs text-slate-400 mt-0.5">Ketik permintaan Anda (misal: "Buatkan sistem game C++ lengkap dengan physics, rendering, dan main loop"). AI akan memberikan banyak blok kode panjang sekaligus!</p>
+                    </div>
+                    <button onclick="clearChatHistory()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium">Clear Chat</button>
+                </div>
+
+                <!-- Chat Messages Container -->
+                <div id="chat-messages" class="bg-panelDark border border-panelBorder rounded-xl p-4 h-[480px] overflow-y-auto space-y-4 font-sans text-xs">
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold shrink-0">AI</div>
+                        <div class="bg-bgDark border border-panelBorder rounded-xl p-3.5 space-y-2 max-w-2xl text-slate-200">
+                            <p class="font-semibold text-emerald-400">Halo! Saya Mega AI Engine v6.0.</p>
+                            <p>Setiap jawaban saya sekarang akan menyertakan **banyak blok kode modular panjang** (Core, Helper, Config, Test) dalam satu file `.txt` utuh yang siap Anda unduh!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Input Form -->
+                <div class="bg-panelDark border border-panelBorder rounded-xl p-3 flex items-center gap-3">
+                    <input type="text" id="chat-input" onkeydown="if(event.key==='Enter') sendChatMessage()" placeholder="Ketik permintaan pembuatan banyak blok kode panjang..." class="flex-1 bg-bgDark border border-panelBorder rounded-lg px-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 font-sans">
+                    <button onclick="sendChatMessage()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow-lg glow-emerald flex items-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                        Kirim
+                    </button>
                 </div>
             </section>
 
@@ -263,11 +261,8 @@
             <section id="view-streamer" class="hidden space-y-6">
                 <div class="bg-panelDark p-5 rounded-xl border border-emerald-500/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/40 rounded">NEURAL STREAMER v5.2</span>
-                        </div>
-                        <h1 class="text-xl font-bold text-white">Live Neural AI Streamer Feed (.txt)</h1>
-                        <p class="text-xs text-slate-400">AI Neural Engine secara otomatis men-generate skrip dan prompt tingkat lanjut secara real-time.</p>
+                        <h1 class="text-xl font-bold text-white">Live Mega Code Streamer Feed (.txt)</h1>
+                        <p class="text-xs text-slate-400">AI secara otomatis men-generate file `.txt` panjang berisi banyak blok kode modular secara real-time.</p>
                     </div>
                     <div class="flex items-center gap-2">
                         <button onclick="toggleStreamerPause()" id="btn-streamer-toggle" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded-lg text-xs font-semibold">Pause / Resume</button>
@@ -279,10 +274,10 @@
                     <div class="lg:col-span-8 space-y-4" id="streamer-feed-container"></div>
                     <div class="lg:col-span-4 space-y-4">
                         <div class="bg-panelDark border border-panelBorder rounded-xl p-4 space-y-3">
-                            <h2 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Neural Metrics</h2>
+                            <h2 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Engine Metrics</h2>
                             <div class="space-y-2 text-xs font-mono">
                                 <div class="flex justify-between text-slate-400"><span>Total Public Files:</span><span id="streamer-stat-total" class="text-emerald-400">0</span></div>
-                                <div class="flex justify-between text-slate-400"><span>Engine Status:</span><span class="text-emerald-400">Active (v5.2)</span></div>
+                                <div class="flex justify-between text-slate-400"><span>Engine Version:</span><span class="text-emerald-400">v6.0 Mega</span></div>
                             </div>
                         </div>
                     </div>
@@ -294,7 +289,7 @@
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-panelDark p-4 rounded-xl border border-panelBorder">
                     <div>
                         <h1 class="text-xl font-bold text-white">Semua Prompt & File .txt Publik</h1>
-                        <p class="text-xs text-slate-400">Jelajahi seluruh prompt yang di-generate AI Neural Engine dari semua topik publik.</p>
+                        <p class="text-xs text-slate-400">Jelajahi seluruh file `.txt` panjang berisi banyak blok kode.</p>
                     </div>
                     <button onclick="openCategoryModal()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow-lg glow-emerald">
                         + Topik Baru
@@ -332,7 +327,7 @@
         </main>
     </div>
 
-    <!-- JAVASCRIPT & AI SMART SELECTOR ENGINE -->
+    <!-- JAVASCRIPT & MEGA-NEURAL ENGINE v6.0 -->
     <script>
         const INITIAL_CATEGORIES = [
             "C dan C++",
@@ -344,24 +339,14 @@
 
         const INITIAL_PROMPTS = [
             {
-                id: "p-cpp-memory-pool",
-                title: "C++ High-Performance Memory Pool Allocator",
+                id: "p-cpp-mega-system",
+                title: "C++ Complete Game Engine Subsystems (Multi-Code)",
                 category: "C dan C++",
                 language: "C++",
                 difficulty: "Expert",
-                author: "AI Smart Selector",
-                description: "Alokator memori kustom berbasis block fixed-size untuk menghindari fragmentasi heap pada game engine.",
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Senior C++ Game Engine Architect. Design a high-performance fixed-size memory pool allocator in C++20.\n\n### NEURAL CODE BLUEPRINT\n1. Pre-allocate contiguous heap memory block during initialization phase.\n2. Intrusive free-list management for O(1) complexity allocation and deallocation.\n3. Thread-safe wrapper utilizing std::mutex or lock-free atomics for concurrent task workers.\n\n### IMPLEMENTATION SPECIFICATION\n\`\`\`cpp\n#include <vector>\n#include <iostream>\n#include <mutex>\n\ntemplate <typename T, size_t BlockSize = 4096>\nclass MemoryPool {\nprivate:\n    struct Node { Node* next; };\n    Node* freeList = nullptr;\n    std::vector<void*> chunks;\n    std::mutex mtx;\npublic:\n    MemoryPool() = default;\n};\n\`\`\``
-            },
-            {
-                id: "p-java-microservice",
-                title: "Java Spring Boot Reactive Microservice",
-                category: "Java Enterprise",
-                language: "Java",
-                difficulty: "Advanced",
-                author: "AI Smart Selector",
-                description: "Enterprise microservice non-blocking menggunakan Spring WebFlux, R2DBC, dan Resilience4j.",
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal Java Enterprise Architect. Design a reactive microservice using Spring Boot 3.x and R2DBC.\n\n### NEURAL ARCHITECTURE BLUEPRINT\n1. Fully reactive end-to-end non-blocking database queries with PostgreSQL R2DBC.\n2. Resilience4j circuit breakers and rate limiters for fault tolerance.\n\n### CODE SPECIFICATION\n\`\`\`java\n@RestController\n@RequestMapping("/api/v1/secure")\npublic class ReactiveController {\n    @GetMapping("/data")\n    public Mono<ServerResponse> getData() {\n        return Mono.just(ServerResponse.ok().bodyValue("Secure Payload"));\n    }\n}\n\`\`\``
+                author: "Mega AI Engine v6.0",
+                description: "File .txt panjang berisi banyak blok kode: MemoryPool, RenderPipeline, dan PhysicsEngine.",
+                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal Game Engine Architect. Design a multi-subsystem C++20 game engine.\n\n### MODULE 1: MemoryPool.h (Fixed-Size Allocator)\n\`\`\`cpp\n#include <vector>\n#include <mutex>\n\ntemplate <typename T, size_t BlockSize = 4096>\nclass MemoryPool {\nprivate:\n    struct Node { Node* next; };\n    Node* freeList = nullptr;\n    std::vector<void*> chunks;\n    std::mutex mtx;\npublic:\n    MemoryPool() = default;\n    ~MemoryPool() {\n        for (auto chunk : chunks) std::free(chunk);\n    }\n};\n\`\`\`\n\n### MODULE 2: RenderPipeline.cpp (Graphics Dispatcher)\n\`\`\`cpp\n#include <iostream>\n\nclass RenderPipeline {\npublic:\n    void beginFrame() { std::cout << "[RENDER] Beginning frame dispatch...\\n"; }\n    void drawMesh(int meshId) { std::cout << "[RENDER] Drawing mesh ID: " << meshId << "\\n"; }\n    void endFrame() { std::cout << "[RENDER] Presenting swapchain frame.\\n"; }\n};\n\`\`\`\n\n### MODULE 3: PhysicsEngine.cpp (Collision Resolver)\n\`\`\`cpp\n#include <cmath>\n\nstruct Vector3 { float x, y, z; };\nclass PhysicsEngine {\npublic:\n    void stepSimulation(float dt) {\n        // Integrate velocities and resolve rigid body contacts\n    }\n};\n\`\`\``
             }
         ];
 
@@ -370,6 +355,7 @@
             prompts: [],
             favorites: [],
             streamedPrompts: [],
+            chatHistory: [],
             isStreamerPaused: false,
             activeTab: 'dashboard'
         };
@@ -385,27 +371,31 @@
             renderDashboard();
             renderLibrary();
             renderWorkspace();
+            renderChatHistory();
 
-            setInterval(runNeuralAiStreamerTick, 3000);
-            terminalLog("AI SELECTOR: Engine ready. Click 'Minta Rekomendasi AI' to get the best code instantly.");
+            setInterval(runMegaAiStreamerTick, 4000);
+            terminalLog("MEGA ENGINE: v6.0 online. Multi-code long-format generator ready.");
         };
 
         function loadFromStorage() {
             try {
-                const cats = localStorage.getItem('sps_selector_categories_v7');
-                const prompts = localStorage.getItem('sps_selector_prompts_v7');
-                const favs = localStorage.getItem('sps_selector_favs_v7');
+                const cats = localStorage.getItem('sps_mega_cats_v9');
+                const prompts = localStorage.getItem('sps_mega_prompts_v9');
+                const favs = localStorage.getItem('sps_mega_favs_v9');
+                const chats = localStorage.getItem('sps_mega_chats_v9');
                 if (cats) appState.categories = JSON.parse(cats);
                 if (prompts) appState.prompts = JSON.parse(prompts);
                 if (favs) appState.favorites = JSON.parse(favs);
+                if (chats) appState.chatHistory = JSON.parse(chats);
             } catch (err) {}
         }
 
         function saveToStorage() {
             try {
-                localStorage.setItem('sps_selector_categories_v7', JSON.stringify(appState.categories));
-                localStorage.setItem('sps_selector_prompts_v7', JSON.stringify(appState.prompts));
-                localStorage.setItem('sps_selector_favs_v7', JSON.stringify(appState.favorites));
+                localStorage.setItem('sps_mega_cats_v9', JSON.stringify(appState.categories));
+                localStorage.setItem('sps_mega_prompts_v9', JSON.stringify(appState.prompts));
+                localStorage.setItem('sps_mega_favs_v9', JSON.stringify(appState.favorites));
+                localStorage.setItem('sps_mega_chats_v9', JSON.stringify(appState.chatHistory));
             } catch (err) {}
         }
 
@@ -425,74 +415,143 @@
             if (term) term.innerHTML = `<div>[${new Date().toLocaleTimeString()}] [TERMINAL] Logs cleared.</div>`;
         }
 
-        // AI SMART CODE SELECTOR & RECOMMENDER ENGINE
-        function openAiSelectorModal() {
-            document.getElementById('ai-selector-modal').classList.remove('hidden');
-            document.getElementById('ai-recommendation-result').classList.add('hidden');
-            document.getElementById('ai-query-input').value = '';
-        }
-        function closeAiSelectorModal() {
-            document.getElementById('ai-selector-modal').classList.add('hidden');
-        }
+        // AI CHAT MULTI-CODE GENERATOR
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const query = input.value.trim();
+            if (!query) return;
 
-        function runAiSmartSelector() {
-            const query = document.getElementById('ai-query-input').value.trim().toLowerCase();
-            if (!query) {
-                showToast("Tuliskan dulu kebutuhan skrip Anda!", "error");
-                return;
-            }
+            appState.chatHistory.push({ sender: 'user', text: query, time: new Date().toLocaleTimeString() });
+            input.value = '';
+            renderChatHistory();
+            terminalLog(`CHAT: User requested multi-code for "${query}"`);
 
-            terminalLog(`AI SELECTOR: Analyzing request "${query}" across ${appState.prompts.length} scripts...`);
-
-            // Algoritma pencocokan skor AI cerdas
-            let bestMatch = null;
-            let highestScore = -1;
-
-            appState.prompts.forEach(p => {
-                let score = 0;
-                const targetText = (p.title + " " + p.category + " " + p.description + " " + p.content).toLowerCase();
-                
-                const keywords = query.split(/\s+/);
-                keywords.forEach(kw => {
-                    if (kw.length > 2 && targetText.includes(kw)) {
-                        score += kw.length * 2;
-                    }
+            setTimeout(() => {
+                const aiResponse = generateMegaAiResponse(query);
+                appState.chatHistory.push({ 
+                    sender: 'ai', 
+                    text: aiResponse.text, 
+                    code: aiResponse.code, 
+                    title: aiResponse.title, 
+                    time: new Date().toLocaleTimeString() 
                 });
 
-                // Bonus skor untuk kecocokan kategori langsung
-                if (query.includes(p.category.toLowerCase())) score += 15;
-                if (query.includes(p.language.toLowerCase())) score += 15;
+                const newPrompt = {
+                    id: 'p-mega-chat-' + Date.now(),
+                    title: aiResponse.title,
+                    category: aiResponse.category,
+                    language: aiResponse.language,
+                    difficulty: 'Expert',
+                    author: 'Mega AI Engine v6.0',
+                    description: `File .txt panjang berisi banyak blok kode modular untuk: "${query}"`,
+                    content: aiResponse.code
+                };
 
-                if (score > highestScore) {
-                    highestScore = score;
-                    bestMatch = p;
+                appState.prompts.unshift(newPrompt);
+                saveToStorage();
+                renderDashboard();
+                applyLibraryFilters();
+                renderChatHistory();
+                terminalLog(`MEGA ENGINE: Synthesized multi-code script & saved to public library.`);
+            }, 900);
+        }
+
+        function generateMegaAiResponse(query) {
+            const q = query.toLowerCase();
+            let title = `Complete Multi-Code System: ${query.substring(0, 30)}`;
+            let category = "Python & AI";
+            let language = "Python";
+            let multiCodeContent = "";
+
+            if (q.includes("cpp") || q.includes("c++") || q.includes("game") || q.includes("engine")) {
+                title = "C++ High-Performance Modular Game Architecture";
+                category = "C dan C++";
+                language = "C++";
+                multiCodeContent = `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal C++ Architect. Implement a complete multi-module system for "${query}".\n\n### MODULE 1: Config.h (Global Constants & Settings)\n\`\`\`cpp\n#pragma once\n#define ENGINE_VERSION "6.0"\n#define MAX_WORKERS 8\nstruct EngineConfig { bool vsync = true; int targetFps = 144; };\n\`\`\`\n\n### MODULE 2: TaskQueue.h (Lock-Free Thread Dispatcher)\n\`\`\`cpp\n#include <queue>\n#include <mutex>\n#include <condition_variable>\n\ntemplate <typename T>\nclass ThreadSafeQueue {\nprivate:\n    std::queue<T> queue;\n    std::mutex mtx;\n    std::condition_variable cv;\npublic:\n    void push(T item) {\n        std::lock_guard<std::mutex> lock(mtx);\n        queue.push(item);\n        cv.notify_one();\n    }\n    T pop() {\n        std::unique_lock<std::mutex> lock(mtx);\n        cv.wait(lock, [this]{ return !queue.empty(); });\n        T item = queue.front(); queue.pop();\n        return item;\n    }\n};\n\`\`\`\n\n### MODULE 3: MainApp.cpp (Execution & Stress Test)\n\`\`\`cpp\n#include <iostream>\nint main() {\n    std::cout << "Starting C++ Multi-Code Subsystem v" << ENGINE_VERSION << "\\n";\n    ThreadSafeQueue<int> taskPool;\n    taskPool.push(101);\n    std::cout << "Successfully dispatched initial task.\\n";\n    return 0;\n}\n\`\`\``;
+            } else if (q.includes("roblox") || q.includes("luau") || q.includes("combat")) {
+                title = "Roblox Luau Advanced Modular Framework (Client-Server)";
+                category = "Roblox Development";
+                language = "Luau / Lua";
+                multiCodeContent = `### SYSTEM ROLE & OBJECTIVE\nAct as an Elite Roblox Luau Engineer for "${query}".\n\n### MODULE 1: Constants.lua (Shared Configuration)\n\`\`\`lua\nlocal Constants = {}\nConstants.MAX_HEALTH = 100\nConstants.COMBAT_COOLDOWN = 0.75\nreturn Constants\n\`\`\`\n\n### MODULE 2: CombatService.lua (Server Hit Registration)\n\`\`\`lua\nlocal ReplicatedStorage = game:GetService(\"ReplicatedStorage\")\nlocal Events = ReplicatedStorage:WaitForChild(\"RemoteEvents\")\n\nlocal function processHit(player, targetCharacter)\n    local humanoid = targetCharacter:FindFirstChildOfClass(\"Humanoid\")\n    if humanoid then\n        humanoid:TakeDamage(25)\n    end\nend\nEvents.RequestHit.OnServerEvent:Connect(processHit)\n\`\`\`\n\n### MODULE 3: CombatClient.lua (Client Input & Prediction)\n\`\`\`lua\nlocal UserInputService = game:GetService(\"UserInputService\")\nUserInputService.InputBegan:Connect(function(input, gpe)\n    if gpe then return end\n    if input.KeyCode == Enum.KeyCode.E then\n        print(\"Client triggered combat action.\")\n    end\nend)\n\`\`\``;
+            } else {
+                title = `Python Multi-Service Pipeline: ${query.substring(0, 25)}`;
+                category = "Python & AI";
+                language = "Python";
+                multiCodeContent = `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal Python Architect for "${query}".\n\n### MODULE 1: Settings.py (Configuration & Environment)\n\`\`\`python\nimport os\nfrom pydantic_settings import BaseSettings\n\nclass Settings(BaseSettings):\n    app_name: str = "Mega Python Engine"\n    debug_mode: bool = True\n    redis_url: str = "redis://localhost:6379"\n    class Config:\n        env_file = ".env"\n\`\`\`\n\n### MODULE 2: WorkerQueue.py (Async Task Processor)\n\`\`\`python\nimport asyncio\nimport logging\n\nasync def process_async_task(payload: dict):\n    logging.info(f"Processing payload: {payload}")\n    await asyncio.sleep(0.1)\n    return {"status": "COMPLETED", "result": payload}\n\`\`\`\n\n### MODULE 3: MainApi.py (FastAPI Server Entry)\n\`\`\`python\nfrom fastapi import FastAPI\n\napp = FastAPI(title="Mega Multi-Code API")\n@app.get("/health")\nasync def health_check():\n    return {"status": "ONLINE", "engine": "v6.0"}\n\`\`\``;
+            }
+
+            return {
+                text: `Berhasil! Saya telah merancang file `.txt` master berukuran panjang yang berisi **banyak blok kode modular** (Config, Worker, dan Main Entry) untuk permintaan: **"${query}"**.`,
+                code: multiCodeContent,
+                title: title,
+                category: category,
+                language: language
+            };
+        }
+
+        function renderChatHistory() {
+            const container = document.getElementById('chat-messages');
+            if (!container) return;
+
+            let html = `
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold shrink-0">AI</div>
+                    <div class="bg-bgDark border border-panelBorder rounded-xl p-3.5 space-y-2 max-w-2xl text-slate-200">
+                        <p class="font-semibold text-emerald-400">Halo! Saya Mega AI Engine v6.0.</p>
+                        <p>Setiap jawaban saya menyertakan **banyak blok kode modular panjang** dalam satu file `.txt` utuh.</p>
+                    </div>
+                </div>
+            `;
+
+            appState.chatHistory.forEach(msg => {
+                if (msg.sender === 'user') {
+                    html += `
+                        <div class="flex items-start justify-end gap-3">
+                            <div class="bg-emerald-950 border border-emerald-800/50 rounded-xl p-3.5 space-y-1 max-w-2xl text-slate-100">
+                                <p>${escapeHTML(msg.text)}</p>
+                                <span class="text-[9px] text-emerald-400 font-mono block text-right">${msg.time}</span>
+                            </div>
+                            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold shrink-0">U</div>
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold shrink-0">AI</div>
+                            <div class="bg-bgDark border border-panelBorder rounded-xl p-3.5 space-y-3 max-w-2xl text-slate-200">
+                                <p>${escapeHTML(msg.text)}</p>
+                                ${msg.code ? `
+                                    <div class="bg-panelDark border border-panelBorder rounded-lg p-3 space-y-2">
+                                        <div class="flex items-center justify-between text-[11px] font-mono text-emerald-400">
+                                            <span>📄 ${escapeHTML(msg.title)} (Multi-Code .txt)</span>
+                                            <span class="bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">Auto-Synced</span>
+                                        </div>
+                                        <pre class="text-[11px] font-mono text-slate-300 whitespace-pre-wrap max-h-56 overflow-y-auto">${escapeHTML(msg.code)}</pre>
+                                        <div class="flex justify-end gap-2 pt-1">
+                                            <button onclick="copyTextToClipboard(\`${escapeJsString(msg.code)}\`, 'Semua blok kode disalin!')" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-[11px]">Copy All Code</button>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                <span class="text-[9px] text-slate-500 font-mono block">${msg.time}</span>
+                            </div>
+                        </div>
+                    `;
                 }
             });
 
-            // Fallback jika skor terlalu rendah
-            if (!bestMatch || highestScore <= 0) {
-                bestMatch = appState.prompts[Math.floor(Math.random() * appState.prompts.length)];
-            }
-
-            const resultContainer = document.getElementById('ai-recommendation-result');
-            document.getElementById('ai-rec-title').innerText = bestMatch.title;
-            document.getElementById('ai-rec-score').innerText = `AI Match Score: ${Math.max(highestScore * 5, 88)}% (Optimal)`;
-            document.getElementById('ai-rec-reason').innerText = `💡 AI Recommendation Reason: Skrip ini dipilih karena memiliki arsitektur paling bersih, mendukung manajemen memori tingkat lanjut untuk kategori "${bestMatch.category}", serta lolos uji keamanan produksi.`;
-            document.getElementById('ai-rec-code').innerText = bestMatch.content;
-
-            const copyBtn = document.getElementById('ai-rec-copy-btn');
-            const downloadBtn = document.getElementById('ai-rec-download-btn');
-
-            copyBtn.onclick = () => copyTextToClipboard(bestMatch.content, "Skrip terbaik berhasil disalin!");
-            downloadBtn.onclick = () => downloadPromptTxt(bestMatch.title.replace(/[^a-zA-Z0-9]/g, '_'), bestMatch.content);
-
-            resultContainer.classList.remove('hidden');
-            showToast("AI berhasil memilihkan skrip terbaik!");
-            terminalLog(`AI SELECTOR: Selected "${bestMatch.title}" with high precision score.`);
+            container.innerHTML = html;
+            container.scrollTop = container.scrollHeight;
         }
 
-        // NEURAL TOPIC GENERATOR
-        function saveCategoryAndRunNeuralAI() {
+        function clearChatHistory() {
+            appState.chatHistory = [];
+            saveToStorage();
+            renderChatHistory();
+            showToast("Riwayat chat dibersihkan.");
+        }
+
+        // MEGA TOPIC GENERATOR
+        function saveCategoryAndRunMegaAI() {
             const nameInput = document.getElementById('new-category-name');
             const catName = nameInput.value.trim();
             if (!catName) {
@@ -506,20 +565,18 @@
 
             appState.categories.push(catName);
 
-            const neuralGeneratedPrompts = [
-                {
-                    id: 'p-neural-' + Date.now() + '-1',
-                    title: `Neural Master: ${catName} - Core Architectural Framework`,
-                    category: catName,
-                    language: catName.split(' ')[0],
-                    difficulty: 'Expert',
-                    author: 'AI Smart Selector v5.2',
-                    description: `File .txt master hasil sintesis AI untuk perancangan sistem ${catName}.`,
-                    content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal ${catName} Architect. Design an ultra-scalable master architecture.\n\n### MASTER CODE SPECIFICATION\n\`\`\`\nclass ${catName.replace(/[^a-zA-Z0-9]/g, '')}Core {\n    constructor() { console.log("Core initialized for ${catName}"); }\n}\n\`\``
-                }
-            ];
+            const megaGeneratedPrompt = {
+                id: 'p-mega-topic-' + Date.now(),
+                title: `Mega Master Multi-Code: ${catName} Subsystems`,
+                category: catName,
+                language: catName.split(' ')[0],
+                difficulty: 'Expert',
+                author: 'Mega AI Engine v6.0',
+                description: `File .txt master panjang berisi banyak blok kode modular untuk ${catName}.`,
+                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal ${catName} Architect. Design a multi-module production framework.\n\n### MODULE 1: CoreSetup.h (Initialization & Config)\n\`\`\`\n// Core initialization for ${catName}\nstruct SystemConfig { bool secure = true; int maxThreads = 4; };\n\`\`\`\n\n### MODULE 2: WorkerEngine.cpp (Asynchronous Handler)\n\`\`\`\n// Async worker pool for ${catName}\nclass WorkerEngine {\npublic:\n    void dispatchTask() { /* Processing payload */ }\n};\n\`\`\`\n\n### MODULE 3: TestSuite.cpp (Unit & Integration Tests)\n\`\`\`\n// Automated test harness for ${catName}\nint main() {\n    return 0;\n}\n\`\`\``
+            };
 
-            appState.prompts.unshift(...neuralGeneratedPrompts);
+            appState.prompts.unshift(megaGeneratedPrompt);
             saveToStorage();
             closeCategoryModal();
 
@@ -528,25 +585,25 @@
             renderDashboard();
             applyLibraryFilters();
 
-            showToast(`Topik "${catName}" berhasil dibuat & AI men-generate .txt master!`);
-            terminalLog(`AI: Generated master files for [${catName}]`);
+            showToast(`Topik "${catName}" berhasil dibuat & AI men-generate multi-code .txt!`);
+            terminalLog(`MEGA ENGINE: Generated multi-code master file for [${catName}]`);
             nameInput.value = '';
         }
 
-        function runNeuralAiStreamerTick() {
+        function runMegaAiStreamerTick() {
             if (appState.isStreamerPaused) return;
 
             const randomCat = appState.categories[Math.floor(Math.random() * appState.categories.length)];
             const randId = Math.floor(Math.random() * 90000) + 10000;
             const newPrompt = {
-                id: 'p-neural-stream-' + Date.now(),
-                title: `Neural Stream: ${randomCat} - Script v${randId.toString().slice(-3)}`,
+                id: 'p-mega-stream-' + Date.now(),
+                title: `Mega Stream: ${randomCat} Multi-Code v${randId.toString().slice(-3)}`,
                 category: randomCat,
                 language: randomCat.split(' ')[0],
                 difficulty: 'Expert',
-                author: 'AI Streamer v5.2',
-                description: `File .txt publik hasil generate AI otonom untuk topik ${randomCat}.`,
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as an Autonomous Architect for ${randomCat}.\n\n### CODE BLUEPRINT\n\`\`\`\nfunction runNeuralPipeline() {\n    console.log("Executing ${randomCat} module...");\n}\n\`\``
+                author: 'Mega Streamer v6.0',
+                description: `File .txt panjang berisi banyak blok kode modular untuk topik ${randomCat}.`,
+                content: `### SYSTEM ROLE & OBJECTIVE\nAct as Lead Architect for ${randomCat}.\n\n### MODULE 1: Core.h\n\`\`\`\nstruct ${randomCat.replace(/[^a-zA-Z0-9]/g, '')}Core { int id; };\n\`\`\`\n\n### MODULE 2: Pipeline.cpp\n\`\`\`\nvoid executePipeline() { /* Multi-code execution */ }\n\`\`\``
             };
 
             appState.prompts.unshift(newPrompt);
@@ -557,7 +614,7 @@
 
             const ticker = document.getElementById('dashboard-live-ticker');
             if (ticker) {
-                ticker.innerHTML = `<span class="text-emerald-400 font-bold">[AI STREAM]</span> <span class="text-white">${escapeHTML(newPrompt.title)}</span>`;
+                ticker.innerHTML = `<span class="text-emerald-400 font-bold">[MEGA STREAM]</span> <span class="text-white">${escapeHTML(newPrompt.title)}</span>`;
             }
 
             if (appState.activeTab === 'streamer') renderStreamerFeed();
@@ -631,6 +688,7 @@
             if (tabId === 'streamer') renderStreamerFeed();
             if (tabId === 'library') applyLibraryFilters();
             if (tabId === 'workspace') renderWorkspace();
+            if (tabId === 'chat') renderChatHistory();
 
             const sidebar = document.getElementById('sidebar');
             if (sidebar) sidebar.classList.add('-translate-x-full');
@@ -709,16 +767,16 @@
                             </div>
                         </div>
                         <h3 class="text-sm font-bold text-white mb-1">${escapeHTML(prompt.title)}</h3>
-                        <p class="text-[10px] text-emerald-400 font-mono mb-1">Author: ${escapeHTML(prompt.author || 'AI Smart Selector')}</p>
+                        <p class="text-[10px] text-emerald-400 font-mono mb-1">Author: ${escapeHTML(prompt.author || 'Mega AI Engine v6.0')}</p>
                         <p class="text-xs text-slate-400 mb-3">${escapeHTML(prompt.description)}</p>
-                        <div class="bg-bgDark border border-panelBorder rounded-lg p-2.5 mb-3 max-h-48 overflow-y-auto">
+                        <div class="bg-bgDark border border-panelBorder rounded-lg p-2.5 mb-3 max-h-56 overflow-y-auto">
                             <pre class="text-[11px] font-mono text-slate-300 whitespace-pre-wrap">${escapeHTML(prompt.content)}</pre>
                         </div>
                     </div>
                     <div class="flex items-center justify-between pt-3 border-t border-panelBorder text-xs">
                         <span class="text-[10px] text-slate-500 font-mono">Level: ${prompt.difficulty || 'Expert'}</span>
                         <div class="flex items-center gap-1.5">
-                            <button onclick="copyTextToClipboard(\`${escapeJsString(prompt.content)}\`, 'Disalin!')" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded font-medium">Copy</button>
+                            <button onclick="copyTextToClipboard(\`${escapeJsString(prompt.content)}\`, 'Semua blok kode disalin!')" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded font-medium">Copy All</button>
                             <button onclick="downloadPromptTxt('${safeFileName}', \`${escapeJsString(prompt.content)}\`)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded font-medium flex items-center gap-1">
                                 <svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 .txt
