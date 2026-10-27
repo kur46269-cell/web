@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCRIPT PROMPT STUDIO - Unlimited Long-Context & Live Terminal</title>
+    <title>SCRIPT PROMPT STUDIO - Mass Batch Streamer & Custom Categories</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -37,26 +37,12 @@
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #080B12;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1E293B;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #334155;
-        }
-        .glow-blue {
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
-        }
-        .pulse-live {
-            animation: pulseGlow 1.5s infinite;
-        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #080B12; }
+        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        .glow-blue { box-shadow: 0 0 15px rgba(59, 130, 246, 0.25); }
+        .pulse-live { animation: pulseGlow 1.5s infinite; }
         @keyframes pulseGlow {
             0% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.6; transform: scale(1.02); }
@@ -69,91 +55,93 @@
     <!-- Toast Alert Container -->
     <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- Modal Tambah Prompt Kustom (Unlimited) -->
+    <!-- Modal Tambah Kategori Baru (Custom Category) -->
+    <div id="create-category-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-panelDark border border-panelBorder rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-panelBorder">
+                <h3 class="text-base font-bold text-white">Buat Kategori Custom Baru</h3>
+                <button onclick="closeCategoryModal()" class="text-slate-400 hover:text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Nama Kategori Stack</label>
+                <input type="text" id="new-category-name" placeholder="e.g. Web3 & Crypto, Cyber Security, Game AI" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="flex justify-end gap-2 pt-2 border-t border-panelBorder">
+                <button onclick="closeCategoryModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium">Batal</button>
+                <button onclick="saveNewCategory()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold shadow-md">Simpan Kategori</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Tambah Prompt Kustom -->
     <div id="create-prompt-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-panelDark border border-panelBorder rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl">
             <div class="flex items-center justify-between pb-3 border-b border-panelBorder">
-                <h3 class="text-base font-bold text-white">Create Unlimited Long-Context Prompt</h3>
+                <h3 class="text-base font-bold text-white">Buat Prompt & Ide Kustom</h3>
                 <button onclick="closeCreatePromptModal()" class="text-slate-400 hover:text-white">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
             <div class="space-y-3">
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Prompt Title</label>
-                    <input type="text" id="modal-title" placeholder="e.g. Enterprise Distributed Cluster Engine" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Judul Prompt / Ide</label>
+                    <input type="text" id="modal-title" placeholder="e.g. C++ Ray Tracing Engine" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Category</label>
-                        <select id="modal-category" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
-                            <option value="Roblox Development">Roblox Development</option>
-                            <option value="Website Development">Website Development</option>
-                            <option value="Python Development">Python Development</option>
-                            <option value="C dan C++">C dan C++</option>
-                            <option value="Systems & Rust">Systems & Rust</option>
-                            <option value="Smart Contracts">Smart Contracts</option>
-                            <option value="AI & Machine Learning">AI & Machine Learning</option>
-                            <option value="Script Security">Script Security</option>
-                        </select>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Pilih Kategori</label>
+                        <select id="modal-category" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500"></select>
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Language</label>
-                        <select id="modal-language" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
-                            <option value="Luau / Lua">Luau / Lua</option>
-                            <option value="Python">Python</option>
-                            <option value="JavaScript / TypeScript">JavaScript / TypeScript</option>
-                            <option value="C++ / C">C++ / C</option>
-                            <option value="Rust">Rust</option>
-                            <option value="Go">Go</option>
-                            <option value="Solidity">Solidity</option>
-                            <option value="Java / C#">Java / C#</option>
-                        </select>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Bahasa / Teknologi</label>
+                        <input type="text" id="modal-language" placeholder="e.g. C++, Python, Rust" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Description</label>
-                    <input type="text" id="modal-desc" placeholder="Brief summary..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Ringkasan Ide</label>
+                    <input type="text" id="modal-desc" placeholder="Deskripsi singkat skrip..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Prompt Content (Unlimited Context / Structured Architecture)</label>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Isi Prompt Terstruktur</label>
                     <textarea id="modal-content" rows="7" placeholder="### SYSTEM ROLE & OBJECTIVE..." class="w-full bg-bgDark border border-panelBorder rounded-lg p-3 text-xs font-mono text-slate-200 focus:outline-none resize-none"></textarea>
                 </div>
             </div>
             <div class="flex justify-end gap-2 pt-2 border-t border-panelBorder">
-                <button onclick="closeCreatePromptModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium">Cancel</button>
-                <button onclick="saveModalPrompt()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold shadow-md">Save Prompt</button>
+                <button onclick="closeCreatePromptModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium">Batal</button>
+                <button onclick="saveModalPrompt()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold shadow-md">Simpan Prompt</button>
             </div>
         </div>
     </div>
 
-    <!-- Top Navigation Bar -->
+    <!-- Header -->
     <header class="sticky top-0 z-40 bg-panelDark/90 backdrop-blur-md border-b border-panelBorder">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('dashboard')">
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center glow-blue">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
-                        </svg>
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
                     </div>
                     <div>
                         <span class="text-lg font-bold tracking-tight text-white block leading-none">SCRIPT PROMPT STUDIO</span>
-                        <span class="text-[10px] font-mono text-blue-400 tracking-wider">UNLIMITED CONTEXT & LIVE TERMINAL</span>
+                        <span class="text-[10px] font-mono text-blue-400 tracking-wider">MASS BATCH STREAMER & CUSTOM CATEGORIES</span>
                     </div>
                 </div>
 
                 <div class="hidden md:flex flex-1 max-w-md mx-8 relative">
-                    <input type="text" id="global-search" oninput="handleGlobalSearch(this.value)" placeholder="Search Luau, Python, Rust, C++, Smart Contracts..." class="w-full bg-bgDark border border-panelBorder rounded-lg pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all">
-                    <svg class="w-4 h-4 text-slate-500 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
+                    <input type="text" id="global-search" oninput="handleGlobalSearch(this.value)" placeholder="Cari prompt, kategori, atau bahasa..." class="w-full bg-bgDark border border-panelBorder rounded-lg pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all">
+                    <svg class="w-4 h-4 text-slate-500 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <button onclick="openCreatePromptModal()" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition-all shadow-md">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                        New Prompt
+                <div class="flex items-center gap-2">
+                    <button onclick="openCategoryModal()" class="px-3 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder transition-all flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        + Kategori
+                    </button>
+                    <button onclick="openCreatePromptModal()" class="px-3 py-2 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition-all shadow-md flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        + Prompt
                     </button>
                     <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 text-slate-400 hover:text-white rounded-lg border border-panelBorder">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -175,70 +163,44 @@
                 </div>
 
                 <div>
-                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-2 px-3">Stack Categories</span>
-                    <nav class="space-y-1">
+                    <div class="flex items-center justify-between mb-2 px-3">
+                        <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Categories</span>
+                        <button onclick="openCategoryModal()" class="text-[10px] text-blue-400 hover:underline">+ Buat</button>
+                    </div>
+                    <nav id="sidebar-category-nav" class="space-y-1">
                         <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn active w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
                             <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                            Dashboard & Overview
-                        </button>
-                        <button onclick="switchCategoryView('C dan C++')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
-                            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-                            C dan C++ Stacks
-                        </button>
-                        <button onclick="switchCategoryView('Java')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
-                            <span class="w-2 h-2 rounded-full bg-rose-500"></span>
-                            Java Enterprise
-                        </button>
-                        <button onclick="switchCategoryView('Python Development')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
-                            <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
-                            Python & AI
-                        </button>
-                        <button onclick="switchCategoryView('Roblox Development')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
-                            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-                            Roblox Luau Hub
-                        </button>
-                        <button onclick="switchCategoryView('Systems & Rust')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
-                            <span class="w-2 h-2 rounded-full bg-orange-500"></span>
-                            Systems & Rust
-                        </button>
-                        <button onclick="switchCategoryView('Smart Contracts')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
-                            <span class="w-2 h-2 rounded-full bg-purple-500"></span>
-                            Smart Contracts
-                        </button>
-                        <button onclick="switchCategoryView('JavaScript / TS')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
-                            <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                            JavaScript / TS
-                        </button>
-                        <button onclick="switchCategoryView('Go & Cloud')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
-                            <span class="w-2 h-2 rounded-full bg-teal-400"></span>
-                            Go & Cloud
+                            Dashboard
                         </button>
                     </nav>
                 </div>
 
                 <div>
-                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-2 px-3">Studio Tools</span>
+                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-2 px-3">Studio & Automation</span>
                     <nav class="space-y-1">
-                        <button onclick="switchTab('library')" id="nav-library" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
-                            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                            Full Prompt Library
+                        <button onclick="switchTab('streamer')" id="nav-streamer" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+                            <svg class="w-4 h-4 text-emerald-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            Mass Batch Streamer <span class="ml-auto px-1.5 py-0.5 text-[9px] font-mono bg-emerald-950 text-emerald-400 rounded border border-emerald-800">3x/s</span>
                         </button>
-                        <button onclick="switchTab('workspace')" id="nav-workspace" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+                        <button onclick="switchTab('library')" id="nav-library" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+                            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                            Full Library
+                        </button>
+                        <button onclick="switchTab('workspace')" id="nav-workspace" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
                             <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v1a2 2 0 01-2 2M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
-                            My Workspace (Favorites)
+                            My Workspace
                         </button>
                     </nav>
                 </div>
             </div>
 
-            <div class="p-4 border-t border-panelBorder bg-bgDark/50 space-y-2">
-                <div class="flex items-center justify-between text-[11px]">
-                    <span class="text-slate-400">1s AI Generator:</span>
-                    <span id="stream-status-badge" class="text-emerald-400 font-mono font-bold animate-pulse">ACTIVE (1s)</span>
+            <div class="p-4 border-t border-panelBorder bg-bgDark/50">
+                <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
+                    <span>Batch Generator</span>
+                    <span id="streamer-status-badge" class="text-emerald-400 font-mono font-bold animate-pulse">ACTIVE (3 files/s)</span>
                 </div>
-                <div class="flex items-center gap-2">
-                    <button id="toggle-stream-btn" onclick="toggleStreamer()" class="flex-1 py-1 px-2 bg-rose-900/60 hover:bg-rose-800 border border-rose-700/50 text-rose-200 text-[10px] font-bold rounded transition-all">Pause AI</button>
-                    <button onclick="triggerStreamerStep()" class="flex-1 py-1 px-2 bg-blue-900/60 hover:bg-blue-800 border border-blue-700/50 text-blue-200 text-[10px] font-bold rounded transition-all">+1 Force</button>
+                <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-emerald-500 rounded-full w-full"></div>
                 </div>
             </div>
         </aside>
@@ -250,70 +212,87 @@
             <section id="view-dashboard" class="space-y-6">
                 <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-panelDark via-slate-900 to-panelDark border border-panelBorder p-6">
                     <div class="relative z-10">
-                        <span class="px-2.5 py-1 text-[10px] font-mono font-semibold text-blue-400 bg-blue-950 border border-blue-800/40 rounded uppercase tracking-wider">Autonomous Multi-Language Prompt Synthesis Engine</span>
-                        <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-2">SCRIPT PROMPT & IDEA STUDIO</h1>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="px-2.5 py-1 text-[10px] font-mono font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/40 rounded uppercase tracking-wider pulse-live">● Mass Batch Generation Active (3x/sec)</span>
+                        </div>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold text-white">SCRIPT PROMPT & IDEA STUDIO</h1>
                         <p class="text-xs sm:text-sm text-slate-400 max-w-2xl mt-1">
-                            Engine 1s AI Streamer aktif secara otomatis memproduksi prompt terstruktur dan ide skrip modular untuk C++, Java, Python, Roblox Luau, Rust, Smart Contracts, JS/TS, dan Go.
+                            Mesin otonom menghasilkan banyak file prompt sekaligus. Anda juga bisa membuat kategori custom sendiri sesuai keinginan!
                         </p>
                         <div class="flex flex-wrap gap-3 mt-4">
-                            <button onclick="switchTab('library')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold flex items-center gap-2 transition-all shadow-lg">
-                                Buka Semua Pustaka Prompt
+                            <button onclick="switchTab('streamer')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-2 transition-all shadow-lg">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                Buka Mass Batch Streamer Feed
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Live Streamer Hacker Console Terminal -->
-                <div class="bg-panelDark border border-panelBorder rounded-xl p-4 shadow-xl">
-                    <div class="flex items-center justify-between pb-3 border-b border-panelBorder mb-3">
+                <!-- Live Streamer Ticker Preview -->
+                <div class="bg-panelDark border border-emerald-500/30 rounded-xl p-5 space-y-3">
+                    <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
-                            <span class="relative flex h-2.5 w-2.5">
-                              <span id="pulse-ping" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                              <span id="pulse-dot" class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                            </span>
-                            <span class="text-xs font-mono font-bold text-white tracking-wide">LIVE 1s AI STREAMER & TERMINAL EVENT LOG</span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Mass Batch Live Feed (Generating 3 Prompts / sec)</h2>
                         </div>
-                        <div class="flex items-center gap-3">
-                            <span class="text-[10px] font-mono text-slate-400">Total Generated: <span id="gen-count" class="text-blue-400 font-bold">0</span></span>
-                            <button onclick="clearTerminalLogs()" class="text-[10px] text-slate-500 hover:text-slate-300 font-mono">Clear Log</button>
-                        </div>
+                        <button onclick="switchTab('streamer')" class="text-xs text-blue-400 hover:text-blue-300 font-medium">Buka Feed &rarr;</button>
                     </div>
-                    <div id="terminal-log" class="bg-bgDark border border-panelBorder/70 rounded-lg p-3 font-mono text-[11px] h-36 overflow-y-auto space-y-1.5 scroll-smooth">
-                        <!-- Dynamic terminal events -->
+                    <div id="dashboard-live-ticker" class="bg-bgDark border border-panelBorder rounded-lg p-3 font-mono text-xs text-slate-300">
+                        Menginisialisasi batch stream otonom...
                     </div>
                 </div>
 
-                <!-- Kategori Quick Filter Cards -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                    <div onclick="switchCategoryView('C dan C++')" class="bg-panelDark border border-panelBorder hover:border-cyan-500/50 cursor-pointer rounded-xl p-4 transition-all group">
-                        <div class="w-8 h-8 rounded-lg bg-cyan-950 text-cyan-400 flex items-center justify-center font-mono font-bold mb-3 group-hover:scale-110 transition-transform">C++</div>
-                        <h3 class="text-sm font-bold text-white">C dan C++</h3>
-                        <p class="text-[11px] text-slate-400 mt-0.5">Game Engine, Memory Pool, Algoritma</p>
-                    </div>
-                    <div onclick="switchCategoryView('Java')" class="bg-panelDark border border-panelBorder hover:border-rose-500/50 cursor-pointer rounded-xl p-4 transition-all group">
-                        <div class="w-8 h-8 rounded-lg bg-rose-950 text-rose-400 flex items-center justify-center font-mono font-bold mb-3 group-hover:scale-110 transition-transform">JV</div>
-                        <h3 class="text-sm font-bold text-white">Java Enterprise</h3>
-                        <p class="text-[11px] text-slate-400 mt-0.5">Spring Boot, Concurrency, Microservices</p>
-                    </div>
-                    <div onclick="switchCategoryView('Python Development')" class="bg-panelDark border border-panelBorder hover:border-yellow-500/50 cursor-pointer rounded-xl p-4 transition-all group">
-                        <div class="w-8 h-8 rounded-lg bg-yellow-950 text-yellow-400 flex items-center justify-center font-mono font-bold mb-3 group-hover:scale-110 transition-transform">PY</div>
-                        <h3 class="text-sm font-bold text-white">Python & AI</h3>
-                        <p class="text-[11px] text-slate-400 mt-0.5">FastAPI, Machine Learning, Automation</p>
-                    </div>
-                    <div onclick="switchCategoryView('Roblox Development')" class="bg-panelDark border border-panelBorder hover:border-amber-500/50 cursor-pointer rounded-xl p-4 transition-all group">
-                        <div class="w-8 h-8 rounded-lg bg-amber-950 text-amber-400 flex items-center justify-center font-mono font-bold mb-3 group-hover:scale-110 transition-transform">RB</div>
-                        <h3 class="text-sm font-bold text-white">Roblox Luau Hub</h3>
-                        <p class="text-[11px] text-slate-400 mt-0.5">DataStore, Combat, Client-Server</p>
-                    </div>
-                </div>
-
-                <!-- Featured Stacks Grid -->
                 <div>
                     <div class="flex items-center justify-between mb-3">
-                        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Featured Prompts & Live Streamed Ideas</h2>
-                        <button onclick="switchTab('library')" class="text-xs text-blue-400 hover:text-blue-300 font-medium">View All &rarr;</button>
+                        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Prompt & Ide Terbaru</h2>
+                        <button onclick="switchTab('library')" class="text-xs text-blue-400 hover:text-blue-300 font-medium">Lihat Semua &rarr;</button>
                     </div>
                     <div id="dashboard-featured-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
+
+                <!-- Real-Time Terminal Log -->
+                <div class="bg-panelDark border border-emerald-500/40 rounded-xl p-4 space-y-2 shadow-2xl">
+                    <div class="flex items-center justify-between pb-2 border-b border-panelBorder">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">Live Mass Terminal & Batch Log</h2>
+                        </div>
+                        <button onclick="clearTerminalLogs()" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-[10px] font-mono">Clear Terminal</button>
+                    </div>
+                    <div id="realtime-terminal" class="bg-bgDark border border-panelBorder rounded-lg p-3 font-mono text-[11px] text-emerald-400 h-36 overflow-y-auto space-y-1">
+                        <div>[00:00:00] [SYSTEM] Script Prompt Studio booted. Mass batch streamer initialized.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW: MASS BATCH STREAMER -->
+            <section id="view-streamer" class="hidden space-y-6">
+                <div class="bg-panelDark p-5 rounded-xl border border-emerald-500/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/40 rounded">MASS BATCH UNLIMITED GENERATOR</span>
+                        </div>
+                        <h1 class="text-xl font-bold text-white">Mass Batch AI Streamer Feed</h1>
+                        <p class="text-xs text-slate-400">Sistem otomatis menghasilkan 3 file prompt terstruktur setiap detik agar koleksi bertambah sangat cepat.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="toggleStreamerPause()" id="btn-streamer-toggle" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded-lg text-xs font-semibold">Pause / Resume</button>
+                        <button onclick="clearStreamedPrompts()" class="px-3 py-2 bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-800/50 rounded-lg text-xs font-semibold">Clear Feed</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="lg:col-span-8 space-y-4" id="streamer-feed-container"></div>
+                    <div class="lg:col-span-4 space-y-4">
+                        <div class="bg-panelDark border border-panelBorder rounded-xl p-4 space-y-3">
+                            <h2 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Batch Stats</h2>
+                            <div class="space-y-2 text-xs font-mono">
+                                <div class="flex justify-between text-slate-400"><span>Batch Rate:</span><span class="text-white">3 files / sec</span></div>
+                                <div class="flex justify-between text-slate-400"><span>Total Generated:</span><span id="streamer-stat-total" class="text-emerald-400">0</span></div>
+                                <div class="flex justify-between text-slate-400"><span>Status:</span><span id="streamer-stat-status" class="text-emerald-400">Batch Active</span></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -321,49 +300,31 @@
             <section id="view-library" class="hidden space-y-6">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-panelDark p-4 rounded-xl border border-panelBorder">
                     <div>
-                        <h1 class="text-xl font-bold text-white">Multi-Language Prompt & Idea Library</h1>
-                        <p class="text-xs text-slate-400">Jelajahi prompt dan ide skrip terbaik untuk C++, Java, Python, Roblox, Rust, Smart Contracts, JS/TS, dan Go.</p>
+                        <h1 class="text-xl font-bold text-white">Full Prompt & Idea Library</h1>
+                        <p class="text-xs text-slate-400">Semua prompt tersimpan rapi berdasarkan kategori bawaan maupun kategori custom buatan Anda.</p>
                     </div>
-                    <button onclick="openCreatePromptModal()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                        Add Custom Prompt
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="openCategoryModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded-lg text-xs font-semibold">
+                            + Buat Kategori
+                        </button>
+                        <button onclick="openCreatePromptModal()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-md">
+                            + Prompt Baru
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Filters -->
                 <div class="bg-panelDark border border-panelBorder p-4 rounded-xl space-y-3">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-[11px] font-medium text-slate-400 mb-1">Category Stack</label>
+                            <label class="block text-[11px] font-medium text-slate-400 mb-1">Filter Kategori Stack</label>
                             <select id="filter-category" onchange="applyLibraryFilters()" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
-                                <option value="ALL">All Stack Categories</option>
-                                <option value="C dan C++">C dan C++</option>
-                                <option value="Java">Java</option>
-                                <option value="Python Development">Python Development</option>
-                                <option value="Roblox Development">Roblox Development</option>
-                                <option value="Systems & Rust">Systems & Rust</option>
-                                <option value="Smart Contracts">Smart Contracts</option>
-                                <option value="JavaScript / TS">JavaScript / TS</option>
-                                <option value="Go & Cloud">Go & Cloud</option>
+                                <option value="ALL">Semua Kategori</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-[11px] font-medium text-slate-400 mb-1">Language</label>
-                            <select id="filter-language" onchange="applyLibraryFilters()" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
-                                <option value="ALL">All Languages</option>
-                                <option value="C++">C++</option>
-                                <option value="Java">Java</option>
-                                <option value="Python">Python</option>
-                                <option value="Luau / Lua">Luau / Lua</option>
-                                <option value="Rust">Rust</option>
-                                <option value="Solidity">Solidity</option>
-                                <option value="TypeScript">TypeScript</option>
-                                <option value="Go">Go</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-[11px] font-medium text-slate-400 mb-1">Keyword Search</label>
-                            <input type="text" id="filter-search" oninput="applyLibraryFilters()" placeholder="Search title or content..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                            <label class="block text-[11px] font-medium text-slate-400 mb-1">Cari Kata Kunci</label>
+                            <input type="text" id="filter-search" oninput="applyLibraryFilters()" placeholder="Cari judul atau isi prompt..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                         </div>
                     </div>
                 </div>
@@ -375,7 +336,7 @@
             <section id="view-workspace" class="hidden space-y-6">
                 <div class="bg-panelDark p-4 rounded-xl border border-panelBorder">
                     <h1 class="text-xl font-bold text-white">My Workspace & Bookmarks</h1>
-                    <p class="text-xs text-slate-400">Koleksi prompt dan ide skrip favorit Anda yang telah disimpan.</p>
+                    <p class="text-xs text-slate-400">Koleksi prompt favorit yang Anda bookmark.</p>
                 </div>
                 <div id="workspace-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </section>
@@ -383,347 +344,254 @@
         </main>
     </div>
 
-    <!-- JAVASCRIPT & STRUCTURED STACK DATABASE -->
+    <!-- JAVASCRIPT & MASS BATCH ENGINE -->
     <script>
+        const INITIAL_CATEGORIES = [
+            "C dan C++",
+            "Java Enterprise",
+            "Python & AI",
+            "Roblox Development",
+            "Systems & Rust",
+            "Web3 & Smart Contracts",
+            "Cyber Security & Ethical Hacking",
+            "Mobile App Development"
+        ];
+
         const INITIAL_PROMPTS = [
-            // --- C dan C++ ---
             {
                 id: "p-cpp-memory-pool",
                 title: "C++ High-Performance Memory Pool Allocator",
                 category: "C dan C++",
                 language: "C++",
                 difficulty: "Expert",
-                description: "Ide skrip: Alokator memori kustom berbasis block fixed-size untuk menghindari fragmentasi heap pada game engine.",
-                content: `### SYSTEM ROLE & OBJECTIVE
-Act as a Senior C++ Game Engine Architect. Your task is to design a high-performance, cache-friendly fixed-size memory pool allocator in modern C++20.
-
-### IDEA & CORE REQUIREMENTS
-1. Heap Fragmentation Elimination: Pre-allocate a contiguous memory block during initialization and manage free blocks via an intrusive free list.
-2. O(1) Complexity: Ensure allocation and deallocation operations run in constant time O(1).
-3. Thread Safety: Provide a thread-safe wrapper using std::mutex or lock-free atomics for multithreaded task workers.
-4. RAII Wrapper: Include custom smart pointers or scope guards to prevent memory leaks.
-
-### OUTPUT EXPECTATION
-Provide clean, header-only C++20 source code with benchmarking main() routine.`
+                description: "Alokator memori kustom berbasis block fixed-size untuk menghindari fragmentasi heap pada game engine.",
+                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Senior C++ Game Engine Architect. Design a high-performance fixed-size memory pool allocator in C++20.\n\n### REQUIREMENTS\n1. Pre-allocate contiguous memory.\n2. O(1) allocation & deallocation.\n3. Thread-safe wrapper.`
             },
             {
-                id: "p-cpp-socket-server",
-                title: "C++ Asynchronous Network Server with Epoll / IOCP",
-                category: "C dan C++",
-                language: "C++",
-                difficulty: "Expert",
-                description: "Ide skrip: Low-level network server menggunakan sistem I/O multiplexing epoll (Linux) untuk high concurrency.",
-                content: `### SYSTEM ROLE & OBJECTIVE
-Act as a Principal C++ Systems Engineer. Build a high-concurrency non-blocking TCP server using epoll (Linux) or IOCP (Windows).
-
-### IDEA & CORE REQUIREMENTS
-1. Reactor Pattern: Implement non-blocking socket state machine with edge-triggered epoll events.
-2. Buffer Management: Circular ring buffer for zero-copy packet parsing and assembly.
-3. Thread Pool: Dispatch incoming payload worker jobs to a thread pool with condition variables.
-
-### OUTPUT EXPECTATION
-Provide modular C++17 source code (Server.h and main.cpp).`
-            },
-
-            // --- Java Enterprise ---
-            {
-                id: "p-java-spring-microservice",
-                title: "Java Spring Boot Reactive Microservice with WebFlux",
-                category: "Java",
+                id: "p-java-microservice",
+                title: "Java Spring Boot Reactive Microservice",
+                category: "Java Enterprise",
                 language: "Java",
                 difficulty: "Advanced",
-                description: "Ide skrip: Enterprise microservice non-blocking menggunakan Spring WebFlux, R2DBC, dan Resilience4j.",
-                content: `### SYSTEM ROLE & OBJECTIVE
-Act as a Principal Java Enterprise Architect. Design a fully reactive, non-blocking microservice using Spring Boot 3.x, Spring WebFlux, and R2DBC.
-
-### IDEA & CORE REQUIREMENTS
-1. Reactive Stack: Use Project Reactor (Flux/Mono) for end-to-end non-blocking database queries with PostgreSQL R2DBC.
-2. Fault Tolerance: Integrate Resilience4j circuit breakers and rate limiters for downstream service calls.
-3. Security: Implement Spring Security OAuth2 Resource Server with JWT validation.
-
-### OUTPUT EXPECTATION
-Provide complete Spring Boot component structure and configuration classes.`
+                description: "Enterprise microservice non-blocking menggunakan Spring WebFlux, R2DBC, dan Resilience4j.",
+                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal Java Enterprise Architect. Design a reactive microservice using Spring Boot 3.x and R2DBC.\n\n### REQUIREMENTS\n1. Project Reactor (Flux/Mono).\n2. Resilience4j circuit breakers.\n3. OAuth2 Resource Server.`
             },
             {
-                id: "p-java-concurrent-queue",
-                title: "Java Lock-Free Producer-Consumer Queue",
-                category: "Java",
-                language: "Java",
-                difficulty: "Expert",
-                description: "Ide skrip: Struktur data concurrent performa tinggi menggunakan AtomicReference dan CAS (Compare-And-Swap).",
-                content: `### SYSTEM ROLE & OBJECTIVE
-Act as a Senior Java Concurrency Specialist. Build a lock-free, high-throughput bounded producer-consumer queue in Java using java.util.concurrent.atomic.
-
-### IDEA & CORE REQUIREMENTS
-1. Lock-Free CAS: Avoid synchronized blocks; utilize AtomicReference and volatile variables to achieve thread safety.
-2. False Sharing Mitigation: Apply @Contended annotations on queue node pointers to optimize CPU cache line utilization.
-
-### OUTPUT EXPECTATION
-Provide clean Java class implementation with multi-threaded stress test simulation.`
-            },
-
-            // --- Python & AI ---
-            {
-                id: "p-python-fastapi-ai",
-                title: "Python FastAPI Asynchronous AI Model Inference Pipeline",
-                category: "Python Development",
+                id: "p-python-ai-pipeline",
+                title: "Python FastAPI AI Inference Pipeline",
+                category: "Python & AI",
                 language: "Python",
                 difficulty: "Advanced",
-                description: "Ide skrip: API server untuk melayani inferensi model Machine Learning dengan background tasks dan Redis queue.",
-                content: `### SYSTEM ROLE & OBJECTIVE
-Act as a Senior Python AI Infrastructure Engineer. Build an asynchronous FastAPI inference pipeline integrating PyTorch/HuggingFace models.
-
-### IDEA & CORE REQUIREMENTS
-1. Async Worker Queue: Utilize Celery + Redis to offload heavy inference tasks from HTTP event loop.
-2. Input Validation: Pydantic v2 data models with strict tensor dimension assertions.
-3. Monitoring: Prometheus metrics middleware for request latency tracking.
-
-### OUTPUT EXPECTATION
-Provide complete main.py, celery_worker.py, and requirements.txt.`
-            },
-
-            // --- Roblox Development ---
-            {
-                id: "p-roblox-datastore",
-                title: "Roblox Luau Secure DataStore2 / ProfileService Architecture",
-                category: "Roblox Development",
-                language: "Luau / Lua",
-                difficulty: "Advanced",
-                description: "Ide skrip: Sistem simpan data player tahan crash dengan session locking dan auto-save berkala.",
-                content: `### SYSTEM ROLE & OBJECTIVE
-Act as an elite Roblox Luau Engineer. Design a robust player data persistence module using ProfileService with zero data loss.
-
-### IDEA & CORE REQUIREMENTS
-1. Session Locking: Prevent multi-device data corruption.
-2. pcall Error Handling: Exponential backoff retry logic for cloud requests.
-3. Auto-Save & Shutdown: Automatic 5-minute interval saves + game:BindToClose() hooks.
-
-### OUTPUT EXPECTATION
-Provide clean, commented Luau ModuleScript.`
-            },
-
-            // --- Systems & Rust ---
-            {
-                id: "p-rust-tokio-server",
-                title: "Rust Asynchronous Tokio TCP Server & Worker Pool",
-                category: "Systems & Rust",
-                language: "Rust",
-                difficulty: "Expert",
-                description: "Ide skrip: Server jaringan berkinerja tinggi menggunakan Tokio async runtime dan bounded channels.",
-                content: `### SYSTEM ROLE & OBJECTIVE
-Act as a Principal Rust Systems Engineer. Implement an ultra-low latency concurrent TCP server using Tokio.
-
-### IDEA & CORE REQUIREMENTS
-1. Concurrency: tokio::net::TcpListener with mpsc channels.
-2. Safety: Zero-copy packet parsing using bytes crate without unsafe blocks.
-
-### OUTPUT EXPECTATION
-Provide complete Cargo project structure (main.rs and Cargo.toml).`
-            },
-
-            // --- Smart Contracts ---
-            {
-                id: "p-solidity-vault",
-                title: "Solidity ERC-4626 Tokenized Yield Vault & Reentrancy Guard",
-                category: "Smart Contracts",
-                language: "Solidity",
-                difficulty: "Expert",
-                description: "Ide skrip: Smart contract vault standar ERC-4626 dengan strategi yield farming dan pengamanan reentrancy.",
-                content: `### SYSTEM ROLE & OBJECTIVE
-Act as a Lead Blockchain & Smart Contract Auditor. Write a production-ready ERC-4626 Vault in Solidity 0.8.20.
-
-### IDEA & CORE REQUIREMENTS
-1. Security: OpenZeppelin ReentrancyGuard transient storage.
-2. Precision: Math calculations handling 18-decimal token precision without rounding errors.
-
-### OUTPUT EXPECTATION
-Provide complete Solidity contract with Foundry automated tests.`
+                description: "API server untuk inferensi model Machine Learning dengan background tasks dan Redis queue.",
+                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Senior Python AI Infrastructure Engineer. Build an asynchronous FastAPI inference pipeline.\n\n### REQUIREMENTS\n1. Celery + Redis queue.\n2. Pydantic v2 validation.\n3. Prometheus metrics.`
             }
         ];
 
-        // Generator Templates pool for Autonomous 1s AI Streamer
-        const GENERATOR_TEMPLATES = [
-            {
-                category: "C dan C++",
-                language: "C++",
-                title: "C++ SIMD Vectorized Physics Matrix Math Engine",
-                description: "Ide skrip: Engine matematika matriks 3D terakselerasi AVX2 / NEON untuk perhitungan fisika real-time.",
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a C++ High-Performance Graphics & Math Engineer. Design a SIMD-accelerated 4x4 matrix multiplication module using intrinsics (_mm256_mul_ps).\n\n### REQUIREMENTS\n1. Memory Alignment: Align matrix arrays to 32-byte boundaries.\n2. Fallback: Provide auto-vectorizing scalar fallback for non-AVX architectures.`
-            },
-            {
-                category: "Java",
-                language: "Java",
-                title: "Java Distributed Rate Limiter with Redis & Token Bucket",
-                description: "Ide skrip: Middleware rate-limiting terdistribusi untuk REST API Gateway enterprise.",
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Java Distributed Systems Architect. Build a high-throughput Token Bucket rate limiter using Redisson & Lua scripts.\n\n### REQUIREMENTS\n1. Atomicity: Execute rate check via atomic Redis Lua script.\n2. Latency: Target sub-millisecond execution time under high concurrency.`
-            },
-            {
-                category: "Python Development",
-                language: "Python",
-                title: "Python Streaming RAG Pipeline with LangChain & VectorDB",
-                description: "Ide skrip: Pipeline Retrieval-Augmented Generation berbasis async streaming untuk konteks dokumen besar.",
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as an AI Knowledge Engine Architect. Construct an async RAG pipeline streaming LLM token chunks while fetching vectors from Qdrant.\n\n### REQUIREMENTS\n1. Chunking: Recursive character text splitter.\n2. Streaming: AsyncGenerator interface for WebSockets.`
-            },
-            {
-                category: "Roblox Development",
-                language: "Luau / Lua",
-                title: "Roblox Luau Client-Side Prediction Combat System",
-                description: "Ide skrip: Sistem pertarungan melee dengan lag compensation dan hitbox server validation.",
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Roblox Lead Gameplay Engineer. Create a client-predicted melee swing system with raycast hit detection.\n\n### REQUIREMENTS\n1. Responsiveness: Instant client visual feedback.\n2. Security: Server spatial verification preventing distance exploits.`
-            },
-            {
-                category: "Systems & Rust",
-                language: "Rust",
-                title: "Rust High-Speed Lock-Free Ring Buffer for Audio Stream",
-                description: "Ide skrip: Circular buffer bebas lock untuk real-time audio DSP and packet streaming.",
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Rust Audio DSP Engineer. Implement a single-producer single-consumer lock-free ring buffer.\n\n### REQUIREMENTS\n1. Memory Ordering: Acquire-Release atomic operations.\n2. No Allocations: Zero dynamic allocation inside the audio processing loop.`
-            },
-            {
-                category: "JavaScript / TS",
-                language: "TypeScript",
-                title: "TypeScript Full-Stack WebSocket State Synchronization Sync Engine",
-                description: "Ide skrip: Engine sinkronisasi state aplikasi multiplayer real-time berbasis CRDT.",
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal TypeScript Architect. Design a lightweight CRDT state sync engine over WebSocket connections.\n\n### REQUIREMENTS\n1. Conflict Resolution: Eventual consistency for concurrent client edits.\n2. Type Safety: End-to-end typed event payloads.`
-            },
-            {
-                category: "Go & Cloud",
-                language: "Go",
-                title: "Go High-Concurrency gRPC Microservice with Circuit Breaker",
-                description: "Ide skrip: Backend gRPC service berkecepatan tinggi dengan worker pool dan telemetry tracing.",
-                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Cloud Native Engineer. Build a Go gRPC service implementing context timeouts and OpenTelemetry spans.\n\n### REQUIREMENTS\n1. Channel Worker Pool: Dispatch tasks using buffered channels.\n2. Graceful Shutdown: Listen to SIGTERM and flush pending active streams.`
-            }
+        const STREAMER_TEMPLATES = [
+            { title: "Mass Batch C++ Renderer v", cat: "C dan C++", lang: "C++", desc: "Generated Vulkan graphics pipeline initialization script." },
+            { title: "Mass Batch Java Spring Data v", cat: "Java Enterprise", lang: "Java", desc: "Generated Spring Data JPA auditing repository." },
+            { title: "Mass Batch Python Automation v", cat: "Python & AI", lang: "Python", desc: "Generated AsyncIO web scraping & data extraction pipeline." },
+            { title: "Mass Batch Roblox Combat v", cat: "Roblox Development", lang: "Luau / Lua", desc: "Generated server-side raycast weapon hit registration." },
+            { title: "Mass Batch Rust Memory v", cat: "Systems & Rust", lang: "Rust", desc: "Generated zero-copy lock-free ring buffer structure." }
         ];
 
         let appState = {
+            categories: [],
             prompts: [],
             favorites: [],
-            activeTab: 'dashboard',
-            streamerActive: true,
-            streamInterval: null,
-            generatedCount: 0
+            streamedPrompts: [],
+            isStreamerPaused: false,
+            activeTab: 'dashboard'
         };
 
         window.onload = function() {
             loadFromStorage();
-            if (appState.prompts.length === 0) {
-                appState.prompts = [...INITIAL_PROMPTS];
-                saveToStorage();
-            }
+            if (appState.categories.length === 0) appState.categories = [...INITIAL_CATEGORIES];
+            if (appState.prompts.length === 0) appState.prompts = [...INITIAL_PROMPTS];
+            saveToStorage();
+
+            renderSidebarCategories();
+            renderCategoryDropdowns();
             renderDashboard();
             renderLibrary();
             renderWorkspace();
-            startStreamer();
-            logTerminalEvent("SYSTEM", "Studio Engine initialized. 1s AI Streamer active.");
+
+            // Jalankan streamer 3 file sekaligus per 1 detik
+            setInterval(runMassBatchStreamerTick, 1000);
+            terminalLog("SYSTEM: Mass batch AI streamer active (Generating 3 files per second).");
         };
-
-        function startStreamer() {
-            if (appState.streamInterval) clearInterval(appState.streamInterval);
-            appState.streamInterval = setInterval(() => {
-                if (appState.streamerActive) {
-                    triggerStreamerStep();
-                }
-            }, 1000);
-        }
-
-        function toggleStreamer() {
-            appState.streamerActive = !appState.streamerActive;
-            const btn = document.getElementById('toggle-stream-btn');
-            const badge = document.getElementById('stream-status-badge');
-            const ping = document.getElementById('pulse-ping');
-            const dot = document.getElementById('pulse-dot');
-
-            if (appState.streamerActive) {
-                if (btn) btn.innerText = "Pause AI";
-                if (badge) {
-                    badge.innerText = "ACTIVE (1s)";
-                    badge.className = "text-emerald-400 font-mono font-bold animate-pulse";
-                }
-                if (ping) ping.className = "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75";
-                if (dot) dot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500";
-                logTerminalEvent("STREAM", "1s Autonomous AI Streamer resumed.");
-            } else {
-                if (btn) btn.innerText = "Resume AI";
-                if (badge) {
-                    badge.innerText = "PAUSED";
-                    badge.className = "text-amber-400 font-mono font-bold";
-                }
-                if (ping) ping.className = "hidden";
-                if (dot) dot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500";
-                logTerminalEvent("STREAM", "1s Autonomous AI Streamer paused by user.");
-            }
-        }
-
-        function triggerStreamerStep() {
-            const randomTpl = GENERATOR_TEMPLATES[Math.floor(Math.random() * GENERATOR_TEMPLATES.length)];
-            const timeId = Date.now().toString().slice(-5);
-            const newPrompt = {
-                id: 'p-gen-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
-                title: `${randomTpl.title} #${timeId}`,
-                category: randomTpl.category,
-                language: randomTpl.language,
-                difficulty: "Expert",
-                description: randomTpl.description,
-                content: randomTpl.content
-            };
-
-            appState.prompts.unshift(newPrompt);
-            if (appState.prompts.length > 60) appState.prompts.pop(); // Cap memory size
-            appState.generatedCount++;
-
-            const countEl = document.getElementById('gen-count');
-            if (countEl) countEl.innerText = appState.generatedCount;
-
-            logTerminalEvent("SYNTHESIS", `[${newPrompt.language}] Generated: "${newPrompt.title.substring(0, 32)}..."`);
-
-            if (appState.activeTab === 'dashboard') renderDashboard();
-            if (appState.activeTab === 'library') applyLibraryFilters();
-        }
-
-        function logTerminalEvent(tag, message) {
-            const container = document.getElementById('terminal-log');
-            if (!container) return;
-            const timestamp = new Date().toLocaleTimeString();
-            const logEntry = document.createElement('div');
-            logEntry.className = "flex items-start gap-2 text-slate-300";
-
-            let tagColor = "text-blue-400";
-            if (tag === "SYNTHESIS") tagColor = "text-emerald-400 font-bold";
-            if (tag === "SYSTEM") tagColor = "text-cyan-400";
-            if (tag === "STREAM") tagColor = "text-amber-400";
-
-            logEntry.innerHTML = `
-                <span class="text-slate-500 font-mono text-[10px]">${timestamp}</span>
-                <span class="${tagColor} font-mono text-[10px]">[${tag}]</span>
-                <span class="text-slate-200 text-[11px] font-mono leading-tight">${escapeHTML(message)}</span>
-            `;
-            container.appendChild(logEntry);
-
-            if (container.children.length > 40) {
-                container.removeChild(container.firstChild);
-            }
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function clearTerminalLogs() {
-            const container = document.getElementById('terminal-log');
-            if (container) container.innerHTML = '';
-            logTerminalEvent("SYSTEM", "Terminal log stream cleared.");
-        }
 
         function loadFromStorage() {
             try {
-                const storedPrompts = localStorage.getItem('sps_prompts_mod');
-                const storedFavs = localStorage.getItem('sps_favorites_mod');
-                if (storedPrompts) appState.prompts = JSON.parse(storedPrompts);
-                if (storedFavs) appState.favorites = JSON.parse(storedFavs);
+                const cats = localStorage.getItem('sps_categories_v3');
+                const prompts = localStorage.getItem('sps_prompts_v3');
+                const favs = localStorage.getItem('sps_favs_v3');
+                if (cats) appState.categories = JSON.parse(cats);
+                if (prompts) appState.prompts = JSON.parse(prompts);
+                if (favs) appState.favorites = JSON.parse(favs);
             } catch (err) {}
         }
 
         function saveToStorage() {
             try {
-                localStorage.setItem('sps_prompts_mod', JSON.stringify(appState.prompts));
-                localStorage.setItem('sps_favorites_mod', JSON.stringify(appState.favorites));
+                localStorage.setItem('sps_categories_v3', JSON.stringify(appState.categories));
+                localStorage.setItem('sps_prompts_v3', JSON.stringify(appState.prompts));
+                localStorage.setItem('sps_favs_v3', JSON.stringify(appState.favorites));
             } catch (err) {}
+        }
+
+        function terminalLog(msg) {
+            const term = document.getElementById('realtime-terminal');
+            if (!term) return;
+            const timeStr = new Date().toLocaleTimeString();
+            const div = document.createElement('div');
+            div.innerHTML = `[${timeStr}] ${escapeHTML(msg)}`;
+            term.appendChild(div);
+            term.scrollTop = term.scrollHeight;
+            if (term.children.length > 60) term.removeChild(term.firstChild);
+        }
+
+        function clearTerminalLogs() {
+            const term = document.getElementById('realtime-terminal');
+            if (term) term.innerHTML = `<div>[${new Date().toLocaleTimeString()}] [TERMINAL] Logs cleared.</div>`;
+        }
+
+        // MASS BATCH GENERATOR (3 PROMPTS PER TICK)
+        function runMassBatchStreamerTick() {
+            if (appState.isStreamerPaused) return;
+
+            let batchLogs = [];
+            for (let i = 0; i < 3; i++) {
+                const template = STREAMER_TEMPLATES[Math.floor(Math.random() * STREAMER_TEMPLATES.length)];
+                const randomCat = appState.categories[Math.floor(Math.random() * appState.categories.length)];
+                const randId = Math.floor(Math.random() * 90000) + 10000;
+                
+                const newPrompt = {
+                    id: 'p-batch-' + Date.now() + '-' + i,
+                    title: `${template.title}${randId.toString().slice(-3)}`,
+                    category: randomCat,
+                    language: template.lang,
+                    difficulty: 'Advanced',
+                    description: template.desc,
+                    content: `### MASS BATCH AUTONOMOUS SCRIPT\nCategory: ${randomCat}\nGenerated at: ${new Date().toLocaleTimeString()}\n\n### IMPLEMENTATION BLUEPRINT\n1. Enterprise modular architecture.\n2. Robust exception handling & async execution.\n3. Optimized memory management.`
+                };
+
+                appState.prompts.unshift(newPrompt);
+                appState.streamedPrompts.unshift(newPrompt);
+                batchLogs.push(newPrompt.title);
+            }
+
+            if (appState.streamedPrompts.length > 40) {
+                appState.streamedPrompts = appState.streamedPrompts.slice(0, 40);
+            }
+
+            saveToStorage();
+            terminalLog(`BATCH [3 FILES GENERATED] &rarr; ${batchLogs.join(' | ')}`);
+
+            const ticker = document.getElementById('dashboard-live-ticker');
+            if (ticker) {
+                ticker.innerHTML = `<span class="text-emerald-400 font-bold">[BATCH STREAM ACTIVE]</span> <span class="text-white">Berhasil generate 3 file prompt baru: ${escapeHTML(batchLogs[0])}, dll.</span>`;
+            }
+
+            if (appState.activeTab === 'streamer') renderStreamerFeed();
+
+            const statStreamed = document.getElementById('streamer-stat-total');
+            if (statStreamed) statStreamed.innerText = appState.streamedPrompts.length;
+        }
+
+        function toggleStreamerPause() {
+            appState.isStreamerPaused = !appState.isStreamerPaused;
+            const statusBadge = document.getElementById('streamer-status-badge');
+            const statStatus = document.getElementById('streamer-stat-status');
+            const btn = document.getElementById('btn-streamer-toggle');
+
+            if (appState.isStreamerPaused) {
+                if (statusBadge) { statusBadge.innerText = "PAUSED"; statusBadge.className = "text-amber-400 font-mono font-bold"; }
+                if (statStatus) statStatus.innerText = "Stream Paused";
+                if (btn) btn.innerText = "Resume Stream";
+                showToast("Mass batch streamer dijeda.");
+            } else {
+                if (statusBadge) { statusBadge.innerText = "ACTIVE (3 files/s)"; statusBadge.className = "text-emerald-400 font-mono font-bold animate-pulse"; }
+                if (statStatus) statStatus.innerText = "Batch Active";
+                if (btn) btn.innerText = "Pause Stream";
+                showToast("Mass batch streamer dilanjutkan.");
+            }
+        }
+
+        function clearStreamedPrompts() {
+            appState.streamedPrompts = [];
+            renderStreamerFeed();
+            showToast("Feed streamer dibersihkan.");
+        }
+
+        function renderStreamerFeed() {
+            const container = document.getElementById('streamer-feed-container');
+            if (!container) return;
+            if (appState.streamedPrompts.length === 0) {
+                container.innerHTML = `<div class="p-8 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">Streamer dijeda atau menunggu tick berikutnya...</div>`;
+                return;
+            }
+            container.innerHTML = appState.streamedPrompts.map(p => createPromptCardHTML(p)).join('');
+        }
+
+        function renderSidebarCategories() {
+            const nav = document.getElementById('sidebar-category-nav');
+            if (!nav) return;
+            
+            let html = `
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn active w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+                    <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    Dashboard
+                </button>
+            `;
+
+            appState.categories.forEach(cat => {
+                html += `
+                    <button onclick="switchCategoryView('${escapeHTML(cat)}')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+                        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                        <span class="truncate">${escapeHTML(cat)}</span>
+                    </button>
+                `;
+            });
+            nav.innerHTML = html;
+        }
+
+        function renderCategoryDropdowns() {
+            const modalSelect = document.getElementById('modal-category');
+            const filterSelect = document.getElementById('filter-category');
+
+            let optionsHtml = appState.categories.map(c => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');
+            if (modalSelect) modalSelect.innerHTML = optionsHtml;
+
+            if (filterSelect) {
+                filterSelect.innerHTML = `<option value="ALL">Semua Kategori</option>` + optionsHtml;
+            }
+        }
+
+        // CUSTOM CATEGORY MODAL
+        function openCategoryModal() { document.getElementById('create-category-modal').classList.remove('hidden'); }
+        function closeCategoryModal() { document.getElementById('create-category-modal').classList.add('hidden'); }
+
+        function saveNewCategory() {
+            const nameInput = document.getElementById('new-category-name');
+            const catName = nameInput.value.trim();
+            if (!catName) {
+                showToast("Nama kategori tidak boleh kosong!", "error");
+                return;
+            }
+            if (appState.categories.includes(catName)) {
+                showToast("Kategori tersebut sudah ada!", "error");
+                return;
+            }
+
+            appState.categories.push(catName);
+            saveToStorage();
+            closeCategoryModal();
+            renderSidebarCategories();
+            renderCategoryDropdowns();
+            showToast(`Kategori "${catName}" berhasil dibuat!`);
+            terminalLog(`SYSTEM: Created new custom category [${catName}]`);
+            nameInput.value = '';
         }
 
         function switchTab(tabId) {
@@ -736,6 +604,7 @@ Provide complete Solidity contract with Foundry automated tests.`
             const activeNav = document.getElementById(`nav-${tabId}`);
             if (activeNav) activeNav.classList.add('active', 'bg-slate-800/80', 'text-white');
 
+            if (tabId === 'streamer') renderStreamerFeed();
             if (tabId === 'library') applyLibraryFilters();
             if (tabId === 'workspace') renderWorkspace();
 
@@ -769,19 +638,17 @@ Provide complete Solidity contract with Foundry automated tests.`
 
         function applyLibraryFilters() {
             const cat = document.getElementById('filter-category')?.value || 'ALL';
-            const lang = document.getElementById('filter-language')?.value || 'ALL';
             const search = (document.getElementById('filter-search')?.value || '').toLowerCase();
 
             let filtered = appState.prompts.filter(p => {
                 if (cat !== 'ALL' && p.category !== cat) return false;
-                if (lang !== 'ALL' && p.language !== lang) return false;
                 if (search && !p.title.toLowerCase().includes(search) && !p.description.toLowerCase().includes(search) && !p.content.toLowerCase().includes(search)) return false;
                 return true;
             });
 
             const grid = document.getElementById('library-prompt-grid');
             if (grid) {
-                grid.innerHTML = filtered.length === 0 ? `<div class="col-span-full py-12 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">No prompts found matching category.</div>` : filtered.map(p => createPromptCardHTML(p)).join('');
+                grid.innerHTML = filtered.length === 0 ? `<div class="col-span-full py-12 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">Tidak ada prompt ditemukan.</div>` : filtered.map(p => createPromptCardHTML(p)).join('');
             }
         }
 
@@ -799,7 +666,7 @@ Provide complete Solidity contract with Foundry automated tests.`
             if (!grid) return;
             const favPrompts = appState.prompts.filter(p => appState.favorites.includes(p.id));
             if (favPrompts.length === 0) {
-                grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">No bookmarked prompts in workspace yet.</div>`;
+                grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">Belum ada prompt favorit di workspace.</div>`;
                 return;
             }
             grid.innerHTML = favPrompts.map(p => createPromptCardHTML(p)).join('');
@@ -830,7 +697,7 @@ Provide complete Solidity contract with Foundry automated tests.`
                     <div class="flex items-center justify-between pt-3 border-t border-panelBorder text-xs">
                         <span class="text-[10px] text-slate-500 font-mono">Level: ${prompt.difficulty}</span>
                         <div class="flex items-center gap-1.5">
-                            <button onclick="copyTextToClipboard(\`${escapeJsString(prompt.content)}\`, 'Prompt Copied!')" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded font-medium">Copy Prompt</button>
+                            <button onclick="copyTextToClipboard(\`${escapeJsString(prompt.content)}\`, 'Prompt Disalin!')" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded font-medium">Copy</button>
                             <button onclick="downloadPromptTxt('${safeFileName}', \`${escapeJsString(prompt.content)}\`)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded font-medium flex items-center gap-1">
                                 <svg class="w-3 h-3 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 .txt
@@ -843,8 +710,8 @@ Provide complete Solidity contract with Foundry automated tests.`
 
         function toggleFavorite(id) {
             const idx = appState.favorites.indexOf(id);
-            if (idx > -1) { appState.favorites.splice(idx, 1); showToast("Removed from workspace."); }
-            else { appState.favorites.push(id); showToast("Saved to workspace!"); }
+            if (idx > -1) { appState.favorites.splice(idx, 1); showToast("Dihapus dari workspace."); }
+            else { appState.favorites.push(id); showToast("Disimpan ke workspace!"); }
             saveToStorage();
             applyLibraryFilters();
             renderDashboard();
@@ -857,12 +724,12 @@ Provide complete Solidity contract with Foundry automated tests.`
         function saveModalPrompt() {
             const title = document.getElementById('modal-title').value.trim();
             const category = document.getElementById('modal-category').value;
-            const language = document.getElementById('modal-language').value;
+            const language = document.getElementById('modal-language').value.trim() || 'General';
             const description = document.getElementById('modal-desc').value.trim();
             const content = document.getElementById('modal-content').value.trim();
 
             if (!title || !content) {
-                showToast("Title and Content are required!", "error");
+                showToast("Judul dan Konten prompt wajib diisi!", "error");
                 return;
             }
 
@@ -872,15 +739,14 @@ Provide complete Solidity contract with Foundry automated tests.`
                 category,
                 language,
                 difficulty: 'Advanced',
-                description: description || 'Custom user prompt & idea template.',
+                description: description || 'Custom prompt template.',
                 content
             };
 
             appState.prompts.unshift(newCustom);
             saveToStorage();
             closeCreatePromptModal();
-            showToast("Custom prompt & idea saved!");
-            logTerminalEvent("USER", `Created custom prompt: "${title}"`);
+            showToast("Prompt berhasil disimpan!");
             renderDashboard();
             applyLibraryFilters();
 
@@ -899,10 +765,10 @@ Provide complete Solidity contract with Foundry automated tests.`
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            showToast(`Downloaded ${a.download}`);
+            showToast(`Mengunduh ${a.download}`);
         }
 
-        function copyTextToClipboard(text, successMsg = "Copied!") {
+        function copyTextToClipboard(text, successMsg = "Disalin!") {
             const ta = document.createElement("textarea");
             ta.value = text;
             ta.style.position = "fixed";
@@ -913,7 +779,7 @@ Provide complete Solidity contract with Foundry automated tests.`
                 document.execCommand('copy');
                 showToast(successMsg);
             } catch (err) {
-                showToast("Failed to copy.", "error");
+                showToast("Gagal menyalin.", "error");
             }
             document.body.removeChild(ta);
         }
@@ -922,7 +788,7 @@ Provide complete Solidity contract with Foundry automated tests.`
             const container = document.getElementById('toast-container');
             if (!container) return;
             const toast = document.createElement('div');
-            const colorClass = type === 'error' ? 'bg-rose-950 border-rose-800 text-rose-200' : 'bg-slate-900 border-blue-800 text-slate-100';
+            const colorClass = type === 'error' ? 'bg-rose-950 border-rose-800 text-rose-200' : 'bg-slate-900 border-emerald-800 text-slate-100';
             toast.className = `pointer-events-auto px-4 py-2.5 rounded-lg border text-xs font-medium shadow-2xl transition-all ${colorClass}`;
             toast.innerHTML = `<span>${escapeHTML(msg)}</span>`;
             container.appendChild(toast);
