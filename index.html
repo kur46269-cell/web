@@ -509,18 +509,7 @@
                 language: "Luau / Lua",
                 difficulty: "Advanced",
                 description: "Enterprise-grade server-side data persistence script with session locking, pcall error handling, and auto-save.",
-                content: `### SYSTEM ROLE & OBJECTIVE
-Act as an elite Roblox Luau Engineer and Systems Architect. Your task is to design a production-ready, highly resilient player data persistence module using ProfileService or DataStore2 without any truncation or token limits.
-
-### TECHNICAL REQUIREMENTS & CONSTRAINTS
-1. Session Locking: Prevent multi-device data corruption or duplication when players rapidly rejoin or switch servers.
-2. Error Handling: Wrap all GetAsync, UpdateAsync, and RemoveAsync calls inside robust pcall() blocks with exponential backoff retry logic (maximum 3 retries).
-3. Auto-Saving: Implement a background task executing an auto-save routine every 5 minutes with a per-player debounce tracker.
-4. Server Shutdown Handling: Utilize game:BindToClose() to gracefully flush and save all active player sessions before the cloud server terminates.
-5. Directory Structure: Provide clear instructions for ModuleScript placement inside ReplicatedStorage or ServerScriptService.
-
-### OUTPUT EXPECTATION
-Provide clean, commented Luau source code implementing a complete DataManager class along with test simulation scripts.`
+                content: `### SYSTEM ROLE & OBJECTIVE\nAct as an elite Roblox Luau Engineer and Systems Architect. Your task is to design a production-ready, highly resilient player data persistence module using ProfileService or DataStore2 without any truncation or token limits.\n\n### TECHNICAL REQUIREMENTS & CONSTRAINTS\n1. Session Locking: Prevent multi-device data corruption or duplication when players rapidly rejoin or switch servers.\n2. Error Handling: Wrap all GetAsync, UpdateAsync, and RemoveAsync calls inside robust pcall() blocks with exponential backoff retry logic (maximum 3 retries).\n3. Auto-Saving: Implement a background task executing an auto-save routine every 5 minutes with a per-player debounce tracker.\n4. Server Shutdown Handling: Utilize game:BindToClose() to gracefully flush and save all active player sessions before the cloud server terminates.\n5. Directory Structure: Provide clear instructions for ModuleScript placement inside ReplicatedStorage or ServerScriptService.\n\n### OUTPUT EXPECTATION\nProvide clean, commented Luau source code implementing a complete DataManager class along with test simulation scripts.`
             },
             {
                 id: "p-rust-tokio-server",
@@ -529,17 +518,7 @@ Provide clean, commented Luau source code implementing a complete DataManager cl
                 language: "Rust",
                 difficulty: "Expert",
                 description: "High-performance multi-threaded TCP server in Rust using Tokio, bounded channels, and zero-copy parsing.",
-                content: `### SYSTEM ROLE & OBJECTIVE
-Act as a Principal Rust Systems Engineer. Design and implement an ultra-low latency, concurrent TCP server using the Tokio asynchronous runtime with complete zero-limit specification.
-
-### TECHNICAL SPECIFICATIONS
-1. Concurrency Model: Utilize tokio::net::TcpListener with bounded channels (tokio::sync::mpsc) to distribute client tasks across worker threads.
-2. Memory Safety: Avoid unsafe blocks unless strictly necessary; enforce zero-copy packet deserialization utilizing bytes crate.
-3. Connection Management: Implement heartbeat timeouts, graceful shutdown signals via tokio::signal::ctrl_c, and rate-limiting per IP address.
-4. Observability: Integrate tracing and tracing-subscriber for structured logging of connection events and packet throughput.
-
-### DELIVERABLES
-Provide fully compiling Cargo project source code (main.rs and Cargo.toml dependencies) with thorough unit tests.`
+                content: `### SYSTEM ROLE & OBJECTIVE\nAct as a Principal Rust Systems Engineer. Design and implement an ultra-low latency, concurrent TCP server using the Tokio asynchronous runtime with complete zero-limit specification.\n\n### TECHNICAL SPECIFICATIONS\n1. Concurrency Model: Utilize tokio::net::TcpListener with bounded channels (tokio::sync::mpsc) to distribute client tasks across worker threads.\n2. Memory Safety: Avoid unsafe blocks unless strictly necessary; enforce zero-copy packet deserialization utilizing bytes crate.\n3. Connection Management: Implement heartbeat timeouts, graceful shutdown signals via tokio::signal::ctrl_c, and rate-limiting per IP address.\n4. Observability: Integrate tracing and tracing-subscriber for structured logging of connection events and packet throughput.\n\n### DELIVERABLES\nProvide fully compiling Cargo project source code (main.rs and Cargo.toml dependencies) with thorough unit tests.`
             }
         ];
 
