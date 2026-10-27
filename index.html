@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCRIPT PROMPT STUDIO - Modular Multi-Language Prompt & Idea Studio</title>
+    <title>SCRIPT PROMPT STUDIO - Modular Stacks & Autonomous Live AI Streamer</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -42,6 +42,12 @@
         ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #334155; }
         .glow-blue { box-shadow: 0 0 15px rgba(59, 130, 246, 0.25); }
+        .pulse-live { animation: pulseGlow 1.5s infinite; }
+        @keyframes pulseGlow {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.02); }
+            100% { opacity: 1; transform: scale(1); }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
@@ -53,28 +59,27 @@
     <div id="create-prompt-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-panelDark border border-panelBorder rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl">
             <div class="flex items-center justify-between pb-3 border-b border-panelBorder">
-                <h3 class="text-base font-bold text-white">Create Structured Multi-Language Prompt</h3>
+                <h3 class="text-base font-bold text-white">Create Structured Multi-Language Prompt & Idea</h3>
                 <button onclick="closeCreatePromptModal()" class="text-slate-400 hover:text-white">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
             <div class="space-y-3">
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Prompt Title / Idea Name</label>
-                    <input type="text" id="modal-title" placeholder="e.g. C++ Thread-Safe Memory Pool" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Prompt Title / Script Idea</label>
+                    <input type="text" id="modal-title" placeholder="e.g. C++ Multi-Threaded Ray Tracer" class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Category / Stack</label>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Category Stack</label>
                         <select id="modal-category" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                             <option value="C dan C++">C dan C++</option>
-                            <option value="Java">Java</option>
-                            <option value="Python Development">Python Development</option>
+                            <option value="Java Enterprise">Java Enterprise</option>
+                            <option value="Python & AI">Python & AI</option>
                             <option value="Roblox Development">Roblox Development</option>
                             <option value="Systems & Rust">Systems & Rust</option>
-                            <option value="JavaScript / TS">JavaScript / TS</option>
                             <option value="Smart Contracts">Smart Contracts</option>
-                            <option value="Go & Cloud">Go & Cloud</option>
+                            <option value="JavaScript / TS">JavaScript / TS</option>
                         </select>
                     </div>
                     <div>
@@ -85,24 +90,23 @@
                             <option value="Python">Python</option>
                             <option value="Luau / Lua">Luau / Lua</option>
                             <option value="Rust">Rust</option>
-                            <option value="TypeScript">TypeScript</option>
                             <option value="Solidity">Solidity</option>
-                            <option value="Go">Go</option>
+                            <option value="TypeScript">TypeScript</option>
                         </select>
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Idea & Implementation Summary</label>
-                    <input type="text" id="modal-desc" placeholder="Brief project idea description..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Idea Summary</label>
+                    <input type="text" id="modal-desc" placeholder="Brief script concept description..." class="w-full bg-bgDark border border-panelBorder rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Structured Prompt Content (System Role & Constraints)</label>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Structured Prompt Content</label>
                     <textarea id="modal-content" rows="7" placeholder="### SYSTEM ROLE & OBJECTIVE..." class="w-full bg-bgDark border border-panelBorder rounded-lg p-3 text-xs font-mono text-slate-200 focus:outline-none resize-none"></textarea>
                 </div>
             </div>
             <div class="flex justify-end gap-2 pt-2 border-t border-panelBorder">
                 <button onclick="closeCreatePromptModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium">Cancel</button>
-                <button onclick="saveModalPrompt()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold shadow-md">Save Prompt & Idea</button>
+                <button onclick="saveModalPrompt()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold shadow-md">Save Prompt</button>
             </div>
         </div>
     </div>
@@ -117,19 +121,19 @@
                     </div>
                     <div>
                         <span class="text-lg font-bold tracking-tight text-white block leading-none">SCRIPT PROMPT STUDIO</span>
-                        <span class="text-[10px] font-mono text-blue-400 tracking-wider">MODULAR LANGUAGE STACKS & IDEA HUB</span>
+                        <span class="text-[10px] font-mono text-blue-400 tracking-wider">MODULAR STACKS + AUTONOMOUS 1S STREAMER</span>
                     </div>
                 </div>
 
                 <div class="hidden md:flex flex-1 max-w-md mx-8 relative">
-                    <input type="text" id="global-search" oninput="handleGlobalSearch(this.value)" placeholder="Search C++, Java, Python, Rust, Luau prompts & ideas..." class="w-full bg-bgDark border border-panelBorder rounded-lg pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all">
+                    <input type="text" id="global-search" oninput="handleGlobalSearch(this.value)" placeholder="Search C++, Java, Python, Roblox, Rust prompts..." class="w-full bg-bgDark border border-panelBorder rounded-lg pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all">
                     <svg class="w-4 h-4 text-slate-500 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 </div>
 
                 <div class="flex items-center gap-3">
                     <button onclick="openCreatePromptModal()" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition-all shadow-md">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                        New Prompt & Idea
+                        New Prompt
                     </button>
                     <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 text-slate-400 hover:text-white rounded-lg border border-panelBorder">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -151,21 +155,21 @@
                 </div>
 
                 <div>
-                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-2 px-3">Stack Categories</span>
+                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-2 px-3">Modular Language Stacks</span>
                     <nav class="space-y-1">
                         <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn active w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
                             <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                            Dashboard & Overview
+                            Dashboard
                         </button>
                         <button onclick="switchCategoryView('C dan C++')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
                             <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
                             C dan C++ Stacks
                         </button>
-                        <button onclick="switchCategoryView('Java')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+                        <button onclick="switchCategoryView('Java Enterprise')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
                             <span class="w-2 h-2 rounded-full bg-rose-500"></span>
                             Java Enterprise
                         </button>
-                        <button onclick="switchCategoryView('Python Development')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+                        <button onclick="switchCategoryView('Python & AI')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
                             <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
                             Python & AI
                         </button>
@@ -181,15 +185,19 @@
                 </div>
 
                 <div>
-                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-2 px-3">Studio Tools</span>
+                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-2 px-3">Autonomous & Workspace</span>
                     <nav class="space-y-1">
-                        <button onclick="switchTab('library')" id="nav-library" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
-                            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                            Full Prompt Library
+                        <button onclick="switchTab('streamer')" id="nav-streamer" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+                            <svg class="w-4 h-4 text-emerald-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            Live 1s AI Streamer <span class="ml-auto px-1.5 py-0.5 text-[9px] font-mono bg-emerald-950 text-emerald-400 rounded border border-emerald-800">LIVE</span>
                         </button>
-                        <button onclick="switchTab('workspace')" id="nav-workspace" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+                        <button onclick="switchTab('library')" id="nav-library" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+                            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                            Full Library
+                        </button>
+                        <button onclick="switchTab('workspace')" id="nav-workspace" class="nav-btn w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
                             <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v1a2 2 0 01-2 2M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
-                            My Workspace (Favorites)
+                            My Workspace
                         </button>
                     </nav>
                 </div>
@@ -197,11 +205,11 @@
 
             <div class="p-4 border-t border-panelBorder bg-bgDark/50">
                 <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
-                    <span>Active Environment</span>
-                    <span class="text-emerald-400 font-mono font-bold">READY</span>
+                    <span>Autonomous Streamer</span>
+                    <span id="streamer-status-badge" class="text-emerald-400 font-mono font-bold animate-pulse">ACTIVE (1s)</span>
                 </div>
                 <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                    <div class="h-full bg-blue-500 rounded-full w-full"></div>
+                    <div class="h-full bg-emerald-500 rounded-full w-full"></div>
                 </div>
             </div>
         </aside>
@@ -213,50 +221,111 @@
             <section id="view-dashboard" class="space-y-6">
                 <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-panelDark via-slate-900 to-panelDark border border-panelBorder p-6">
                     <div class="relative z-10">
-                        <span class="px-2.5 py-1 text-[10px] font-mono font-semibold text-blue-400 bg-blue-950 border border-blue-800/40 rounded uppercase tracking-wider">Modular Language Stacks & Creative Ideas</span>
-                        <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-2">SCRIPT PROMPT & IDEA STUDIO</h1>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="px-2.5 py-1 text-[10px] font-mono font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/40 rounded uppercase tracking-wider pulse-live">● Autonomous 1s Streamer Active</span>
+                        </div>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold text-white">SCRIPT PROMPT & IDEA STUDIO</h1>
                         <p class="text-xs sm:text-sm text-slate-400 max-w-2xl mt-1">
-                            Pilih kategori bahasa pemrograman di bawah (C++, Java, Python, Roblox, Rust, dll.) untuk mendapatkan prompt terstruktur dan ide skrip tingkat lanjut.
+                            Pusat ide skrip dan prompt modular terstruktur untuk C++, Java, Python, Roblox Luau, dan sistem otonom real-time.
                         </p>
                         <div class="flex flex-wrap gap-3 mt-4">
-                            <button onclick="switchTab('library')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold flex items-center gap-2 transition-all shadow-lg">
-                                Buka Semua Pustaka Prompt
+                            <button onclick="switchTab('streamer')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-2 transition-all shadow-lg">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                Buka Live 1s AI Streamer
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Kategori Quick Filter Cards -->
+                <!-- Kategori Stack Cards -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <div onclick="switchCategoryView('C dan C++')" class="bg-panelDark border border-panelBorder hover:border-cyan-500/50 cursor-pointer rounded-xl p-4 transition-all group">
                         <div class="w-8 h-8 rounded-lg bg-cyan-950 text-cyan-400 flex items-center justify-center font-mono font-bold mb-3 group-hover:scale-110 transition-transform">C++</div>
                         <h3 class="text-sm font-bold text-white">C dan C++</h3>
-                        <p class="text-[11px] text-slate-400 mt-0.5">Game Engine, Memory Pool, Algoritma</p>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Memory Pool, Game Engine</p>
                     </div>
-                    <div onclick="switchCategoryView('Java')" class="bg-panelDark border border-panelBorder hover:border-rose-500/50 cursor-pointer rounded-xl p-4 transition-all group">
+                    <div onclick="switchCategoryView('Java Enterprise')" class="bg-panelDark border border-panelBorder hover:border-rose-500/50 cursor-pointer rounded-xl p-4 transition-all group">
                         <div class="w-8 h-8 rounded-lg bg-rose-950 text-rose-400 flex items-center justify-center font-mono font-bold mb-3 group-hover:scale-110 transition-transform">JV</div>
                         <h3 class="text-sm font-bold text-white">Java Enterprise</h3>
-                        <p class="text-[11px] text-slate-400 mt-0.5">Spring Boot, Concurrency, Microservices</p>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Spring Boot, Concurrency</p>
                     </div>
-                    <div onclick="switchCategoryView('Python Development')" class="bg-panelDark border border-panelBorder hover:border-yellow-500/50 cursor-pointer rounded-xl p-4 transition-all group">
+                    <div onclick="switchCategoryView('Python & AI')" class="bg-panelDark border border-panelBorder hover:border-yellow-500/50 cursor-pointer rounded-xl p-4 transition-all group">
                         <div class="w-8 h-8 rounded-lg bg-yellow-950 text-yellow-400 flex items-center justify-center font-mono font-bold mb-3 group-hover:scale-110 transition-transform">PY</div>
                         <h3 class="text-sm font-bold text-white">Python & AI</h3>
-                        <p class="text-[11px] text-slate-400 mt-0.5">FastAPI, Machine Learning, Automation</p>
+                        <p class="text-[11px] text-slate-400 mt-0.5">FastAPI, Machine Learning</p>
                     </div>
                     <div onclick="switchCategoryView('Roblox Development')" class="bg-panelDark border border-panelBorder hover:border-amber-500/50 cursor-pointer rounded-xl p-4 transition-all group">
                         <div class="w-8 h-8 rounded-lg bg-amber-950 text-amber-400 flex items-center justify-center font-mono font-bold mb-3 group-hover:scale-110 transition-transform">RB</div>
                         <h3 class="text-sm font-bold text-white">Roblox Luau Hub</h3>
-                        <p class="text-[11px] text-slate-400 mt-0.5">DataStore, Combat, Client-Server</p>
+                        <p class="text-[11px] text-slate-400 mt-0.5">DataStore, Combat System</p>
                     </div>
                 </div>
 
-                <!-- Featured Stacks Grid -->
+                <!-- Live Streamer Ticker Preview -->
+                <div class="bg-panelDark border border-emerald-500/30 rounded-xl p-5 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Live Autonomous Streamer (1s Generation)</h2>
+                        </div>
+                        <button onclick="switchTab('streamer')" class="text-xs text-blue-400 hover:text-blue-300 font-medium">Open Live Streamer &rarr;</button>
+                    </div>
+                    <div id="dashboard-live-ticker" class="bg-bgDark border border-panelBorder rounded-lg p-3 font-mono text-xs text-slate-300">
+                        Initializing autonomous prompt generation stream...
+                    </div>
+                </div>
+
                 <div>
                     <div class="flex items-center justify-between mb-3">
-                        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Featured Prompts & Script Ideas</h2>
+                        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Featured Modular Prompts & Script Ideas</h2>
                         <button onclick="switchTab('library')" class="text-xs text-blue-400 hover:text-blue-300 font-medium">View All &rarr;</button>
                     </div>
                     <div id="dashboard-featured-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
+
+                <!-- Real-Time Terminal Log -->
+                <div class="bg-panelDark border border-emerald-500/40 rounded-xl p-4 space-y-2 shadow-2xl">
+                    <div class="flex items-center justify-between pb-2 border-b border-panelBorder">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                            <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">Live Real-Time Terminal & Log Stream</h2>
+                        </div>
+                        <button onclick="clearTerminalLogs()" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-[10px] font-mono">Clear Terminal</button>
+                    </div>
+                    <div id="realtime-terminal" class="bg-bgDark border border-panelBorder rounded-lg p-3 font-mono text-[11px] text-emerald-400 h-32 overflow-y-auto space-y-1">
+                        <div>[00:00:00] [SYSTEM] Script Prompt Studio modular stacks & live streamer booted.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW: LIVE 1S AI STREAMER -->
+            <section id="view-streamer" class="hidden space-y-6">
+                <div class="bg-panelDark p-5 rounded-xl border border-emerald-500/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/40 rounded">AUTONOMOUS 1-SECOND GENERATOR</span>
+                        </div>
+                        <h1 class="text-xl font-bold text-white">Live AI Streamer Feed</h1>
+                        <p class="text-xs text-slate-400">Sistem otomatis menghasilkan prompt terstruktur dan ide skrip baru setiap 1 detik tanpa henti.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="toggleStreamerPause()" id="btn-streamer-toggle" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded-lg text-xs font-semibold">Pause / Resume</button>
+                        <button onclick="clearStreamedPrompts()" class="px-3 py-2 bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-800/50 rounded-lg text-xs font-semibold">Clear Feed</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="lg:col-span-8 space-y-4" id="streamer-feed-container"></div>
+                    <div class="lg:col-span-4 space-y-4">
+                        <div class="bg-panelDark border border-panelBorder rounded-xl p-4 space-y-3">
+                            <h2 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Streamer Stats</h2>
+                            <div class="space-y-2 text-xs font-mono">
+                                <div class="flex justify-between text-slate-400"><span>Interval:</span><span class="text-white">1.0s</span></div>
+                                <div class="flex justify-between text-slate-400"><span>Generated Total:</span><span id="streamer-stat-total" class="text-emerald-400">0</span></div>
+                                <div class="flex justify-between text-slate-400"><span>Status:</span><span id="streamer-stat-status" class="text-emerald-400">Streaming Active</span></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -265,7 +334,7 @@
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-panelDark p-4 rounded-xl border border-panelBorder">
                     <div>
                         <h1 class="text-xl font-bold text-white">Multi-Language Prompt & Idea Library</h1>
-                        <p class="text-xs text-slate-400">Jelajahi prompt dan ide skrip terbaik untuk C++, Java, Python, Roblox, Rust, dan lainnya.</p>
+                        <p class="text-xs text-slate-400">Filter prompt dan ide skrip berdasarkan kategori bahasa pemrograman (C++, Java, Python, Roblox, dll.).</p>
                     </div>
                     <button onclick="openCreatePromptModal()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
@@ -281,11 +350,10 @@
                             <select id="filter-category" onchange="applyLibraryFilters()" class="w-full bg-bgDark border border-panelBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
                                 <option value="ALL">All Stack Categories</option>
                                 <option value="C dan C++">C dan C++</option>
-                                <option value="Java">Java</option>
-                                <option value="Python Development">Python Development</option>
+                                <option value="Java Enterprise">Java Enterprise</option>
+                                <option value="Python & AI">Python & AI</option>
                                 <option value="Roblox Development">Roblox Development</option>
                                 <option value="Systems & Rust">Systems & Rust</option>
-                                <option value="JavaScript / TS">JavaScript / TS</option>
                                 <option value="Smart Contracts">Smart Contracts</option>
                             </select>
                         </div>
@@ -298,7 +366,6 @@
                                 <option value="Python">Python</option>
                                 <option value="Luau / Lua">Luau / Lua</option>
                                 <option value="Rust">Rust</option>
-                                <option value="TypeScript">TypeScript</option>
                                 <option value="Solidity">Solidity</option>
                             </select>
                         </div>
@@ -316,7 +383,7 @@
             <section id="view-workspace" class="hidden space-y-6">
                 <div class="bg-panelDark p-4 rounded-xl border border-panelBorder">
                     <h1 class="text-xl font-bold text-white">My Workspace & Bookmarks</h1>
-                    <p class="text-xs text-slate-400">Koleksi prompt dan ide skrip favorit Anda yang telah disimpan.</p>
+                    <p class="text-xs text-slate-400">Koleksi prompt dan ide skrip favorit yang Anda simpan.</p>
                 </div>
                 <div id="workspace-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </section>
@@ -324,7 +391,7 @@
         </main>
     </div>
 
-    <!-- JAVASCRIPT & STRUCTURED STACK DATABASE -->
+    <!-- JAVASCRIPT & AUTONOMOUS ENGINE -->
     <script>
         const INITIAL_PROMPTS = [
             // --- C dan C++ ---
@@ -336,108 +403,104 @@
                 difficulty: "Expert",
                 description: "Ide skrip: Alokator memori kustom berbasis block fixed-size untuk menghindari fragmentasi heap pada game engine.",
                 content: `### SYSTEM ROLE & OBJECTIVE
-Act as a Senior C++ Game Engine Architect. Your task is to design a high-performance, cache-friendly fixed-size memory pool allocator in modern C++20.
+Act as a Senior C++ Game Engine Architect. Design a high-performance, cache-friendly fixed-size memory pool allocator in modern C++20.
 
 ### IDEA & CORE REQUIREMENTS
-1. Heap Fragmentation Elimination: Pre-allocate a contiguous memory block during initialization and manage free blocks via an intrusive free list.
-2. O(1) Complexity: Ensure allocation and deallocation operations run in constant time O(1).
-3. Thread Safety: Provide a thread-safe wrapper using std::mutex or lock-free atomics for multithreaded task workers.
-4. RAII Wrapper: Include custom smart pointers or scope guards to prevent memory leaks.
+1. Heap Fragmentation Elimination: Pre-allocate a contiguous memory block and manage free blocks via an intrusive free list.
+2. O(1) Complexity: Constant time allocation and deallocation operations.
+3. Thread Safety: Thread-safe wrapper using lock-free atomics for multithreaded task workers.
 
 ### OUTPUT EXPECTATION
 Provide clean, header-only C++20 source code with benchmarking main() routine.`
             },
             {
-                id: "p-cpp-socket-server",
-                title: "C++ Asynchronous Network Server with Epoll / IOCP",
+                id: "p-cpp-raytracer",
+                title: "C++ Multi-Threaded Real-time Ray Tracer",
                 category: "C dan C++",
                 language: "C++",
                 difficulty: "Expert",
-                description: "Ide skrip: Low-level network server menggunakan sistem I/O multiplexing epoll (Linux) untuk high concurrency.",
+                description: "Ide skrip: Renderer grafis 3D dari nol menggunakan C++17 dengan multithreading std::jthread.",
                 content: `### SYSTEM ROLE & OBJECTIVE
-Act as a Principal C++ Systems Engineer. Build a high-concurrency non-blocking TCP server using epoll (Linux) or IOCP (Windows).
+Act as a Principal Graphics Engineer. Implement a multi-threaded real-time CPU ray tracer in C++17.
 
 ### IDEA & CORE REQUIREMENTS
-1. Reactor Pattern: Implement non-blocking socket state machine with edge-triggered epoll events.
-2. Buffer Management: Circular ring buffer for zero-copy packet parsing and assembly.
-3. Thread Pool: Dispatch incoming payload worker jobs to a thread pool with condition variables.
+1. BVH Acceleration: Build a Bounding Volume Hierarchy to speed up ray-triangle intersection tests.
+2. Multithreading: Divide frame buffer tiles across std::jthread pool workers.
+3. Material Shading: Support diffuse, metallic reflection, and refraction (glass).
 
 ### OUTPUT EXPECTATION
-Provide modular C++17 source code (Server.h and main.cpp).`
+Provide complete C++ rendering pipeline source code.`
             },
 
             // --- Java Enterprise ---
             {
                 id: "p-java-spring-microservice",
                 title: "Java Spring Boot Reactive Microservice with WebFlux",
-                category: "Java",
+                category: "Java Enterprise",
                 language: "Java",
                 difficulty: "Advanced",
                 description: "Ide skrip: Enterprise microservice non-blocking menggunakan Spring WebFlux, R2DBC, dan Resilience4j.",
                 content: `### SYSTEM ROLE & OBJECTIVE
-Act as a Principal Java Enterprise Architect. Design a fully reactive, non-blocking microservice using Spring Boot 3.x, Spring WebFlux, and R2DBC.
+Act as a Principal Java Enterprise Architect. Design a fully reactive microservice using Spring Boot 3.x, Spring WebFlux, and R2DBC.
 
 ### IDEA & CORE REQUIREMENTS
-1. Reactive Stack: Use Project Reactor (Flux/Mono) for end-to-end non-blocking database queries with PostgreSQL R2DBC.
-2. Fault Tolerance: Integrate Resilience4j circuit breakers and rate limiters for downstream service calls.
-3. Security: Implement Spring Security OAuth2 Resource Server with JWT validation.
+1. Reactive Stack: Project Reactor (Flux/Mono) for end-to-end non-blocking DB queries with PostgreSQL R2DBC.
+2. Fault Tolerance: Integrate Resilience4j circuit breakers.
 
 ### OUTPUT EXPECTATION
-Provide complete Spring Boot component structure and configuration classes.`
+Provide complete Spring Boot component structure.`
             },
             {
                 id: "p-java-concurrent-queue",
                 title: "Java Lock-Free Producer-Consumer Queue",
-                category: "Java",
+                category: "Java Enterprise",
                 language: "Java",
                 difficulty: "Expert",
-                description: "Ide skrip: Struktur data concurrent performa tinggi menggunakan AtomicReference dan CAS (Compare-And-Swap).",
+                description: "Ide skrip: Struktur data concurrent performa tinggi menggunakan AtomicReference dan CAS.",
                 content: `### SYSTEM ROLE & OBJECTIVE
-Act as a Senior Java Concurrency Specialist. Build a lock-free, high-throughput bounded producer-consumer queue in Java using java.util.concurrent.atomic.
+Act as a Senior Java Concurrency Specialist. Build a lock-free, high-throughput bounded producer-consumer queue in Java.
 
 ### IDEA & CORE REQUIREMENTS
-1. Lock-Free CAS: Avoid synchronized blocks; utilize AtomicReference and volatile variables to achieve thread safety.
-2. False Sharing Mitigation: Apply @Contended annotations on queue node pointers to optimize CPU cache line utilization.
+1. Lock-Free CAS: Avoid synchronized blocks; utilize AtomicReference and volatile variables.
+2. Cache Optimization: Apply @Contended annotations on queue node pointers.
 
 ### OUTPUT EXPECTATION
-Provide clean Java class implementation with multi-threaded stress test simulation.`
+Provide clean Java class implementation with multi-threaded stress test.`
             },
 
             // --- Python & AI ---
             {
                 id: "p-python-fastapi-ai",
                 title: "Python FastAPI Asynchronous AI Model Inference Pipeline",
-                category: "Python Development",
+                category: "Python & AI",
                 language: "Python",
                 difficulty: "Advanced",
-                description: "Ide skrip: API server untuk melayani inferensi model Machine Learning dengan background tasks dan Redis queue.",
+                description: "Ide skrip: API server untuk inferensi model Machine Learning dengan background tasks dan Redis queue.",
                 content: `### SYSTEM ROLE & OBJECTIVE
-Act as a Senior Python AI Infrastructure Engineer. Build an asynchronous FastAPI inference pipeline integrating PyTorch/HuggingFace models.
+Act as a Senior Python AI Infrastructure Engineer. Build an asynchronous FastAPI inference pipeline integrating PyTorch models.
 
 ### IDEA & CORE REQUIREMENTS
-1. Async Worker Queue: Utilize Celery + Redis to offload heavy inference tasks from HTTP event loop.
-2. Input Validation: Pydantic v2 data models with strict tensor dimension assertions.
-3. Monitoring: Prometheus metrics middleware for request latency tracking.
+1. Async Worker Queue: Celery + Redis to offload heavy inference tasks.
+2. Validation: Pydantic v2 data models with strict tensor assertions.
 
 ### OUTPUT EXPECTATION
-Provide complete main.py, celery_worker.py, and requirements.txt.`
+Provide complete main.py and celery worker configuration.`
             },
 
             // --- Roblox Development ---
             {
                 id: "p-roblox-datastore",
-                title: "Roblox Luau Secure DataStore2 / ProfileService Architecture",
+                title: "Roblox Luau Secure ProfileService Architecture",
                 category: "Roblox Development",
                 language: "Luau / Lua",
                 difficulty: "Advanced",
                 description: "Ide skrip: Sistem simpan data player tahan crash dengan session locking dan auto-save berkala.",
                 content: `### SYSTEM ROLE & OBJECTIVE
-Act as an elite Roblox Luau Engineer. Design a robust player data persistence module using ProfileService with zero data loss.
+Act as an elite Roblox Luau Engineer. Design a robust player data persistence module using ProfileService.
 
 ### IDEA & CORE REQUIREMENTS
 1. Session Locking: Prevent multi-device data corruption.
-2. pcall Error Handling: Exponential backoff retry logic for cloud requests.
-3. Auto-Save & Shutdown: Automatic 5-minute interval saves + game:BindToClose() hooks.
+2. pcall Error Handling: Exponential backoff retry logic.
 
 ### OUTPUT EXPECTATION
 Provide clean, commented Luau ModuleScript.`
@@ -446,26 +509,35 @@ Provide clean, commented Luau ModuleScript.`
             // --- Systems & Rust ---
             {
                 id: "p-rust-tokio-server",
-                title: "Rust Asynchronous Tokio TCP Server & Worker Pool",
+                title: "Rust Asynchronous Tokio TCP Server",
                 category: "Systems & Rust",
                 language: "Rust",
                 difficulty: "Expert",
-                description: "Ide skrip: Server jaringan berkinerja tinggi menggunakan Tokio async runtime dan bounded channels.",
+                description: "Ide skrip: Server jaringan berperforma tinggi menggunakan Tokio async runtime.",
                 content: `### SYSTEM ROLE & OBJECTIVE
 Act as a Principal Rust Systems Engineer. Implement an ultra-low latency concurrent TCP server using Tokio.
 
 ### IDEA & CORE REQUIREMENTS
 1. Concurrency: tokio::net::TcpListener with mpsc channels.
-2. Safety: Zero-copy packet parsing using bytes crate without unsafe blocks.
+2. Safety: Zero-copy packet parsing using bytes crate.
 
 ### OUTPUT EXPECTATION
-Provide complete Cargo project structure (main.rs and Cargo.toml).`
+Provide complete Cargo project structure.`
             }
+        ];
+
+        const STREAMER_TEMPLATES = [
+            { title: "Autonomous C++ Thread Pool v", cat: "C dan C++", lang: "C++", diff: "Expert", desc: "Generated C++20 thread pool worker scheduler.", content: "### C++20 TASK SCHEDULER\nImplement a work-stealing thread pool in C++20 with condition variables and atomic task queues." },
+            { title: "Autonomous Java Spring Security v", cat: "Java Enterprise", lang: "Java", diff: "Advanced", desc: "Generated Spring Security OAuth2 JWT resource server.", content: "### SPRING SECURITY ARCHITECTURE\nConfigure stateless JWT authentication filter chain with role-based method security." },
+            { title: "Autonomous Python Data Scraper v", cat: "Python & AI", lang: "Python", diff: "Intermediate", desc: "Generated AsyncIO + BeautifulSoup concurrent web crawler.", content: "### ASYNC WEB SCRAPER\nBuild a rate-limited asynchronous crawler using httpx and BeautifulSoup." },
+            { title: "Autonomous Roblox Combat System v", cat: "Roblox Development", lang: "Luau / Lua", diff: "Advanced", desc: "Generated client-server hit registration module.", content: "### ROBLOX HITBOX MODULE\nImplement server-side raycast validation and client prediction for melee combat." }
         ];
 
         let appState = {
             prompts: [],
             favorites: [],
+            streamedPrompts: [],
+            isStreamerPaused: false,
             activeTab: 'dashboard'
         };
 
@@ -478,12 +550,15 @@ Provide complete Cargo project structure (main.rs and Cargo.toml).`
             renderDashboard();
             renderLibrary();
             renderWorkspace();
+
+            setInterval(runLiveAiStreamerTick, 1000);
+            terminalLog("SYSTEM: Autonomous 1s AI Streamer engine booted successfully.");
         };
 
         function loadFromStorage() {
             try {
-                const storedPrompts = localStorage.getItem('sps_prompts_mod');
-                const storedFavs = localStorage.getItem('sps_favorites_mod');
+                const storedPrompts = localStorage.getItem('sps_prompts_mod_v2');
+                const storedFavs = localStorage.getItem('sps_favorites_mod_v2');
                 if (storedPrompts) appState.prompts = JSON.parse(storedPrompts);
                 if (storedFavs) appState.favorites = JSON.parse(storedFavs);
             } catch (err) {}
@@ -491,9 +566,98 @@ Provide complete Cargo project structure (main.rs and Cargo.toml).`
 
         function saveToStorage() {
             try {
-                localStorage.setItem('sps_prompts_mod', JSON.stringify(appState.prompts));
-                localStorage.setItem('sps_favorites_mod', JSON.stringify(appState.favorites));
+                localStorage.setItem('sps_prompts_mod_v2', JSON.stringify(appState.prompts));
+                localStorage.setItem('sps_favorites_mod_v2', JSON.stringify(appState.favorites));
             } catch (err) {}
+        }
+
+        function terminalLog(msg) {
+            const term = document.getElementById('realtime-terminal');
+            if (!term) return;
+            const timeStr = new Date().toLocaleTimeString();
+            const div = document.createElement('div');
+            div.innerHTML = `[${timeStr}] ${escapeHTML(msg)}`;
+            term.appendChild(div);
+            term.scrollTop = term.scrollHeight;
+            if (term.children.length > 50) term.removeChild(term.firstChild);
+        }
+
+        function clearTerminalLogs() {
+            const term = document.getElementById('realtime-terminal');
+            if (term) term.innerHTML = `<div>[${new Date().toLocaleTimeString()}] [TERMINAL] Logs cleared by user.</div>`;
+        }
+
+        function runLiveAiStreamerTick() {
+            if (appState.isStreamerPaused) return;
+
+            const template = STREAMER_TEMPLATES[Math.floor(Math.random() * STREAMER_TEMPLATES.length)];
+            const randId = Math.floor(Math.random() * 90000) + 10000;
+            const newPrompt = {
+                id: 'p-stream-' + Date.now(),
+                title: `${template.title}${randId.toString().slice(-3)}`,
+                category: template.cat,
+                language: template.lang,
+                difficulty: template.diff,
+                description: template.desc,
+                content: `${template.content}\n\n### AUTONOMOUS METADATA\nGenerated Live at ${new Date().toLocaleTimeString()} | Target: Production Ready.`
+            };
+
+            appState.prompts.unshift(newPrompt);
+            appState.streamedPrompts.unshift(newPrompt);
+            if (appState.streamedPrompts.length > 25) appState.streamedPrompts.pop();
+
+            saveToStorage();
+            terminalLog(`AUTONOMOUS SYNTHESIS [${newPrompt.language}] &rarr; "${newPrompt.title}"`);
+
+            const ticker = document.getElementById('dashboard-live-ticker');
+            if (ticker) {
+                ticker.innerHTML = `<span class="text-emerald-400 font-bold">[AUTONOMOUS STREAM]</span> <span class="text-white">${escapeHTML(newPrompt.title)}</span> (${escapeHTML(newPrompt.language)})`;
+            }
+
+            const feedContainer = document.getElementById('streamer-feed-container');
+            if (feedContainer && appState.activeTab === 'streamer') {
+                renderStreamerFeed();
+            }
+
+            const statStreamed = document.getElementById('streamer-stat-total');
+            if (statStreamed) statStreamed.innerText = appState.streamedPrompts.length;
+        }
+
+        function toggleStreamerPause() {
+            appState.isStreamerPaused = !appState.isStreamerPaused;
+            const statusBadge = document.getElementById('streamer-status-badge');
+            const statStatus = document.getElementById('streamer-stat-status');
+            const btn = document.getElementById('btn-streamer-toggle');
+
+            if (appState.isStreamerPaused) {
+                if (statusBadge) { statusBadge.innerText = "PAUSED"; statusBadge.className = "text-amber-400 font-mono font-bold"; }
+                if (statStatus) statStatus.innerText = "Stream Paused";
+                if (btn) btn.innerText = "Resume Stream";
+                showToast("Live AI Streamer paused.");
+                terminalLog("SYSTEM: Autonomous streamer paused.");
+            } else {
+                if (statusBadge) { statusBadge.innerText = "ACTIVE (1s)"; statusBadge.className = "text-emerald-400 font-mono font-bold animate-pulse"; }
+                if (statStatus) statStatus.innerText = "Streaming Active";
+                if (btn) btn.innerText = "Pause Stream";
+                showToast("Live AI Streamer resumed.");
+                terminalLog("SYSTEM: Autonomous streamer resumed.");
+            }
+        }
+
+        function clearStreamedPrompts() {
+            appState.streamedPrompts = [];
+            renderStreamerFeed();
+            showToast("Stream feed cleared.");
+        }
+
+        function renderStreamerFeed() {
+            const container = document.getElementById('streamer-feed-container');
+            if (!container) return;
+            if (appState.streamedPrompts.length === 0) {
+                container.innerHTML = `<div class="p-8 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">Streamer is paused or waiting for next tick...</div>`;
+                return;
+            }
+            container.innerHTML = appState.streamedPrompts.map(p => createPromptCardHTML(p)).join('');
         }
 
         function switchTab(tabId) {
@@ -506,6 +670,7 @@ Provide complete Cargo project structure (main.rs and Cargo.toml).`
             const activeNav = document.getElementById(`nav-${tabId}`);
             if (activeNav) activeNav.classList.add('active', 'bg-slate-800/80', 'text-white');
 
+            if (tabId === 'streamer') renderStreamerFeed();
             if (tabId === 'library') applyLibraryFilters();
             if (tabId === 'workspace') renderWorkspace();
 
@@ -551,7 +716,7 @@ Provide complete Cargo project structure (main.rs and Cargo.toml).`
 
             const grid = document.getElementById('library-prompt-grid');
             if (grid) {
-                grid.innerHTML = filtered.length === 0 ? `<div class="col-span-full py-12 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">No prompts found matching category.</div>` : filtered.map(p => createPromptCardHTML(p)).join('');
+                grid.innerHTML = filtered.length === 0 ? `<div class="col-span-full py-12 text-center text-slate-500 border border-dashed border-panelBorder rounded-xl">No prompts found matching filter.</div>` : filtered.map(p => createPromptCardHTML(p)).join('');
             }
         }
 
@@ -600,7 +765,7 @@ Provide complete Cargo project structure (main.rs and Cargo.toml).`
                     <div class="flex items-center justify-between pt-3 border-t border-panelBorder text-xs">
                         <span class="text-[10px] text-slate-500 font-mono">Level: ${prompt.difficulty}</span>
                         <div class="flex items-center gap-1.5">
-                            <button onclick="copyTextToClipboard(\`${escapeJsString(prompt.content)}\`, 'Prompt Copied!')" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded font-medium">Copy Prompt</button>
+                            <button onclick="copyTextToClipboard(\`${escapeJsString(prompt.content)}\`, 'Prompt Copied!')" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded font-medium">Copy</button>
                             <button onclick="downloadPromptTxt('${safeFileName}', \`${escapeJsString(prompt.content)}\`)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-panelBorder rounded font-medium flex items-center gap-1">
                                 <svg class="w-3 h-3 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 .txt
@@ -642,14 +807,14 @@ Provide complete Cargo project structure (main.rs and Cargo.toml).`
                 category,
                 language,
                 difficulty: 'Advanced',
-                description: description || 'Custom user prompt & idea template.',
+                description: description || 'Custom script idea template.',
                 content
             };
 
             appState.prompts.unshift(newCustom);
             saveToStorage();
             closeCreatePromptModal();
-            showToast("Custom prompt & idea saved!");
+            showToast("Custom prompt saved!");
             renderDashboard();
             applyLibraryFilters();
 
@@ -691,7 +856,7 @@ Provide complete Cargo project structure (main.rs and Cargo.toml).`
             const container = document.getElementById('toast-container');
             if (!container) return;
             const toast = document.createElement('div');
-            const colorClass = type === 'error' ? 'bg-rose-950 border-rose-800 text-rose-200' : 'bg-slate-900 border-blue-800 text-slate-100';
+            const colorClass = type === 'error' ? 'bg-rose-950 border-rose-800 text-rose-200' : 'bg-slate-900 border-emerald-800 text-slate-100';
             toast.className = `pointer-events-auto px-4 py-2.5 rounded-lg border text-xs font-medium shadow-2xl transition-all ${colorClass}`;
             toast.innerHTML = `<span>${escapeHTML(msg)}</span>`;
             container.appendChild(toast);
